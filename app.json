@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Agendô Parceiro",
+    "slug": "agendo-partner",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": ["agendo-partner", "com.agendo.partner.auth0"],
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1E293B"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.agendo.partner"
+    },
+    "android": {
+      "package": "com.agendo.partner",
+      "adaptiveIcon": {
+        "backgroundColor": "#1E293B",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O Agendô Parceiro precisa de acesso às suas fotos para enviar imagens do estabelecimento.",
+          "cameraPermission": "O Agendô Parceiro pode usar a câmara para fotografar o seu espaço."
+        }
+      ],
+      "expo-dev-client",
+      "expo-web-browser"
+    ]
+  }
+}
