@@ -119,7 +119,7 @@ export function getBookingScheduleStyles(theme: AppTheme) {
       fontWeight: "600",
     },
     professionalName: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 10,
       fontWeight: "600",
       marginTop: 4,
@@ -143,7 +143,7 @@ export function getBookingScheduleStyles(theme: AppTheme) {
       width: 60,
     },
     sectionTitle: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 12,
       fontWeight: "600",
       letterSpacing: 0.28,
@@ -172,7 +172,7 @@ export function getBookingScheduleStyles(theme: AppTheme) {
       marginBottom: 6,
     },
     summaryCellLabel: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 11,
       fontWeight: "600",
       letterSpacing: 0.2,
@@ -234,7 +234,7 @@ export function getBookingScheduleStyles(theme: AppTheme) {
       textTransform: "uppercase",
     },
     timeSlotsEmptyHint: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 13,
       lineHeight: 18,
       marginTop: 10,

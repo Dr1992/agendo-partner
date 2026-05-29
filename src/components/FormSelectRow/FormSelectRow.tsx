@@ -45,7 +45,7 @@ export function FormSelectRow({
         {displayText}
       </Text>
       <Ionicons
-        color={theme.textMuted}
+        color={theme.textHint}
         name={chevron === "down" ? "chevron-down" : "chevron-forward"}
         size={22}
       />

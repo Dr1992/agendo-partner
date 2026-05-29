@@ -70,7 +70,7 @@ export function EstablishmentRowCard({
           onEditPress();
         }}
       >
-        <Ionicons color={theme.textMuted} name="create-outline" size={22} />
+        <Ionicons color={theme.textHint} name="create-outline" size={22} />
       </Pressable>
     ) : (
       <View
@@ -78,7 +78,7 @@ export function EstablishmentRowCard({
         importantForAccessibility="no-hide-descendants"
         style={styles.editIconBox}
       >
-        <Ionicons color={theme.textMuted} name="create-outline" size={22} />
+        <Ionicons color={theme.textHint} name="create-outline" size={22} />
       </View>
     )
   ) : null;

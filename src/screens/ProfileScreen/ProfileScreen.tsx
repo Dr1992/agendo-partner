@@ -240,7 +240,7 @@ export function ProfileScreen() {
               </Text>
               <Text style={styles.linkSubtitle}>{SUPPORT_EMAIL}</Text>
             </View>
-            <Ionicons color={theme.textMuted} name="mail-outline" size={22} />
+            <Ionicons color={theme.textHint} name="mail-outline" size={22} />
           </View>
         </Pressable>
         <Pressable
@@ -263,7 +263,7 @@ export function ProfileScreen() {
               </Text>
             </View>
             <Ionicons
-              color={theme.textMuted}
+              color={theme.textHint}
               name="chatbox-ellipses-outline"
               size={22}
             />
@@ -284,11 +284,7 @@ export function ProfileScreen() {
         >
           <View style={styles.linkRow}>
             <Text style={styles.linkTitle}>{t("profile.termsOfUse")}</Text>
-            <Ionicons
-              color={theme.textMuted}
-              name="chevron-forward"
-              size={20}
-            />
+            <Ionicons color={theme.textHint} name="chevron-forward" size={20} />
           </View>
         </Pressable>
         <Pressable
@@ -304,11 +300,7 @@ export function ProfileScreen() {
         >
           <View style={styles.linkRow}>
             <Text style={styles.linkTitle}>{t("profile.privacyPolicy")}</Text>
-            <Ionicons
-              color={theme.textMuted}
-              name="chevron-forward"
-              size={20}
-            />
+            <Ionicons color={theme.textHint} name="chevron-forward" size={20} />
           </View>
         </Pressable>
         <Text style={styles.subtle}>{t("profile.legalNotice")}</Text>

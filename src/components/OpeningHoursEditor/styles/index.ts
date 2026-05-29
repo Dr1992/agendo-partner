@@ -33,7 +33,7 @@ export function getOpeningHoursEditorStyles(theme: AppTheme) {
       marginTop: 10,
     },
     timeLabel: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 12,
       fontWeight: "600",
       marginBottom: 4,

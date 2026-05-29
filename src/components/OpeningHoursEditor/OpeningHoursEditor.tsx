@@ -114,7 +114,7 @@ export function OpeningHoursEditor({
                     <View style={oh.timeFieldRow}>
                       <Text variant="body">{slot.open}</Text>
                       <Ionicons
-                        color={theme.textMuted}
+                        color={theme.textHint}
                         name="chevron-down"
                         size={22}
                       />
@@ -135,7 +135,7 @@ export function OpeningHoursEditor({
                     <View style={oh.timeFieldRow}>
                       <Text variant="body">{slot.close}</Text>
                       <Ionicons
-                        color={theme.textMuted}
+                        color={theme.textHint}
                         name="chevron-down"
                         size={22}
                       />

@@ -147,7 +147,7 @@ export function CompleteProfileScreen({
           autoCapitalize="words"
           autoCorrect={false}
           placeholder={t("completeProfile.fullNamePlaceholder")}
-          placeholderTextColor={theme.textMuted}
+          placeholderTextColor={theme.textHint}
           style={styles.field}
           value={fullName}
           onChangeText={setFullName}
@@ -158,7 +158,7 @@ export function CompleteProfileScreen({
           autoCorrect={false}
           keyboardType="email-address"
           placeholder={t("completeProfile.emailPlaceholder")}
-          placeholderTextColor={theme.textMuted}
+          placeholderTextColor={theme.textHint}
           style={styles.field}
           value={email}
           onChangeText={setEmail}
@@ -168,7 +168,7 @@ export function CompleteProfileScreen({
           keyboardType="phone-pad"
           maxLength={15}
           placeholder={t("completeProfile.phonePlaceholder")}
-          placeholderTextColor={theme.textMuted}
+          placeholderTextColor={theme.textHint}
           style={styles.field}
           value={formatBrazilPhoneDisplay(phoneDigits)}
           onChangeText={(input) =>
@@ -180,7 +180,7 @@ export function CompleteProfileScreen({
           keyboardType="number-pad"
           maxLength={14}
           placeholder={t("completeProfile.cpfPlaceholder")}
-          placeholderTextColor={theme.textMuted}
+          placeholderTextColor={theme.textHint}
           style={styles.field}
           value={formatCpfDisplay(cpfDigits)}
           onChangeText={(input) =>

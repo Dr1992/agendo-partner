@@ -44,7 +44,7 @@ export function ServiceCard({
           {name}
         </Text>
         <Ionicons
-          color={theme.textMuted}
+          color={theme.textHint}
           name={mode === "manage" ? "create-outline" : "chevron-forward"}
           size={18}
           style={styles.actionIcon}
@@ -67,7 +67,7 @@ export function ServiceCard({
 
       <View style={styles.footerRow}>
         <View style={styles.durationRow}>
-          <Ionicons color={theme.textMuted} name="time-outline" size={14} />
+          <Ionicons color={theme.textHint} name="time-outline" size={14} />
           <Text style={styles.durationText} variant="bodyTight">
             {formatDurationMinutesLabel(durationMinutes)}
           </Text>

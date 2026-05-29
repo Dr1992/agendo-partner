@@ -20,7 +20,7 @@ export function getEstablishmentRowCardStyles(
 
   return StyleSheet.create({
     address: {
-      color: theme.textMuted,
+      color: theme.textSecondary,
       fontSize: 13,
       marginTop: addressTop,
     },

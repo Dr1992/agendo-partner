@@ -40,7 +40,7 @@ function HubMenuRow({
   title,
 }: HubMenuRowProps) {
   const iconColor = disabled ? theme.textMuted : theme.accent;
-  const chevronColor = disabled ? theme.textMuted : theme.textMuted;
+  const chevronColor = disabled ? theme.textMuted : theme.textHint;
 
   return (
     <Pressable

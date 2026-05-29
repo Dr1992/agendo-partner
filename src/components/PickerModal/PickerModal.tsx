@@ -79,7 +79,7 @@ export function PickerModal<T>({
                   ) : null}
                 </View>
                 <Ionicons
-                  color={theme.textMuted}
+                  color={theme.textHint}
                   name="chevron-forward"
                   size={20}
                 />

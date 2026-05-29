@@ -25,7 +25,7 @@ export function getServiceSelectStyles(theme: AppTheme) {
       textAlign: "center",
     },
     hint: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 14,
       lineHeight: 20,
       marginBottom: 14,

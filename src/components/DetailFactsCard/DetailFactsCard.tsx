@@ -68,7 +68,7 @@ export function DetailFactsCard({ compactTop, rows }: Props) {
                 </Text>
               </View>
               <Ionicons
-                color={theme.textMuted}
+                color={theme.textHint}
                 name="chevron-forward"
                 size={18}
                 style={styles.chevron}

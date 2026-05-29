@@ -89,7 +89,7 @@ export function StaffNewBookingTypeScreen({
               {t("newBookingType.personalDescription")}
             </Text>
           </View>
-          <Ionicons color={theme.textMuted} name="chevron-forward" size={20} />
+          <Ionicons color={theme.textHint} name="chevron-forward" size={20} />
         </Pressable>
 
         <Pressable
@@ -106,7 +106,7 @@ export function StaffNewBookingTypeScreen({
               {t("newBookingType.clientDescription")}
             </Text>
           </View>
-          <Ionicons color={theme.textMuted} name="chevron-forward" size={20} />
+          <Ionicons color={theme.textHint} name="chevron-forward" size={20} />
         </Pressable>
       </ScrollView>
     </SafeAreaView>

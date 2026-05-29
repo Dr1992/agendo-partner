@@ -135,7 +135,7 @@ export function EditProfileScreen({
                   autoCapitalize="words"
                   autoCorrect={false}
                   placeholder={t("editProfile.fullNamePlaceholder")}
-                  placeholderTextColor={theme.textMuted}
+                  placeholderTextColor={theme.textHint}
                   style={styles.inputInner}
                   value={fullName}
                   onChangeText={setFullName}
@@ -184,7 +184,7 @@ export function EditProfileScreen({
                   keyboardType="phone-pad"
                   maxLength={15}
                   placeholder={t("editProfile.phonePlaceholder")}
-                  placeholderTextColor={theme.textMuted}
+                  placeholderTextColor={theme.textHint}
                   style={styles.inputInner}
                   value={formatBrazilPhoneDisplay(phoneDigits)}
                   onChangeText={(input) =>

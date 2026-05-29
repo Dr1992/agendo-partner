@@ -104,7 +104,7 @@ export function getEditProfileStyles(theme: AppTheme) {
       backgroundColor: theme.background,
     },
     rowLabel: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 11,
       fontWeight: "600",
       letterSpacing: 0.4,

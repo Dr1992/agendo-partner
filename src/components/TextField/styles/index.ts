@@ -6,7 +6,7 @@ export function getTextFieldStyles(theme: AppTheme) {
   return StyleSheet.create({
     charCount: {
       alignSelf: "flex-end",
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 12,
       fontWeight: "500",
       marginTop: 6,

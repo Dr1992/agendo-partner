@@ -166,7 +166,7 @@ export function EstablishmentRegisterForm({
           keyboardType="number-pad"
           maxLength={9}
           placeholder={t("placeForm.cepPlaceholder")}
-          placeholderTextColor={theme.textMuted}
+          placeholderTextColor={theme.textHint}
           style={[
             styles.field,
             styles.cepField,

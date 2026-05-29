@@ -54,7 +54,7 @@ export function getStaffPersonalCommitmentStyles(theme: AppTheme) {
       color: theme.textPrimary,
     },
     timeRowValueEmpty: {
-      color: theme.textMuted,
+      color: theme.textHint,
     },
     footer: {
       paddingHorizontal: 20,
@@ -78,7 +78,7 @@ export function getStaffPersonalCommitmentStyles(theme: AppTheme) {
       fontWeight: "600",
     },
     errorText: {
-      color: theme.textMuted,
+      color: theme.textDestructive,
       marginTop: 6,
     },
     descriptionInput: {
