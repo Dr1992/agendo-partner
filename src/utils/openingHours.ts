@@ -1,13 +1,25 @@
-/** Seg=0 … Dom=6 */
-export const WEEKDAY_SHORT = [
-  "Seg",
-  "Ter",
-  "Qua",
-  "Qui",
-  "Sex",
-  "Sáb",
-  "Dom",
+import i18n from "../i18n";
+
+/** Índice 0=Seg … 6=Dom → chave i18n (namespace `components`). */
+const WEEKDAY_I18N_KEY = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
 ] as const;
+
+/** Abreviação localizada do dia (Seg/Mon …). */
+function weekdayShort(index: number): string {
+  return i18n.t(`components:weekdaysShort.${WEEKDAY_I18N_KEY[index]}`);
+}
+
+/** Nome do dia localizado (Segunda/Monday …). */
+function weekdayFull(index: number): string {
+  return i18n.t(`components:openingHours.weekday.${WEEKDAY_I18N_KEY[index]}`);
+}
 
 export type DaySlot = {
   close: string;
@@ -119,9 +131,9 @@ function formatTimeBr(hhmm: string): string {
 
 function dayRangeLabel(startIdx: number, endIdx: number): string {
   if (startIdx === endIdx) {
-    return WEEKDAY_SHORT[startIdx];
+    return weekdayShort(startIdx);
   }
-  return `${WEEKDAY_SHORT[startIdx]}–${WEEKDAY_SHORT[endIdx]}`;
+  return `${weekdayShort(startIdx)}–${weekdayShort(endIdx)}`;
 }
 
 /** Converte o grid semanal num texto único para a API (ex.: "Seg–Sex 9h–18h; Sáb 9h–13h"). */
@@ -201,16 +213,6 @@ export function isOpeningScheduleValid(slots: DaySlot[]): boolean {
   return true;
 }
 
-const WEEKDAY_BR_SHORT = [
-  "Segunda-feira",
-  "Terça-feira",
-  "Quarta-feira",
-  "Quinta-feira",
-  "Sexta-feira",
-  "Sábado",
-  "Domingo",
-] as const;
-
 /**
  * Alinha disponibilidade do staff ao horário do estabelecimento (mesma regra do backend).
  * Retorna mensagem de erro ou `null` se ok / sem horário do local para comparar.
@@ -232,7 +234,9 @@ export function validateStaffWithinEstablishment(
       continue;
     }
     if (!establishmentDay.enabled) {
-      return `O estabelecimento não funciona em ${WEEKDAY_BR_SHORT[i]}. Desmarque este dia na sua disponibilidade ou peça ao dono ou ao gestor para ajustar o horário do local.`;
+      return i18n.t("staff:scheduleValidation.closedDay", {
+        weekday: weekdayFull(i),
+      });
     }
     const staffOpenMinutes = timeToMinutes(staffDay.open);
     const staffCloseMinutes = timeToMinutes(staffDay.close);
@@ -244,13 +248,21 @@ export function validateStaffWithinEstablishment(
       establishmentOpenMinutes === null ||
       establishmentCloseMinutes === null
     ) {
-      return `Confira os horários em ${WEEKDAY_BR_SHORT[i]} (use formato HH:MM).`;
+      return i18n.t("staff:scheduleValidation.invalidTime", {
+        weekday: weekdayFull(i),
+      });
     }
     if (
       staffOpenMinutes < establishmentOpenMinutes ||
       staffCloseMinutes > establishmentCloseMinutes
     ) {
-      return `Em ${WEEKDAY_BR_SHORT[i]}, sua disponibilidade (${staffDay.open}–${staffDay.close}) precisa ficar dentro do horário do estabelecimento (${establishmentDay.open}–${establishmentDay.close}).`;
+      return i18n.t("staff:scheduleValidation.outOfRange", {
+        weekday: weekdayFull(i),
+        staffOpen: staffDay.open,
+        staffClose: staffDay.close,
+        estOpen: establishmentDay.open,
+        estClose: establishmentDay.close,
+      });
     }
   }
   return null;

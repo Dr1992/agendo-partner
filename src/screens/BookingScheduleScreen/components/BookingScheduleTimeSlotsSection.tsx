@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, ScrollView, Text } from "react-native";
 
 import { Text as AppText } from "../../../components/Text";
@@ -34,9 +35,13 @@ export function BookingScheduleTimeSlotsSection({
   slotsForSelectedDay,
   theme,
 }: BookingScheduleTimeSlotsSectionProps) {
+  const { t } = useTranslation("booking");
+
   return (
     <>
-      <Text style={screenStyles.timeSectionTitle}>Horários</Text>
+      <Text style={screenStyles.timeSectionTitle}>
+        {t("schedule.timeSectionTitle")}
+      </Text>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -47,7 +52,7 @@ export function BookingScheduleTimeSlotsSection({
           <ActivityIndicator color={theme.accent} size="small" />
         ) : showTimeSlotsError ? (
           <Text style={screenStyles.errorText}>
-            {slotsErrorMessage ?? "Não foi possível carregar horários."}
+            {slotsErrorMessage ?? t("schedule.slotsLoadError")}
           </Text>
         ) : showClosedDayHint || showNoSlotsHint ? null : (
           slotsForSelectedDay.map((slot) => {
@@ -80,8 +85,8 @@ export function BookingScheduleTimeSlotsSection({
       {showClosedDayHint || showNoSlotsHint ? (
         <AppText style={screenStyles.timeSlotsEmptyHint} variant="hint">
           {showClosedDayHint
-            ? "O estabelecimento não abre neste dia da semana."
-            : "Não há horários disponíveis para esta data."}
+            ? t("schedule.closedDayHint")
+            : t("schedule.noSlotsHint")}
         </AppText>
       ) : null}
     </>

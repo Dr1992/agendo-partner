@@ -1,5 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Platform, Text, View } from "react-native";
 
 import { AppSheetModal } from "../AppSheetModal/AppSheetModal";
@@ -46,6 +47,7 @@ export function HourMinutePickerModal(props: HourMinutePickerModalProps) {
   const initialHHMM = mode === "clock" ? props.initialHHMM : "";
   const initialMinutes = mode === "duration" ? props.initialMinutes : 0;
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const styles = useMemo(() => getHourMinutePickerModalStyles(theme), [theme]);
 
   const [hourVal, setHourVal] = useState(0);
@@ -116,7 +118,9 @@ export function HourMinutePickerModal(props: HourMinutePickerModalProps) {
   return (
     <AppSheetModal
       contentPaddingH={0}
-      footer={<Button onPress={onConfirmPress}>Confirmar</Button>}
+      footer={
+        <Button onPress={onConfirmPress}>{t("hourMinutePicker.confirm")}</Button>
+      }
       size="medium"
       title={title}
       visible={visible}
@@ -124,7 +128,7 @@ export function HourMinutePickerModal(props: HourMinutePickerModalProps) {
     >
       <View style={styles.pickerPair}>
         <View style={[styles.pickerColumn, styles.wheelWrap]}>
-          <Text style={styles.unitLabel}>Horas</Text>
+          <Text style={styles.unitLabel}>{t("hourMinutePicker.hours")}</Text>
           <Picker
             itemStyle={pickerItemStyle as object}
             mode={Platform.OS === "android" ? "dropdown" : undefined}
@@ -148,7 +152,7 @@ export function HourMinutePickerModal(props: HourMinutePickerModalProps) {
           </Picker>
         </View>
         <View style={[styles.pickerColumn, styles.wheelWrap]}>
-          <Text style={styles.unitLabel}>Min</Text>
+          <Text style={styles.unitLabel}>{t("hourMinutePicker.minutes")}</Text>
           <Picker
             enabled={mode === "clock" || hourVal < 24}
             itemStyle={pickerItemStyle as object}

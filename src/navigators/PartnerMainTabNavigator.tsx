@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import type { NavigatorScreenParams } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
 
 import { useAppTheme } from "../hooks/useAppTheme";
@@ -29,6 +30,7 @@ const Tab = createBottomTabNavigator<PartnerMainTabParamList>();
 
 export function PartnerMainTabNavigator() {
   const { theme } = useAppTheme();
+  const { t } = useTranslation();
 
   return (
     <Tab.Navigator
@@ -50,7 +52,7 @@ export function PartnerMainTabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons color={color} name="calendar-outline" size={size} />
           ),
-          title: "Agenda",
+          title: t("tabs.agenda"),
         }}
       />
       <Tab.Screen
@@ -60,7 +62,7 @@ export function PartnerMainTabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons color={color} name="time-outline" size={size} />
           ),
-          title: "Disponibilidade",
+          title: t("tabs.availability"),
         }}
       />
       <Tab.Screen
@@ -70,7 +72,7 @@ export function PartnerMainTabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons color={color} name="storefront-outline" size={size} />
           ),
-          title: "Estabelecimentos",
+          title: t("tabs.establishments"),
         }}
       />
       <Tab.Screen
@@ -80,7 +82,7 @@ export function PartnerMainTabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons color={color} name="person-outline" size={size} />
           ),
-          title: "Perfil",
+          title: t("tabs.profile"),
         }}
       />
     </Tab.Navigator>

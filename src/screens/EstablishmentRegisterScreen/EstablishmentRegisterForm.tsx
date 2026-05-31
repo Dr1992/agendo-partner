@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, TextInput, View } from "react-native";
 
 import { Button } from "../../components/Button";
@@ -109,6 +110,7 @@ export function EstablishmentRegisterForm({
   street,
   whatsappDigits,
 }: EstablishmentRegisterFormProps) {
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = useMemo(
     () => getEstablishmentRegisterScreenStyles(theme),
@@ -144,26 +146,26 @@ export function EstablishmentRegisterForm({
         autoComplete="off"
         autoCorrect={false}
         importantForAutofill="no"
-        label="Nome do local"
-        placeholder="Ex.: Studio Aurora"
+        label={t("placeForm.fieldNameLabel")}
+        placeholder={t("placeForm.fieldNamePlaceholder")}
         spellCheck={false}
         textContentType="none"
         value={name}
         onChangeText={onNameChange}
       />
-      <Text variant="fieldLabel">Categoria</Text>
+      <Text variant="fieldLabel">{t("placeForm.fieldCategoryLabel")}</Text>
       <FormSelectRow
-        displayText={categoryLabel ?? "Selecionar categoria"}
+        displayText={categoryLabel ?? t("placeForm.selectCategory")}
         empty={!categoryLabel}
         onPress={onOpenCategoryModal}
       />
-      <Text variant="fieldLabel">CEP</Text>
+      <Text variant="fieldLabel">{t("placeForm.fieldCepLabel")}</Text>
       <View style={styles.cepRow}>
         <TextInput
           editable={!cepLookupBusy}
           keyboardType="number-pad"
           maxLength={9}
-          placeholder="00000-000"
+          placeholder={t("placeForm.cepPlaceholder")}
           placeholderTextColor={theme.textMuted}
           style={[
             styles.field,
@@ -177,11 +179,13 @@ export function EstablishmentRegisterForm({
           <ActivityIndicator color={theme.accent} size="small" />
         ) : null}
       </View>
-      <Text variant="fieldLabel">Estado</Text>
+      <Text variant="fieldLabel">{t("placeForm.fieldStateLabel")}</Text>
       <FormSelectRow
         disabled={cepLookupBusy || addrLocks.state}
         displayText={
-          stateLabelRow ? `${stateLabelRow} (${stateUf})` : "Selecionar estado"
+          stateLabelRow
+            ? `${stateLabelRow} (${stateUf})`
+            : t("placeForm.selectState")
         }
         empty={!stateLabelRow}
         onPress={() => {
@@ -190,10 +194,10 @@ export function EstablishmentRegisterForm({
           }
         }}
       />
-      <Text variant="fieldLabel">Cidade</Text>
+      <Text variant="fieldLabel">{t("placeForm.fieldCityLabel")}</Text>
       <FormSelectRow
         disabled={cepLookupBusy || !stateUf || addrLocks.city}
-        displayText={cityName || "Selecionar cidade"}
+        displayText={cityName || t("placeForm.selectCity")}
         empty={!cityName}
         onPress={() => {
           if (!cepLookupBusy && stateUf && !addrLocks.city) {
@@ -204,16 +208,16 @@ export function EstablishmentRegisterForm({
       <TextField
         autoCapitalize="words"
         editable={!cepLookupBusy && !addrLocks.street}
-        label="Rua (logradouro)"
-        placeholder="Ex.: Rua das Flores"
+        label={t("placeForm.fieldStreetLabel")}
+        placeholder={t("placeForm.fieldStreetPlaceholder")}
         style={cepLookupBusy || addrLocks.street ? styles.fieldDimmed : null}
         value={street}
         onChangeText={onStreetChange}
       />
       <TextField
         editable={!cepLookupBusy}
-        label="Número"
-        placeholder="Ex.: 1200"
+        label={t("placeForm.fieldNumberLabel")}
+        placeholder={t("placeForm.fieldNumberPlaceholder")}
         style={cepLookupBusy ? styles.fieldDimmed : null}
         value={addressNumber}
         onChangeText={onAddressNumberChange}
@@ -221,46 +225,46 @@ export function EstablishmentRegisterForm({
       <TextField
         autoCapitalize="words"
         editable={!cepLookupBusy && !addrLocks.neighborhood}
-        label="Bairro"
-        placeholder="Ex.: Centro"
+        label={t("placeForm.fieldNeighborhoodLabel")}
+        placeholder={t("placeForm.fieldNeighborhoodPlaceholder")}
         style={
           cepLookupBusy || addrLocks.neighborhood ? styles.fieldDimmed : null
         }
         value={neighborhood}
         onChangeText={onNeighborhoodChange}
       />
-      <Text variant="fieldLabel">Horário de funcionamento</Text>
+      <Text variant="fieldLabel">{t("placeForm.fieldHoursLabel")}</Text>
       <FormSelectRow
         chevron="forward"
         displayText={
           openingHoursSummary
             ? openingHoursSummary
-            : "Toque para definir dias e horários"
+            : t("placeForm.hoursPlaceholder")
         }
         empty={!openingHoursSummary}
         onPress={onOpenHoursModal}
       />
       <TextField
         keyboardType="number-pad"
-        label="CNPJ (opcional)"
+        label={t("placeForm.fieldCnpjLabel")}
         maxLength={18}
-        placeholder="00.000.000/0000-00"
+        placeholder={t("placeForm.cnpjPlaceholder")}
         value={formatCnpjDisplay(cnpj)}
         onChangeText={(t) => onCnpjChange(normalizeCnpjDigits(t))}
       />
       <TextField
         keyboardType="phone-pad"
-        label="Celular"
+        label={t("placeForm.fieldPhoneLabel")}
         maxLength={15}
-        placeholder="(11) 98765-4321"
+        placeholder={t("placeForm.phonePlaceholder")}
         value={formatBrazilPhoneDisplay(whatsappDigits)}
         onChangeText={(t) => onWhatsappChange(normalizePhoneDigits(t, 11))}
       />
       <TextField
         multiline
-        label="Descrição (opcional)"
+        label={t("placeForm.fieldDescriptionLabel")}
         maxLength={150}
-        placeholder="Conte o que você oferece"
+        placeholder={t("placeForm.descriptionPlaceholder")}
         showCharCount
         style={styles.fieldMultiline}
         value={description}
@@ -274,7 +278,7 @@ export function EstablishmentRegisterForm({
         onRemove={onGalleryRemove}
       />
       <Button disabled={!canStep0} onPress={onNext}>
-        Continuar
+        {t("placeForm.continueButton")}
       </Button>
     </>
   );

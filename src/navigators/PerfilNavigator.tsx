@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 import { useAppTheme } from "../hooks/useAppTheme";
 import type { ProfileStackParamList } from "../navigation/profileNavigation.types";
@@ -13,6 +14,7 @@ const Stack = createNativeStackNavigator<ProfileStackParamList>();
 export function PerfilNavigator() {
   const { theme } = useAppTheme();
   const navTheme = useTheme();
+  const { t } = useTranslation("navigation");
 
   return (
     <Stack.Navigator
@@ -35,12 +37,12 @@ export function PerfilNavigator() {
       <Stack.Screen
         component={CompleteProfileScreen}
         name={ProfileStack.CompleteProfile}
-        options={{ title: "Seu cadastro" }}
+        options={{ title: t("profile.completeTitle") }}
       />
       <Stack.Screen
         component={EditProfileScreen}
         name={ProfileStack.EditProfile}
-        options={{ title: "Editar perfil" }}
+        options={{ title: t("profile.editTitle") }}
       />
     </Stack.Navigator>
   );

@@ -1,0 +1,36 @@
+{
+  "completeProfile": {
+    "title": "Complete your registration",
+    "body": "You still need to finish your details to unlock all of the app's features. Fill in the fields below to continue.",
+    "fullNameLabel": "Full name",
+    "fullNamePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "phoneLabel": "Phone (mobile)",
+    "phonePlaceholder": "(11) 98765-4321",
+    "cpfLabel": "CPF (numbers only)",
+    "cpfPlaceholder": "000.000.000-00",
+    "saveButton": "Save and continue",
+    "saveErrorTitle": "Could not save",
+    "saveErrorFallback": "Please try again.",
+    "okButton": "OK"
+  },
+  "editProfile": {
+    "fullNameLabel": "Full name",
+    "fullNamePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "(11) 98765-4321",
+    "cpfLabel": "CPF",
+    "saveButton": "Save changes",
+    "saveErrorTitle": "Could not save",
+    "saveErrorFallback": "Please try again.",
+    "okButton": "OK"
+  },
+  "validation": {
+    "cpfInvalid": "Invalid CPF.",
+    "phoneInvalid": "Invalid phone number (use area code + number).",
+    "fullNameRequired": "Enter your full name.",
+    "emailInvalid": "Invalid email."
+  }
+}

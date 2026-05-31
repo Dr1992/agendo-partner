@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { memo, type ComponentProps, type ReactNode, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import {
   Calendar,
@@ -54,7 +55,7 @@ export type MonthCalendarProps = {
 export function MonthCalendar({
   footerBelowGrid,
   loading = false,
-  loadingHint = "Carregando…",
+  loadingHint,
   markedDates,
   minDate,
   monthIndex,
@@ -66,6 +67,8 @@ export function MonthCalendar({
   year,
 }: MonthCalendarProps) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
+  const resolvedLoadingHint = loadingHint ?? t("monthCalendar.loading");
   const chrome = useMemo(() => getMonthCalendarChromeStyles(theme), [theme]);
   const rnTheme = useMemo(
     () => buildRnCalendarTheme(theme, { weekVerticalMargin }),
@@ -121,7 +124,7 @@ export function MonthCalendar({
     <View>
       {loading ? (
         <Text style={chrome.loadingHint} variant="body">
-          {loadingHint}
+          {resolvedLoadingHint}
         </Text>
       ) : (
         <View style={chrome.calendarShell}>

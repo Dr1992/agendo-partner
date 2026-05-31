@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -23,6 +24,7 @@ export function StaffPersonalCommitmentScreen({
   route,
 }: StaffPersonalCommitmentScreenProps) {
   const { establishmentId } = route.params;
+  const { t } = useTranslation("staff");
   const { theme } = useAppTheme();
   const styles = useMemo(
     () => getStaffPersonalCommitmentStyles(theme),
@@ -73,7 +75,7 @@ export function StaffPersonalCommitmentScreen({
 
         <View style={styles.section}>
           <Text style={styles.sectionLabel} variant="fieldLabel">
-            Horário
+            {t("personalCommitment.scheduleLabel")}
           </Text>
           <View style={styles.card}>
             <Pressable
@@ -85,7 +87,7 @@ export function StaffPersonalCommitmentScreen({
                 <Ionicons color={theme.accent} name="time-outline" size={18} />
               </View>
               <Text style={styles.timeRowLabel} variant="caption">
-                Início
+                {t("personalCommitment.startLabel")}
               </Text>
               <Text
                 style={
@@ -113,7 +115,7 @@ export function StaffPersonalCommitmentScreen({
                 <Ionicons color={theme.accent} name="time-outline" size={18} />
               </View>
               <Text style={styles.timeRowLabel} variant="caption">
-                Fim
+                {t("personalCommitment.endLabel")}
               </Text>
               <Text
                 style={endHHMM ? styles.timeRowValue : styles.timeRowValueEmpty}
@@ -138,12 +140,12 @@ export function StaffPersonalCommitmentScreen({
 
         <View style={styles.section}>
           <Text style={styles.sectionLabel} variant="fieldLabel">
-            Descrição (opcional)
+            {t("personalCommitment.descriptionLabel")}
           </Text>
           <TextInput
             multiline
             numberOfLines={3}
-            placeholder="Ex.: Reunião com fornecedor"
+            placeholder={t("personalCommitment.descriptionPlaceholder")}
             placeholderTextColor={theme.textMuted}
             style={styles.descriptionInput}
             value={description}
@@ -164,7 +166,7 @@ export function StaffPersonalCommitmentScreen({
           onPress={onSavePress}
         >
           <Text style={styles.saveButtonLabel} variant="bodyTight">
-            Salvar
+            {t("personalCommitment.save")}
           </Text>
         </Pressable>
       </View>
@@ -177,7 +179,9 @@ export function StaffPersonalCommitmentScreen({
         }
         mode="clock"
         title={
-          timePickerTarget === "start" ? "Horário de início" : "Horário de fim"
+          timePickerTarget === "start"
+            ? t("personalCommitment.startTimeTitle")
+            : t("personalCommitment.endTimeTitle")
         }
         visible={timePickerTarget !== null}
         onClose={() => setTimePickerTarget(null)}
@@ -187,18 +191,18 @@ export function StaffPersonalCommitmentScreen({
       <AlertDialog
         buttons={[
           {
-            label: "Cancelar",
+            label: t("personalCommitment.overlapCancel"),
             variant: "secondary",
             onPress: () => setShowOverlapAlert(false),
           },
           {
-            label: "Continuar mesmo assim",
+            label: t("personalCommitment.overlapConfirm"),
             variant: "primary",
             onPress: onConfirmOverlap,
           },
         ]}
-        message="O período selecionado coincide com agendamentos já confirmados. Deseja bloquear mesmo assim?"
-        title="Conflito de horário"
+        message={t("personalCommitment.overlapMessage")}
+        title={t("personalCommitment.overlapTitle")}
         visible={showOverlapAlert}
         onRequestClose={() => setShowOverlapAlert(false)}
       />

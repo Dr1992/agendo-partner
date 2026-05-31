@@ -1,31 +1,25 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Switch, Text as RNText, View } from "react-native";
 
 import { HourMinutePickerModal } from "../HourMinutePickerModal/HourMinutePickerModal";
 import { Text } from "../Text";
 import { useAppTheme } from "../../hooks/useAppTheme";
 import { getScreenFormStyles } from "../ScreenForm";
-import {
-  normalizeTimeInput,
-  type DaySlot,
-  WEEKDAY_SHORT,
-} from "../../utils/openingHours";
+import { normalizeTimeInput, type DaySlot } from "../../utils/openingHours";
 
 import { getOpeningHoursEditorStyles } from "./styles";
 
-const WEEKDAY_LABELS = [
-  "Segunda",
-  "Terça",
-  "Quarta",
-  "Quinta",
-  "Sexta",
-  "Sábado",
-  "Domingo",
+const WEEKDAY_KEYS = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
 ] as const;
-
-const DEFAULT_EDITOR_HINT =
-  "Ative os dias em que o local abre e informe abertura e fechamento. Cada dia pode ter horários diferentes.";
 
 type TimePick = {
   field: "close" | "open";
@@ -45,6 +39,7 @@ export function OpeningHoursEditor({
   hint,
 }: OpeningHoursEditorProps) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const styles = useMemo(() => getScreenFormStyles(theme), [theme]);
   const oh = useMemo(() => getOpeningHoursEditorStyles(theme), [theme]);
   const [timePick, setTimePick] = useState<TimePick | null>(null);
@@ -57,19 +52,26 @@ export function OpeningHoursEditor({
   );
 
   const hintLine =
-    hint === false ? null : hint === undefined ? DEFAULT_EDITOR_HINT : hint;
+    hint === false
+      ? null
+      : hint === undefined
+        ? t("openingHours.hint")
+        : hint;
 
   const timePickerTitle =
-    timePick?.field === "open" ? "Início do horário" : "Fim do horário";
+    timePick?.field === "open"
+      ? t("openingHours.openTimeTitle")
+      : t("openingHours.closeTimeTitle");
 
   return (
     <View>
       {hintLine ? <RNText style={styles.hint}>{hintLine}</RNText> : null}
-      {WEEKDAY_LABELS.map((label, index) => {
+      {WEEKDAY_KEYS.map((weekdayKey, index) => {
         const slot = value[index]!;
+        const label = t(`openingHours.weekday.${weekdayKey}`);
         return (
           <View
-            key={label}
+            key={weekdayKey}
             style={[oh.dayRow, index === 6 ? oh.dayRowLast : null]}
           >
             <View style={oh.dayTitleRow}>
@@ -77,12 +79,14 @@ export function OpeningHoursEditor({
                 <RNText style={oh.dayTitle}>
                   {label}{" "}
                   <RNText style={oh.dayLabelMuted}>
-                    ({WEEKDAY_SHORT[index]})
+                    ({t(`weekdaysShort.${weekdayKey}`)})
                   </RNText>
                 </RNText>
               </View>
               <Switch
-                accessibilityLabel={`${label}: abre neste dia`}
+                accessibilityLabel={t("openingHours.dayOpensSwitch", {
+                  day: label,
+                })}
                 thumbColor={theme.surface}
                 trackColor={{
                   false: theme.border,
@@ -95,7 +99,9 @@ export function OpeningHoursEditor({
             {slot.enabled ? (
               <View style={oh.timeGrid}>
                 <View style={oh.timeCol}>
-                  <RNText style={oh.timeLabel}>Início</RNText>
+                  <RNText style={oh.timeLabel}>
+                    {t("openingHours.start")}
+                  </RNText>
                   <Pressable
                     accessibilityRole="button"
                     style={({ pressed }) => [
@@ -116,7 +122,7 @@ export function OpeningHoursEditor({
                   </Pressable>
                 </View>
                 <View style={oh.timeCol}>
-                  <RNText style={oh.timeLabel}>Fim</RNText>
+                  <RNText style={oh.timeLabel}>{t("openingHours.end")}</RNText>
                   <Pressable
                     accessibilityRole="button"
                     style={({ pressed }) => [

@@ -2,6 +2,7 @@ import type { NavigationProp } from "@react-navigation/native";
 import { useMutation, useQueryClient } from "../../../hooks/api/reactQuery";
 import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { updatePartnerEstablishment } from "../../../api/public/partner";
 import { establishmentDetailQueryKey } from "../../../hooks/api/useFetchEstablishmentDetail";
@@ -23,6 +24,7 @@ export function useEstablishmentEditToggleActive({
   setFeedbackDialog: Dispatch<SetStateAction<FeedbackDialogState>>;
 }) {
   const queryClient = useQueryClient();
+  const { t } = useTranslation("partner");
   const [toggleConfirm, setToggleConfirm] = useState<{
     nextActive: boolean;
   } | null>(null);
@@ -52,22 +54,24 @@ export function useEstablishmentEditToggleActive({
         await toggleActiveMutation.mutateAsync(nextActive);
         setToggleConfirm(null);
         setFeedbackDialog({
-          title: nextActive ? "Local reativado" : "Local desativado",
+          title: nextActive
+            ? t("edit.reactivatedTitle")
+            : t("edit.deactivatedTitle"),
           message: nextActive
-            ? "Os clientes podem voltar a encontrar este estabelecimento."
-            : "O estabelecimento foi arquivado na lista de desativados.",
+            ? t("edit.reactivatedMessage")
+            : t("edit.deactivatedMessage"),
           onDismiss: () => navigation.goBack(),
         });
       } catch (e) {
         setToggleConfirm(null);
         setFeedbackDialog({
-          title: "Erro",
+          title: t("common.errorTitle"),
           message:
-            e instanceof Error ? e.message : "Não foi possível atualizar.",
+            e instanceof Error ? e.message : t("edit.toggleErrorFallback"),
         });
       }
     })();
-  }, [navigation, setFeedbackDialog, toggleActiveMutation, toggleConfirm]);
+  }, [navigation, setFeedbackDialog, t, toggleActiveMutation, toggleConfirm]);
 
   return {
     confirmToggleActive,

@@ -1,5 +1,6 @@
 import type { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { DateData } from "react-native-calendars";
 import type { MarkedDates } from "react-native-calendars/src/types";
 import {
@@ -59,6 +60,7 @@ export function BookingScheduleScreen({
     returnToStaffAgenda,
     serviceId,
   } = route.params;
+  const { t } = useTranslation("booking");
   const { theme } = useAppTheme();
   const styles = useMemo(() => getBookingScheduleStyles(theme), [theme]);
   const scrollRef = useRef<ScrollView>(null);
@@ -209,14 +211,14 @@ export function BookingScheduleScreen({
 
   const selectedProfessionalLabel = useMemo(() => {
     if (professionalIdResolved === "any") {
-      return "Equipe do estabelecimento";
+      return t("schedule.establishmentTeam");
     }
     return (
       professionals.find(
         (participant) => participant.id === professionalIdResolved,
       )?.name ?? "—"
     );
-  }, [professionalIdResolved, professionals]);
+  }, [professionalIdResolved, professionals, t]);
 
   const bookingMarkedDates = useMemo((): MarkedDates => {
     const selectedDayKey = localDayKey(selectedDayStart);
@@ -299,7 +301,7 @@ export function BookingScheduleScreen({
   if (!service) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
-        <Text style={styles.errorText}>Serviço não encontrado.</Text>
+        <Text style={styles.errorText}>{t("schedule.serviceNotFound")}</Text>
       </SafeAreaView>
     );
   }
@@ -380,7 +382,7 @@ export function BookingScheduleScreen({
             ]}
             onPress={onReserve}
           >
-            <Text style={styles.footerCtaText}>Continuar</Text>
+            <Text style={styles.footerCtaText}>{t("schedule.continueCta")}</Text>
           </Pressable>
         </View>
       </View>

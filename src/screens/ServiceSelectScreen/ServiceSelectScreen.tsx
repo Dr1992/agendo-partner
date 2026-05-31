@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -15,6 +16,7 @@ import type { ServiceSelectScreenProps } from "./types";
 export type { ServiceSelectScreenProps } from "./types";
 
 export function ServiceSelectScreen(props: ServiceSelectScreenProps) {
+  const { t } = useTranslation("booking");
   const { theme } = useAppTheme();
   const styles = getServiceSelectStyles(theme);
   const { detailQuery, headerHint, onServicePress, services } =
@@ -50,7 +52,7 @@ export function ServiceSelectScreen(props: ServiceSelectScreenProps) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
         <Text style={styles.errorText} variant="bodyTight">
-          {error?.message ?? "Não foi possível carregar serviços."}
+          {error?.message ?? t("serviceSelect.loadError")}
         </Text>
       </SafeAreaView>
     );
@@ -69,7 +71,7 @@ export function ServiceSelectScreen(props: ServiceSelectScreenProps) {
         keyExtractor={(item) => item.id}
         ListEmptyComponent={
           <Text style={styles.empty} variant="bodyTight">
-            Nenhum serviço ativo listado.
+            {t("serviceSelect.emptyList")}
           </Text>
         }
         renderItem={renderItem}

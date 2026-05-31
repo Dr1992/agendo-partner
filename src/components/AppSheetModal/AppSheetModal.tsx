@@ -17,6 +17,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Text } from "../Text";
@@ -71,12 +72,13 @@ export function ModalHeaderBar({
   tone = "background",
 }: ModalHeaderBarProps) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const styles = useMemo(() => getAppSheetModalStyles(theme), [theme]);
 
   const useDefaultClose = right === undefined && showCloseButton;
   const end = useDefaultClose ? (
     <Pressable
-      accessibilityLabel="Fechar"
+      accessibilityLabel={t("appSheetModal.close")}
       accessibilityRole="button"
       hitSlop={12}
       onPress={onCloseRequest}

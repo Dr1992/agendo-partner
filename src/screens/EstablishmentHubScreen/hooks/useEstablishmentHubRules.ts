@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "../../../hooks/api/reactQuery";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   removeEstablishmentStaff,
@@ -10,6 +11,7 @@ import { useAuth } from "../../../providers/AuthProvider";
 export function useEstablishmentHubRules(establishmentId: string) {
   const queryClient = useQueryClient();
   const { session } = useAuth();
+  const { t } = useTranslation("partner");
 
   const [reactivateError, setReactivateError] = useState<{
     message: string;
@@ -35,8 +37,8 @@ export function useEstablishmentHubRules(establishmentId: string) {
     onError: (error: Error) => {
       setShowLeaveAlert(false);
       setLeaveError({
-        title: "Erro",
-        message: error.message || "Não foi possível sair do time.",
+        title: t("common.errorTitle"),
+        message: error.message || t("establishmentHub.leaveErrorFallback"),
       });
     },
   });
@@ -46,9 +48,11 @@ export function useEstablishmentHubRules(establishmentId: string) {
       updatePartnerEstablishment(establishmentId, { isActive: true }),
     onError: (e: Error) => {
       setReactivateError({
-        title: "Erro",
+        title: t("common.errorTitle"),
         message:
-          e instanceof Error ? e.message : "Não foi possível reativar o local.",
+          e instanceof Error
+            ? e.message
+            : t("establishmentHub.reactivateErrorFallback"),
       });
     },
     onSuccess: async () => {

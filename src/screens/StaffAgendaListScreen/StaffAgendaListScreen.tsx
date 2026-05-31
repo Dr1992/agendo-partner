@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -17,6 +18,7 @@ import { useAuth } from "../../providers/AuthProvider";
 export function StaffAgendaListScreen({
   navigation,
 }: ProfileScreenProps<"StaffAgendaList">) {
+  const { t } = useTranslation("staff");
   const { theme } = useAppTheme();
   const styles = useMemo(() => getScreenFormStyles(theme), [theme]);
   const screenStyles = useMemo(() => getStaffAgendaListStyles(theme), [theme]);
@@ -31,12 +33,12 @@ export function StaffAgendaListScreen({
       await signIn();
     } catch (e) {
       setLoginError({
-        title: "Login",
+        title: t("agendaList.loginErrorTitle"),
         message:
-          e instanceof Error ? e.message : "Não foi possível concluir o login.",
+          e instanceof Error ? e.message : t("agendaList.loginErrorDefault"),
       });
     }
-  }, [signIn]);
+  }, [signIn, t]);
 
   const onSelectEstablishment = useCallback(
     (establishmentId: string, establishmentName: string) => {
@@ -54,7 +56,7 @@ export function StaffAgendaListScreen({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("agendaList.ok"),
               onPress: () => setLoginError(null),
               variant: "primary",
             },
@@ -68,13 +70,13 @@ export function StaffAgendaListScreen({
       {!session ? (
         <View style={styles.center}>
           <Text style={screenStyles.gateText} variant="body">
-            Faça login para ver sua agenda como colaborador.
+            {t("agendaList.gateText")}
           </Text>
           <Button
             style={styles.ctaRetryFullWidth}
             onPress={() => void onLogin()}
           >
-            Login
+            {t("agendaList.login")}
           </Button>
         </View>
       ) : (

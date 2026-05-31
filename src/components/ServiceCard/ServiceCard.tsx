@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, View } from "react-native";
 
 import { useAppTheme } from "../../hooks/useAppTheme";
@@ -29,6 +30,7 @@ export function ServiceCard({
   priceLabel,
 }: ServiceCardProps) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const styles = useMemo(() => getServiceCardStyles(theme), [theme]);
 
   return (
@@ -57,7 +59,7 @@ export function ServiceCard({
 
       {isActive === false ? (
         <Text style={styles.inactiveBadge} variant="hint">
-          Desativado
+          {t("serviceCard.inactive")}
         </Text>
       ) : null}
 

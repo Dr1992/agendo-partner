@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "../../../hooks/api/reactQuery";
 import { useCallback, useMemo, useRef, useState } from "react";
+import type { TFunction } from "i18next";
 
 import { createStaffInvite } from "../../../api/public/partner";
 import type { ProfileScreenProps } from "../../../navigation/profileNavigation.types";
@@ -13,6 +14,7 @@ export function useInviteStaffRules(
   establishmentId: string,
   establishmentName: string,
   est: EstablishmentDetail | undefined,
+  t: TFunction<"team">,
 ) {
   const queryClient = useQueryClient();
   const { session } = useAuth();
@@ -40,7 +42,7 @@ export function useInviteStaffRules(
       role: "MANAGER" | "STAFF";
     }) => {
       if (!session?.accessToken) {
-        throw new Error("Sem sessão.");
+        throw new Error(t("invite.noSession"));
       }
       return createStaffInvite(establishmentId, input.digits, input.role);
     },
@@ -66,9 +68,8 @@ export function useInviteStaffRules(
     }
     if (!cpfValid) {
       setInviteDialog({
-        title: "CPF inválido",
-        message:
-          "Confira os números. O CPF precisa estar completo e com dígitos verificadores corretos.",
+        title: t("invite.dialog.invalidCpfTitle"),
+        message: t("invite.dialog.invalidCpfMessage"),
       });
       return;
     }
@@ -82,7 +83,7 @@ export function useInviteStaffRules(
       });
       if ("inviteSkipped" in res && res.inviteSkipped) {
         setInviteDialog({
-          title: "Tudo certo",
+          title: t("invite.dialog.allSetTitle"),
           message: res.message,
           goBackOnOk: true,
         });
@@ -97,8 +98,9 @@ export function useInviteStaffRules(
       }
     } catch (e) {
       setInviteDialog({
-        title: "Adicionar colaborador",
-        message: e instanceof Error ? e.message : "Não foi possível concluir.",
+        title: t("invite.dialog.errorTitle"),
+        message:
+          e instanceof Error ? e.message : t("invite.dialog.errorFallback"),
       });
     } finally {
       setBusy(false);
@@ -114,6 +116,7 @@ export function useInviteStaffRules(
     inviteRole,
     navigation,
     session,
+    t,
   ]);
 
   return {

@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -19,6 +20,7 @@ export type { StaffAgendaCalendarScreenProps } from "./types";
 export function StaffAgendaCalendarScreen(
   props: StaffAgendaCalendarScreenProps,
 ) {
+  const { t } = useTranslation("staff");
   const {
     bookingsForSelected,
     cancelDialogBookingId,
@@ -46,18 +48,20 @@ export function StaffAgendaCalendarScreen(
       <AlertDialog
         buttons={[
           {
-            label: "Voltar",
+            label: t("calendar.cancelBack"),
             onPress: () => setCancelDialogBookingId(null),
             variant: "secondary",
           },
           {
-            label: cancelMutation.isPending ? "A cancelar…" : "Cancelar",
+            label: cancelMutation.isPending
+              ? t("calendar.cancelInProgress")
+              : t("calendar.cancelSubmit"),
             onPress: confirmStaffCancel,
             variant: "destructive",
           },
         ]}
-        message="O cliente deixa de ver este horário na app. Confirma o cancelamento?"
-        title="Cancelar atendimento"
+        message={t("calendar.cancelConfirmMessage")}
+        title={t("calendar.cancelConfirmTitle")}
         visible={cancelDialogBookingId !== null}
         onRequestClose={() => setCancelDialogBookingId(null)}
       />
@@ -65,7 +69,7 @@ export function StaffAgendaCalendarScreen(
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("calendar.ok"),
               onPress: () => setCancelError(null),
               variant: "primary",
             },
@@ -81,8 +85,7 @@ export function StaffAgendaCalendarScreen(
         style={styles.scroll}
       >
         <Text style={local.intro} variant="hint">
-          Os dias destacados no calendário têm pelo menos um atendimento com
-          cliente agendado.
+          {t("calendar.intro")}
         </Text>
 
         <MonthCalendar
@@ -90,12 +93,12 @@ export function StaffAgendaCalendarScreen(
             <View style={local.legendRow}>
               <View style={local.legendDot} />
               <Text style={local.legendLabel} variant="caption">
-                Dia com cliente marcado
+                {t("calendar.legendLabel")}
               </Text>
             </View>
           }
           loading={isPending}
-          loadingHint="Carregando o mês…"
+          loadingHint={t("calendar.loadingHint")}
           markedDates={staffMarkedDates}
           monthIndex={viewMonth}
           renderDay={(args) =>
@@ -111,17 +114,15 @@ export function StaffAgendaCalendarScreen(
         <View style={local.detailSection}>
           <Text style={local.sectionTitle} variant="fieldLabel">
             {selectedKey
-              ? `Horários — ${selectedKey.split("-").reverse().join("/")}`
-              : "Detalhe do dia"}
+              ? t("calendar.slotsForDate", {
+                  date: selectedKey.split("-").reverse().join("/"),
+                })
+              : t("calendar.dayDetailTitle")}
           </Text>
           {!selectedKey ? (
-            <Text variant="body">
-              Toque num dia no calendário para listar os horários com cliente.
-            </Text>
+            <Text variant="body">{t("calendar.selectDayHint")}</Text>
           ) : bookingsForSelected.length === 0 ? (
-            <Text variant="body">
-              Nenhum atendimento com cliente neste dia.
-            </Text>
+            <Text variant="body">{t("calendar.emptyDay")}</Text>
           ) : (
             bookingsForSelected.map((booking, index) => (
               <View
@@ -149,7 +150,7 @@ export function StaffAgendaCalendarScreen(
                         style={summaryStyles.summaryCellLabel}
                         variant="caption"
                       >
-                        Horário
+                        {t("calendar.timeLabel")}
                       </Text>
                     </View>
                     <Text
@@ -170,7 +171,7 @@ export function StaffAgendaCalendarScreen(
                         style={summaryStyles.summaryCellLabel}
                         variant="caption"
                       >
-                        Serviço
+                        {t("calendar.serviceLabel")}
                       </Text>
                     </View>
                     <Text
@@ -194,7 +195,7 @@ export function StaffAgendaCalendarScreen(
                         style={summaryStyles.summaryCellLabel}
                         variant="caption"
                       >
-                        Cliente
+                        {t("calendar.clientLabel")}
                       </Text>
                     </View>
                     <Text
@@ -216,14 +217,14 @@ export function StaffAgendaCalendarScreen(
                         style={summaryStyles.summaryCellLabel}
                         variant="caption"
                       >
-                        Estado
+                        {t("calendar.statusLabel")}
                       </Text>
                     </View>
                     <Text
                       style={summaryStyles.summaryCellValue}
                       variant="bodyTight"
                     >
-                      {formatBookingStatusLabel(booking.status)}
+                      {formatBookingStatusLabel(booking.status, t)}
                     </Text>
                   </View>
                 </View>
@@ -242,7 +243,7 @@ export function StaffAgendaCalendarScreen(
                       style={local.summaryCancelButtonLabel}
                       variant="bodyTight"
                     >
-                      Cancelar atendimento
+                      {t("calendar.cancelBooking")}
                     </Text>
                   </Pressable>
                 </View>

@@ -1,0 +1,113 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "back": "Voltar",
+    "retry": "Tentar novamente",
+    "manager": "Gestor",
+    "staff": "Colaborador"
+  },
+  "collaborators": {
+    "errorFallback": "Local não encontrado ou sem permissão.",
+    "noAccess": "Só o dono ou o gestor pode gerir colaboradores neste local.",
+    "emptyList": "Ainda não há gestores ou colaboradores ativos. Use “Adicionar colaborador” para quem atende no local.",
+    "pendingSheetTitle": "Convites pendentes",
+    "addCollaborator": "Adicionar colaborador",
+    "pendingCard": {
+      "title": "Cadastro pendente",
+      "description": "Pessoas convidadas que ainda não completaram o cadastro no app.",
+      "summaryOne": "1 convite aguardando cadastro",
+      "summaryOther": "{{count}} convites aguardando cadastro",
+      "openButton": "Ver convites pendentes"
+    },
+    "ownerCard": {
+      "title": "Você também atende neste local?",
+      "description": "Assim você aparece na equipe, pode ser escolhido nos agendamentos e associado aos serviços.",
+      "cpfHint": "Cadastre um CPF válido no perfil (o mesmo da conta) para constar como prestador.",
+      "includeButton": "Incluir-me como prestador",
+      "updateProfileButton": "Atualizar perfil"
+    },
+    "teamSection": {
+      "accessibilityLabel": "Equipe, colaboradores",
+      "title": "Equipe",
+      "hint": "Só aparecem aqui quem já tem conta no app com o CPF cadastrado neste local. Quem ainda não completou o cadastro não entra na agenda."
+    },
+    "row": {
+      "accessibilityLabel": "{{name}}, {{role}}",
+      "removeAccessibilityLabel": "Remover {{name}} da equipe"
+    },
+    "role": {
+      "owner": "dono",
+      "manager": "gestor",
+      "staff": "colaborador"
+    },
+    "includeSelfDialog": {
+      "title": "Incluir você na equipe?",
+      "message": "Você passará a aparecer como prestador neste local e poderá ser escolhido nos agendamentos e nos serviços.",
+      "includingButton": "A incluir…",
+      "includeButton": "Incluir"
+    },
+    "removeDialog": {
+      "title": "Remover da equipe",
+      "message": "Remover {{name}} deste estabelecimento? A pessoa deixa de aparecer na equipe.",
+      "removingButton": "A remover…",
+      "removeButton": "Remover"
+    },
+    "feedback": {
+      "revokeTitle": "Revogar convite",
+      "revokeFallback": "Não foi possível revogar.",
+      "removedTitle": "Removido",
+      "removedMessage": "O colaborador foi retirado da equipe.",
+      "errorTitle": "Erro",
+      "removeFallback": "Não foi possível remover.",
+      "allSetTitle": "Tudo certo",
+      "joinedTitle": "Você na equipe",
+      "joinedMessage": "Agora você aparece como prestador neste local. Associe-se aos serviços em Serviços, se ainda não estiver.",
+      "includeTitle": "Incluir como prestador",
+      "includeFallback": "Não foi possível concluir."
+    },
+    "pendingSheet": {
+      "noEmail": "—",
+      "plannedServices": "{{count}} serviço(s) planejado(s)",
+      "noServicesLinked": "Nenhum serviço vinculado ainda",
+      "revokeInviteAccessibilityLabel": "Revogar convite",
+      "linkServicesButton": "Vincular serviços",
+      "revokeTitle": "Revogar convite?",
+      "revokeMessage": "A pessoa deixa de poder ativar este convite ao completar o perfil com o mesmo CPF. Pode convidar de novo depois, se precisar.",
+      "revokeButton": "Revogar"
+    }
+  },
+  "invite": {
+    "noAccess": "Apenas dono ou gestor pode adicionar colaboradores neste local.",
+    "intro": "Digite o CPF da pessoa que vai integrar a equipe. Não há passo de “aceitar convite”: quando ela criar conta no app e completar o perfil com o mesmo CPF, o acesso ao local fica ativo e ela passa a aparecer na equipe e na agenda deste estabelecimento.",
+    "roleLabel": "Função neste local",
+    "managerOnlyByOwnerHint": "Gestores só podem adicionar colaboradores com função de colaborador. Só o dono pode atribuir gestor.",
+    "cpfLabel": "CPF",
+    "cpfPlaceholder": "000.000.000-00",
+    "submitButton": "Adicionar à equipe",
+    "roleOptions": {
+      "staffSubtitle": "Atende clientes neste estabelecimento.",
+      "managerSubtitle": "Pode gerir equipe e configurações do local."
+    },
+    "noSession": "Sem sessão.",
+    "dialog": {
+      "invalidCpfTitle": "CPF inválido",
+      "invalidCpfMessage": "Confira os números. O CPF precisa estar completo e com dígitos verificadores corretos.",
+      "allSetTitle": "Tudo certo",
+      "errorTitle": "Adicionar colaborador",
+      "errorFallback": "Não foi possível concluir."
+    }
+  },
+  "nextSteps": {
+    "bodyAutoAccepted": "Este CPF já tem cadastro na nossa base, por isso esse membro já faz parte da equipe. Associe serviços abaixo para esse colaborador passe a ",
+    "bodyPending": "Registramos este CPF para a equipe. A pessoa precisa criar conta no app e completar o perfil com o mesmo CPF: aí o acesso ao local fica ativo e ela passa a aparecer na equipe e na agenda. Pode já vincular serviços ao convite; os vínculos passam a valer quando o cadastro for concluído.",
+    "linkServicesButton": "Vincular a serviços",
+    "laterButton": "Fazer depois"
+  },
+  "linkServices": {
+    "hint": "Toque para marcar ou desmarcar. Só serviços com lista explícita de prestadores passam a incluir esta pessoa automaticamente; em serviços em que “todos” atendem, não é necessário vincular.",
+    "emptyServices": "Não há serviços activos neste local.",
+    "durationMinutes": "{{minutes}} min",
+    "confirmButton": "Confirmar"
+  }
+}

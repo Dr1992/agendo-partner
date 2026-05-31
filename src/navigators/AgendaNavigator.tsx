@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 import { useAppTheme } from "../hooks/useAppTheme";
 import type { AppointmentsStackParamList } from "../navigation/appointmentsNavigation.types";
@@ -18,6 +19,7 @@ const Stack = createNativeStackNavigator<AppointmentsStackParamList>();
 export function AgendaNavigator() {
   const { theme } = useAppTheme();
   const navTheme = useTheme();
+  const { t } = useTranslation("navigation");
 
   return (
     <Stack.Navigator
@@ -35,42 +37,42 @@ export function AgendaNavigator() {
       <Stack.Screen
         component={StaffAgendaListScreen}
         name={AppointmentsStack.StaffAgendaList}
-        options={{ title: "Agenda" }}
+        options={{ title: t("agenda.listTitle") }}
       />
       <Stack.Screen
         component={StaffAgendaCalendarScreen}
         name={AppointmentsStack.StaffAgendaCalendar}
-        options={{ title: "Agenda" }}
+        options={{ title: t("agenda.calendarTitle") }}
       />
       <Stack.Screen
         component={StaffAgendaDetailScreen}
         name={AppointmentsStack.StaffAgendaDetail}
-        options={{ title: "Disponibilidade" }}
+        options={{ title: t("agenda.detailTitle") }}
       />
       <Stack.Screen
         component={StaffNewBookingTypeScreen}
         name={AppointmentsStack.StaffNewBookingType}
-        options={{ title: "Novo" }}
+        options={{ title: t("agenda.newBookingTypeTitle") }}
       />
       <Stack.Screen
         component={StaffPersonalCommitmentScreen}
         name={AppointmentsStack.StaffPersonalCommitment}
-        options={{ title: "Compromisso Pessoal" }}
+        options={{ title: t("agenda.personalCommitmentTitle") }}
       />
       <Stack.Screen
         component={ServiceSelectScreen}
         name={AppointmentsStack.StaffBookingServiceSelect}
-        options={{ title: "Agendar para cliente" }}
+        options={{ title: t("agenda.bookingServiceSelectTitle") }}
       />
       <Stack.Screen
         component={BookingScheduleScreen}
         name={AppointmentsStack.StaffBookingSchedule}
-        options={{ title: "Data e hora do atendimento" }}
+        options={{ title: t("agenda.bookingScheduleTitle") }}
       />
       <Stack.Screen
         component={BookingConfirmScreen}
         name={AppointmentsStack.StaffBookingConfirm}
-        options={{ title: "Registar atendimento" }}
+        options={{ title: t("agenda.bookingConfirmTitle") }}
       />
     </Stack.Navigator>
   );

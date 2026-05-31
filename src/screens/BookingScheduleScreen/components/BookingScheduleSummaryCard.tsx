@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { Text as AppText } from "../../../components/Text";
@@ -25,6 +26,8 @@ export function BookingScheduleSummaryCard({
   slotRangeLabel,
   theme,
 }: BookingScheduleSummaryCardProps) {
+  const { t } = useTranslation("booking");
+
   return (
     <View style={screenStyles.summaryCard}>
       <View
@@ -34,7 +37,7 @@ export function BookingScheduleSummaryCard({
           <View style={screenStyles.summaryCellHeader}>
             <Ionicons color={theme.accent} name={SERVICE_IONICON} size={18} />
             <AppText style={screenStyles.summaryCellLabel} variant="caption">
-              Serviço
+              {t("schedule.summaryService")}
             </AppText>
           </View>
           <AppText
@@ -49,7 +52,7 @@ export function BookingScheduleSummaryCard({
           <View style={screenStyles.summaryCellHeader}>
             <Ionicons color={theme.accent} name="cash-outline" size={18} />
             <AppText style={screenStyles.summaryCellLabel} variant="caption">
-              Preço
+              {t("schedule.summaryPrice")}
             </AppText>
           </View>
           <AppText
@@ -65,7 +68,7 @@ export function BookingScheduleSummaryCard({
           <View style={screenStyles.summaryCellHeader}>
             <Ionicons color={theme.accent} name="time-outline" size={18} />
             <AppText style={screenStyles.summaryCellLabel} variant="caption">
-              Horário
+              {t("schedule.summaryTime")}
             </AppText>
           </View>
           <AppText style={screenStyles.summaryCellValue} variant="bodyTight">
@@ -76,7 +79,7 @@ export function BookingScheduleSummaryCard({
           <View style={screenStyles.summaryCellHeader}>
             <Ionicons color={theme.accent} name="person-outline" size={18} />
             <AppText style={screenStyles.summaryCellLabel} variant="caption">
-              Colaborador
+              {t("schedule.summaryCollaborator")}
             </AppText>
           </View>
           <AppText

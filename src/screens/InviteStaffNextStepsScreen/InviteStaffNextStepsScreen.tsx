@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -18,12 +19,13 @@ export function InviteStaffNextStepsScreen({
   const { establishmentId, establishmentName, inviteId, autoAccepted } =
     route.params;
   const { theme } = useAppTheme();
+  const { t } = useTranslation("team");
   const formStyles = getScreenFormStyles(theme);
   const local = useMemo(() => getInviteStaffNextStepsStyles(theme), [theme]);
 
   const body = autoAccepted
-    ? "Este CPF já tem cadastro na nossa base, por isso esse membro já faz parte da equipe. Associe serviços abaixo para esse colaborador passe a "
-    : "Registramos este CPF para a equipe. A pessoa precisa criar conta no app e completar o perfil com o mesmo CPF: aí o acesso ao local fica ativo e ela passa a aparecer na equipe e na agenda. Pode já vincular serviços ao convite; os vínculos passam a valer quando o cadastro for concluído.";
+    ? t("nextSteps.bodyAutoAccepted")
+    : t("nextSteps.bodyPending");
 
   return (
     <SafeAreaView edges={[]} style={formStyles.container}>
@@ -46,7 +48,7 @@ export function InviteStaffNextStepsScreen({
               })
             }
           >
-            Vincular a serviços
+            {t("nextSteps.linkServicesButton")}
           </Button>
           <Button
             variant="outline"
@@ -54,7 +56,7 @@ export function InviteStaffNextStepsScreen({
               navigation.pop(2);
             }}
           >
-            Fazer depois
+            {t("nextSteps.laterButton")}
           </Button>
         </View>
       </ScrollView>

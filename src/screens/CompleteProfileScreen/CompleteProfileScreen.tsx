@@ -14,6 +14,7 @@ import {
   TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 import { AlertDialog } from "../../components/AlertDialog/AlertDialog";
 import { useAppTheme } from "../../hooks/useAppTheme";
@@ -32,6 +33,7 @@ import { getScreenFormStyles } from "../../components/ScreenForm";
 export function CompleteProfileScreen({
   navigation,
 }: ProfileScreenProps<"CompleteProfile">) {
+  const { t } = useTranslation("onboarding");
   const { theme } = useAppTheme();
   const styles = getScreenFormStyles(theme);
   const { cancelPendingSignIn, completeRegistration, session } = useAuth();
@@ -93,8 +95,9 @@ export function CompleteProfileScreen({
       navigation.goBack();
     } catch (e) {
       setSaveError({
-        title: "Não foi possível salvar",
-        message: e instanceof Error ? e.message : "Tente novamente.",
+        title: t("completeProfile.saveErrorTitle"),
+        message:
+          e instanceof Error ? e.message : t("completeProfile.saveErrorFallback"),
       });
     } finally {
       setBusy(false);
@@ -106,6 +109,7 @@ export function CompleteProfileScreen({
     fullName,
     navigation,
     phoneDigits,
+    t,
   ]);
 
   if (!session?.accessToken) {
@@ -118,7 +122,7 @@ export function CompleteProfileScreen({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("completeProfile.okButton"),
               onPress: () => setSaveError(null),
               variant: "primary",
             },
@@ -134,51 +138,54 @@ export function CompleteProfileScreen({
         keyboardShouldPersistTaps="handled"
         style={styles.scroll}
       >
-        <Text style={styles.title}>Complete seu cadastro</Text>
-        <Text style={styles.body}>
-          Falta finalizar seus dados para liberar todos os recursos do app.
-          Preencha os campos abaixo para continuar.
+        <Text style={styles.title}>{t("completeProfile.title")}</Text>
+        <Text style={styles.body}>{t("completeProfile.body")}</Text>
+        <Text style={styles.fieldLabel}>
+          {t("completeProfile.fullNameLabel")}
         </Text>
-        <Text style={styles.fieldLabel}>Nome completo</Text>
         <TextInput
           autoCapitalize="words"
           autoCorrect={false}
-          placeholder="Seu nome"
+          placeholder={t("completeProfile.fullNamePlaceholder")}
           placeholderTextColor={theme.textMuted}
           style={styles.field}
           value={fullName}
           onChangeText={setFullName}
         />
-        <Text style={styles.fieldLabel}>E-mail</Text>
+        <Text style={styles.fieldLabel}>{t("completeProfile.emailLabel")}</Text>
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
           keyboardType="email-address"
-          placeholder="voce@email.com"
+          placeholder={t("completeProfile.emailPlaceholder")}
           placeholderTextColor={theme.textMuted}
           style={styles.field}
           value={email}
           onChangeText={setEmail}
         />
-        <Text style={styles.fieldLabel}>Telefone (celular)</Text>
+        <Text style={styles.fieldLabel}>{t("completeProfile.phoneLabel")}</Text>
         <TextInput
           keyboardType="phone-pad"
           maxLength={15}
-          placeholder="(11) 98765-4321"
+          placeholder={t("completeProfile.phonePlaceholder")}
           placeholderTextColor={theme.textMuted}
           style={styles.field}
           value={formatBrazilPhoneDisplay(phoneDigits)}
-          onChangeText={(t) => setPhoneDigits(normalizePhoneDigits(t, 11))}
+          onChangeText={(input) =>
+            setPhoneDigits(normalizePhoneDigits(input, 11))
+          }
         />
-        <Text style={styles.fieldLabel}>CPF (apenas números)</Text>
+        <Text style={styles.fieldLabel}>{t("completeProfile.cpfLabel")}</Text>
         <TextInput
           keyboardType="number-pad"
           maxLength={14}
-          placeholder="000.000.000-00"
+          placeholder={t("completeProfile.cpfPlaceholder")}
           placeholderTextColor={theme.textMuted}
           style={styles.field}
           value={formatCpfDisplay(cpfDigits)}
-          onChangeText={(t) => setCpfDigits(normalizeCpfDigits(t).slice(0, 11))}
+          onChangeText={(input) =>
+            setCpfDigits(normalizeCpfDigits(input).slice(0, 11))
+          }
         />
         <Pressable
           accessibilityRole="button"
@@ -193,7 +200,7 @@ export function CompleteProfileScreen({
           {busy ? (
             <ActivityIndicator color={palette.onAccent} />
           ) : (
-            <Text style={styles.ctaText}>Salvar e continuar</Text>
+            <Text style={styles.ctaText}>{t("completeProfile.saveButton")}</Text>
           )}
         </Pressable>
       </ScrollView>

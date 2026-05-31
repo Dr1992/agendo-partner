@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { Image, Pressable, View } from "react-native";
 
 import { Text } from "../Text";
@@ -32,6 +33,7 @@ export function EstablishmentRowCard({
   compact = false,
   containerStyle,
 }: EstablishmentRowCardProps) {
+  const { t } = useTranslation("components");
   const elevated = elevatedProp ?? true;
   const styles = getEstablishmentRowCardStyles(theme, { compact, elevated });
   const addressDisplay =
@@ -59,7 +61,7 @@ export function EstablishmentRowCard({
   const editGlyph = showEditIcon ? (
     onEditPress ? (
       <Pressable
-        accessibilityLabel="Editar estabelecimento"
+        accessibilityLabel={t("establishmentRowCard.editAction")}
         accessibilityRole="button"
         hitSlop={10}
         style={styles.editIconBox}

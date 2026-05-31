@@ -1,0 +1,33 @@
+{
+  "agenda": {
+    "listTitle": "Agenda",
+    "calendarTitle": "Agenda",
+    "detailTitle": "Availability",
+    "newBookingTypeTitle": "New",
+    "personalCommitmentTitle": "Personal Commitment",
+    "bookingServiceSelectTitle": "Book for client",
+    "bookingScheduleTitle": "Appointment date and time",
+    "bookingConfirmTitle": "Record appointment"
+  },
+  "availability": {
+    "listTitle": "Availability",
+    "detailTitle": "Availability"
+  },
+  "establishments": {
+    "homeTitle": "Establishments",
+    "registerTitle": "New Establishment",
+    "hubTitle": "Management",
+    "editTitle": "Edit establishment",
+    "collaboratorsTitle": "Collaborators",
+    "servicesTitle": "Services",
+    "serviceFormEditTitle": "Edit service",
+    "serviceFormNewTitle": "New service",
+    "inviteStaffTitle": "Add collaborator",
+    "inviteStaffNextStepsTitle": "Next steps",
+    "pendingInviteLinkServicesTitle": "Invite services"
+  },
+  "profile": {
+    "completeTitle": "Your registration",
+    "editTitle": "Edit profile"
+  }
+}

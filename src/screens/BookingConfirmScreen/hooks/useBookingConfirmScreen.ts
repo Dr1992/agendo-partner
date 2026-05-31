@@ -1,6 +1,7 @@
 import type { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useQueryClient } from "../../../hooks/api/reactQuery";
 import { useCallback, useLayoutEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { DetailFactRow } from "../../../components/DetailFactsCard/DetailFactsCard";
 import { createStaffAssistedAppointment } from "../../../api/public/partner";
@@ -21,6 +22,7 @@ export function useBookingConfirmScreen({
   navigation,
   route,
 }: BookingConfirmScreenProps) {
+  const { t } = useTranslation("booking");
   const {
     establishmentId,
     professionalId,
@@ -30,8 +32,8 @@ export function useBookingConfirmScreen({
   } = route.params;
 
   useLayoutEffect(() => {
-    navigation.setOptions({ title: "Registar atendimento" });
-  }, [navigation]);
+    navigation.setOptions({ title: t("confirm.navTitle") });
+  }, [navigation, t]);
 
   const queryClient = useQueryClient();
   const [dialog, setDialog] = useState<BookingDialogState>({ kind: "none" });
@@ -52,10 +54,10 @@ export function useBookingConfirmScreen({
 
   const professional = useMemo(() => {
     if (professionalId === "any") {
-      return { id: "any", name: "Qualquer disponível na equipe" };
+      return { id: "any", name: t("confirm.anyProfessional") };
     }
     return est?.professionals.find((prof) => prof.id === professionalId);
-  }, [est?.professionals, professionalId]);
+  }, [est?.professionals, professionalId, t]);
 
   const slotLabel = useMemo(() => formatSlotDateTimePt(slotIso), [slotIso]);
 
@@ -77,42 +79,42 @@ export function useBookingConfirmScreen({
     return [
       {
         icon: "storefront-outline",
-        label: "Estabelecimento",
+        label: t("confirm.rowEstablishment"),
         value: est.name,
       },
       {
         icon: SERVICE_IONICON,
-        label: "Serviço",
+        label: t("confirm.rowService"),
         value: service.name,
       },
       {
         icon: "person-outline",
-        label: "Profissional",
+        label: t("confirm.rowProfessional"),
         value: professional.name,
       },
       {
         icon: "calendar-outline",
-        label: "Horário",
+        label: t("confirm.rowTime"),
         value: slotLabel,
       },
       {
         icon: "time-outline",
-        label: "Duração",
+        label: t("confirm.rowDuration"),
         value: durationLabel,
       },
       {
         emphasis: true,
         icon: "cash-outline",
-        label: "Valor do serviço",
+        label: t("confirm.rowServicePrice"),
         value: priceLabel,
       },
       {
         icon: "location-outline",
-        label: "Endereço",
+        label: t("confirm.rowAddress"),
         value: est.addressFull,
       },
     ];
-  }, [durationLabel, est, priceLabel, professional, service, slotLabel]);
+  }, [durationLabel, est, priceLabel, professional, service, slotLabel, t]);
 
   const goToStaffAgendaAfterBooking = useCallback(() => {
     setDialog({ kind: "none" });
@@ -131,7 +133,7 @@ export function useBookingConfirmScreen({
     if (professional.id === "any") {
       setDialog({
         kind: "booking_error",
-        message: "Escolha um profissional específico antes de confirmar.",
+        message: t("confirm.errorChooseProfessional"),
       });
       return;
     }
@@ -139,8 +141,7 @@ export function useBookingConfirmScreen({
     if (!isValidCustomerEmail(trimmed)) {
       setDialog({
         kind: "booking_error",
-        message:
-          "Indique um e-mail válido — tem de corresponder à conta do cliente na app.",
+        message: t("confirm.errorInvalidEmail"),
       });
       return;
     }
@@ -169,9 +170,7 @@ export function useBookingConfirmScreen({
       setDialog({
         kind: "booking_error",
         message:
-          e instanceof Error
-            ? e.message
-            : "Não foi possível concluir o registo. Tente de novo.",
+          e instanceof Error ? e.message : t("confirm.errorBookingFailed"),
       });
     } finally {
       setBookingBusy(false);
@@ -184,6 +183,7 @@ export function useBookingConfirmScreen({
     queryClient,
     service,
     slotIso,
+    t,
   ]);
 
   const onConfirm = useCallback(() => {
@@ -193,13 +193,12 @@ export function useBookingConfirmScreen({
     if (!isValidCustomerEmail(customerEmail)) {
       setDialog({
         kind: "booking_error",
-        message:
-          "Indique o e-mail da conta do cliente na app (o mesmo que usa em Perfil).",
+        message: t("confirm.errorMissingEmail"),
       });
       return;
     }
     setDialog({ kind: "confirm" });
-  }, [customerEmail, est, professional, service]);
+  }, [customerEmail, est, professional, service, t]);
 
   const dialogContent = useMemo(() => {
     switch (dialog.kind) {
@@ -209,49 +208,49 @@ export function useBookingConfirmScreen({
         return {
           buttons: [
             {
-              label: "OK",
+              label: t("confirm.dialogOk"),
               onPress: () => setDialog({ kind: "none" }),
               variant: "primary" as const,
             },
           ],
           message: dialog.message,
-          title: "Atendimento",
+          title: t("confirm.dialogErrorTitle"),
         };
       case "confirm":
         return {
           buttons: [
             {
-              label: "Cancelar",
+              label: t("confirm.dialogCancel"),
               onPress: () => setDialog({ kind: "none" }),
               variant: "secondary" as const,
             },
             {
-              label: bookingBusy ? "A registar…" : "Sim, registar",
+              label: bookingBusy
+                ? t("confirm.dialogRegistering")
+                : t("confirm.dialogConfirmRegister"),
               onPress: () => {
                 void performBooking();
               },
               variant: "primary" as const,
             },
           ],
-          message:
-            "O horário fica confirmado para a conta com o e-mail indicado e aparece na sua agenda como profissional.",
-          title: "Registar atendimento?",
+          message: t("confirm.dialogConfirmMessage"),
+          title: t("confirm.dialogConfirmTitle"),
         };
       case "success":
         return {
           buttons: [
             {
-              label: "Ver calendário",
+              label: t("confirm.dialogSuccessViewCalendar"),
               onPress: goToStaffAgendaAfterBooking,
               variant: "primary" as const,
             },
           ],
-          message:
-            "O cliente verá o horário na área Agendamentos. No calendário do local aparece logo o novo atendimento.",
-          title: "Atendimento registado",
+          message: t("confirm.dialogSuccessMessage"),
+          title: t("confirm.dialogSuccessTitle"),
         };
     }
-  }, [bookingBusy, dialog, goToStaffAgendaAfterBooking, performBooking]);
+  }, [bookingBusy, dialog, goToStaffAgendaAfterBooking, performBooking, t]);
 
   const onDialogRequestClose = useCallback(() => {
     setDialog({ kind: "none" });

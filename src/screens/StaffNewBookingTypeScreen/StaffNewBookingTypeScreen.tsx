@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import type { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -26,6 +27,7 @@ export function StaffNewBookingTypeScreen({
     establishmentId,
     returnToStaffAgenda,
   } = route.params;
+  const { t } = useTranslation("staff");
   const { theme } = useAppTheme();
   const styles = useMemo(() => getStaffNewBookingTypeStyles(theme), [theme]);
   const nav = navigation as NavigationProp<ParamListBase>;
@@ -82,10 +84,9 @@ export function StaffNewBookingTypeScreen({
             />
           </View>
           <View style={styles.cardTextBlock}>
-            <Text variant="listTitle">Compromisso Pessoal</Text>
+            <Text variant="listTitle">{t("newBookingType.personalTitle")}</Text>
             <Text style={styles.cardDescription} variant="caption">
-              Escolha essa opção para bloquear um período da sua agenda e
-              cumprir um compromisso particular.
+              {t("newBookingType.personalDescription")}
             </Text>
           </View>
           <Ionicons color={theme.textMuted} name="chevron-forward" size={20} />
@@ -100,10 +101,9 @@ export function StaffNewBookingTypeScreen({
             <Ionicons color={theme.accent} name="person-outline" size={22} />
           </View>
           <View style={styles.cardTextBlock}>
-            <Text variant="listTitle">Cliente</Text>
+            <Text variant="listTitle">{t("newBookingType.clientTitle")}</Text>
             <Text style={styles.cardDescription} variant="caption">
-              Escolha essa opção para agendar um horário de atendimento para um
-              cliente.
+              {t("newBookingType.clientDescription")}
             </Text>
           </View>
           <Ionicons color={theme.textMuted} name="chevron-forward" size={20} />

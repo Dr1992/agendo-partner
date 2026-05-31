@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 import { useAppTheme } from "../hooks/useAppTheme";
 import type { ProfileStackParamList } from "../navigation/profileNavigation.types";
@@ -21,6 +22,7 @@ const Stack = createNativeStackNavigator<ProfileStackParamList>();
 export function EstabelecimentosNavigator() {
   const { theme } = useAppTheme();
   const navTheme = useTheme();
+  const { t } = useTranslation("navigation");
 
   return (
     <Stack.Navigator
@@ -38,54 +40,59 @@ export function EstabelecimentosNavigator() {
       <Stack.Screen
         component={PartnerHomeScreen}
         name={ProfileStack.PartnerHome}
-        options={{ title: "Estabelecimentos" }}
+        options={{ title: t("establishments.homeTitle") }}
       />
       <Stack.Screen
         component={EstablishmentRegisterScreen}
         name={ProfileStack.EstablishmentRegister}
-        options={{ title: "Novo Estabelecimento" }}
+        options={{ title: t("establishments.registerTitle") }}
       />
       <Stack.Screen
         component={EstablishmentHubScreen}
         name={ProfileStack.EstablishmentHub}
-        options={{ title: "Gestão" }}
+        options={{ title: t("establishments.hubTitle") }}
       />
       <Stack.Screen
         component={EstablishmentEditScreen}
         name={ProfileStack.EstablishmentEdit}
-        options={{ title: "Editar estabelecimento" }}
+        options={{ title: t("establishments.editTitle") }}
       />
       <Stack.Screen
         component={EstablishmentCollaboratorsScreen}
         name={ProfileStack.EstablishmentCollaborators}
-        options={{ title: "Colaboradores" }}
+        options={{ title: t("establishments.collaboratorsTitle") }}
       />
       <Stack.Screen
         component={EstablishmentServicesScreen}
         name={ProfileStack.EstablishmentServices}
-        options={{ title: "Serviços" }}
+        options={{ title: t("establishments.servicesTitle") }}
       />
       <Stack.Screen
         component={EstablishmentServiceFormScreen}
         name={ProfileStack.EstablishmentServiceForm}
         options={({ route }) => ({
-          title: route.params.serviceId ? "Editar serviço" : "Novo serviço",
+          title: route.params.serviceId
+            ? t("establishments.serviceFormEditTitle")
+            : t("establishments.serviceFormNewTitle"),
         })}
       />
       <Stack.Screen
         component={InviteStaffScreen}
         name={ProfileStack.InviteStaff}
-        options={{ title: "Adicionar colaborador" }}
+        options={{ title: t("establishments.inviteStaffTitle") }}
       />
       <Stack.Screen
         component={InviteStaffNextStepsScreen}
         name={ProfileStack.InviteStaffNextSteps}
-        options={{ title: "Próximos passos", headerBackVisible: false }}
+        options={{
+          title: t("establishments.inviteStaffNextStepsTitle"),
+          headerBackVisible: false,
+        }}
       />
       <Stack.Screen
         component={PendingInviteLinkServicesScreen}
         name={ProfileStack.PendingInviteLinkServices}
-        options={{ title: "Serviços do convite" }}
+        options={{ title: t("establishments.pendingInviteLinkServicesTitle") }}
       />
       <Stack.Screen
         component={PartnerPlaceholderScreen}

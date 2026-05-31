@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, View } from "react-native";
 
 import { Text } from "../../../components/Text";
@@ -6,7 +7,7 @@ import type { AppTheme } from "../../../theme";
 import type { Professional } from "../../../types/professional";
 import { getEstablishmentCollaboratorsScreenStyles } from "../styles";
 
-import { staffRoleIonIcon, staffRoleLower } from "./staffRoleHelpers";
+import { staffRoleIonIcon, staffRoleKey } from "./staffRoleHelpers";
 
 type ScreenStyles = ReturnType<
   typeof getEstablishmentCollaboratorsScreenStyles
@@ -29,6 +30,7 @@ export function CollaboratorsStaffListRow({
   sessionUserId,
   theme,
 }: CollaboratorsStaffListRowProps) {
+  const { t } = useTranslation("team");
   const isSelf = sessionUserId != null && member.id === sessionUserId;
   const canRemove = !isSelf && !removeStaffPending;
   const roleIcon = staffRoleIonIcon(member.staffRole);
@@ -36,7 +38,10 @@ export function CollaboratorsStaffListRow({
   return (
     <View style={screenStyles.teamRow}>
       <View
-        accessibilityLabel={`${member.name}, ${staffRoleLower(member.staffRole)}`}
+        accessibilityLabel={t("collaborators.row.accessibilityLabel", {
+          name: member.name,
+          role: t(staffRoleKey(member.staffRole)),
+        })}
         accessible
         style={screenStyles.teamRowMain}
       >
@@ -50,7 +55,12 @@ export function CollaboratorsStaffListRow({
       {canRemove ? (
         <View style={screenStyles.teamRowActions}>
           <Pressable
-            accessibilityLabel={`Remover ${member.name} da equipe`}
+            accessibilityLabel={t(
+              "collaborators.row.removeAccessibilityLabel",
+              {
+                name: member.name,
+              },
+            )}
             accessibilityRole="button"
             hitSlop={8}
             style={({ pressed }) => [

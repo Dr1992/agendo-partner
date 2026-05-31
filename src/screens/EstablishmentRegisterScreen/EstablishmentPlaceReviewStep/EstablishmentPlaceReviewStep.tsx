@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Image, ScrollView, View } from "react-native";
 
 import { Button } from "../../../components/Button";
@@ -15,35 +16,6 @@ import { formatBrazilPhoneDisplay } from "../../../utils/phone";
 
 import type { EstablishmentGalleryPhoto } from "../useEstablishmentPlaceFormState";
 import { getEstablishmentPlaceReviewStepStyles } from "./styles";
-
-const REVIEW_INTRO: Record<"create" | "edit", string> = {
-  create:
-    "Confira os dados abaixo. Toque em Voltar para editar. Ao confirmar, o local é cadastrado e você segue na área do parceiro.",
-  edit: "Confira os dados abaixo. Toque em Voltar para editar.",
-};
-
-/** Título no corpo e no header do stack no passo de revisão. */
-export const ESTABLISHMENT_PLACE_REVIEW_NAV_TITLE: Record<
-  "create" | "edit",
-  string
-> = {
-  create: "Confirmar cadastro",
-  edit: "Revisar e salvar",
-};
-
-/** Título do header no passo do formulário (alinhado ao `ProfileNavigator`). */
-export const ESTABLISHMENT_PLACE_STEP0_NAV_TITLE: Record<
-  "create" | "edit",
-  string
-> = {
-  create: "Novo Estabelecimento",
-  edit: "Editar estabelecimento",
-};
-
-const PRIMARY_CTA: Record<"create" | "edit", string> = {
-  create: "Confirmar cadastro",
-  edit: "Salvar alterações",
-};
 
 export type EstablishmentPlaceReviewStepProps = {
   addressLine: string;
@@ -82,6 +54,7 @@ export function EstablishmentPlaceReviewStep({
   stateUf,
   whatsappDigits,
 }: EstablishmentPlaceReviewStepProps) {
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = useMemo(
     () => getEstablishmentPlaceReviewStepStyles(theme),
@@ -106,43 +79,45 @@ export function EstablishmentPlaceReviewStep({
       {
         emphasis: true,
         icon: "storefront-outline",
-        label: "Nome",
+        label: t("placeForm.rowNameLabel"),
         value: name.trim() || "—",
       },
       {
         icon: "pricetag-outline",
-        label: "Categoria",
+        label: t("placeForm.rowCategoryLabel"),
         value: categoryLabel?.trim() || "—",
       },
       {
         icon: "location-outline",
-        label: "Localização",
+        label: t("placeForm.rowLocationLabel"),
         value: locationLine.trim() || "—",
       },
       {
         icon: "map-outline",
-        label: "CEP",
+        label: t("placeForm.rowCepLabel"),
         value: formatCepDisplay(cepDigits) || "—",
       },
       {
         icon: "navigate-outline",
-        label: "Endereço",
+        label: t("placeForm.rowAddressLabel"),
         value: addressLine.trim() || "—",
       },
       {
         icon: "time-outline",
-        label: "Horário",
+        label: t("placeForm.rowHoursLabel"),
         value: openingHoursSummary.trim() || "—",
       },
       {
         icon: "id-card-outline",
-        label: "CNPJ",
+        label: t("placeForm.rowCnpjLabel"),
         value:
-          cnpjDigits.length > 0 ? formatCnpjDisplay(cnpj) : "Não informado",
+          cnpjDigits.length > 0
+            ? formatCnpjDisplay(cnpj)
+            : t("placeForm.rowCnpjEmpty"),
       },
       {
         icon: "call-outline",
-        label: "Celular",
+        label: t("placeForm.rowPhoneLabel"),
         value:
           phoneDigits.length > 0
             ? formatBrazilPhoneDisplay(whatsappDigits)
@@ -150,9 +125,11 @@ export function EstablishmentPlaceReviewStep({
       },
       {
         icon: "reader-outline",
-        label: "Descrição",
+        label: t("placeForm.rowDescriptionLabel"),
         value:
-          description.trim().length > 0 ? description.trim() : "Não informada",
+          description.trim().length > 0
+            ? description.trim()
+            : t("placeForm.rowDescriptionEmpty"),
       },
     ];
   }, [
@@ -165,6 +142,7 @@ export function EstablishmentPlaceReviewStep({
     name,
     openingHoursSummary,
     whatsappDigits,
+    t,
   ]);
 
   return (
@@ -178,7 +156,9 @@ export function EstablishmentPlaceReviewStep({
           />
         </View>
         <Text style={styles.intro} variant="bodyTight">
-          {REVIEW_INTRO[mode]}
+          {mode === "edit"
+            ? t("placeForm.reviewIntroEdit")
+            : t("placeForm.reviewIntroCreate")}
         </Text>
       </View>
 
@@ -188,12 +168,12 @@ export function EstablishmentPlaceReviewStep({
         <View style={styles.photoCardHeader}>
           <Ionicons color={theme.accent} name="images-outline" size={20} />
           <Text style={styles.photoCardTitle} variant="bodyTight">
-            Fotos do local
+            {t("placeForm.photosTitle")}
           </Text>
         </View>
         {galleryPhotos.length === 0 ? (
           <Text style={styles.photoEmpty} variant="bodyTight">
-            Nenhuma foto
+            {t("placeForm.photosEmpty")}
           </Text>
         ) : (
           <ScrollView
@@ -218,10 +198,12 @@ export function EstablishmentPlaceReviewStep({
 
       <View style={styles.actions}>
         <Button loading={busy} onPress={() => void onSubmit()}>
-          {PRIMARY_CTA[mode]}
+          {mode === "edit"
+            ? t("placeForm.primaryCtaEdit")
+            : t("placeForm.primaryCtaCreate")}
         </Button>
         <Button disabled={busy} variant="outline" onPress={onBack}>
-          Voltar
+          {t("placeForm.backButton")}
         </Button>
       </View>
     </>

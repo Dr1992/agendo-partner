@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
 import {
   SafeAreaView,
@@ -76,6 +77,7 @@ export function EstablishmentHubScreen(
   props: ProfileScreenProps<"EstablishmentHub">,
 ) {
   const { navigation } = props;
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = useMemo(() => getScreenFormStyles(theme), [theme]);
   const hub = useMemo(() => getEstablishmentHubScreenStyles(theme), [theme]);
@@ -119,14 +121,14 @@ export function EstablishmentHubScreen(
         <Text variant="body">
           {error instanceof Error
             ? error.message
-            : "Local não encontrado ou sem permissão."}
+            : t("establishmentHub.notFound")}
         </Text>
         {isError ? (
           <Button
             style={styles.ctaRetryFullWidth}
             onPress={() => void refetch()}
           >
-            Tentar novamente
+            {t("common.retry")}
           </Button>
         ) : null}
       </SafeAreaView>
@@ -139,7 +141,7 @@ export function EstablishmentHubScreen(
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: dismissReactivateError,
               variant: "primary",
             },
@@ -154,7 +156,7 @@ export function EstablishmentHubScreen(
       <AlertDialog
         buttons={[
           {
-            label: "Cancelar",
+            label: t("common.cancel"),
             variant: "secondary",
             onPress: () => {
               if (!leavePending) {
@@ -163,13 +165,15 @@ export function EstablishmentHubScreen(
             },
           },
           {
-            label: leavePending ? "Saindo…" : "Sair do time",
+            label: leavePending
+              ? t("establishmentHub.leavingButton")
+              : t("establishmentHub.leaveButton"),
             variant: "destructive",
             onPress: confirmLeave,
           },
         ]}
-        message="Você vai deixar de fazer parte desta equipe. Essa ação não pode ser desfeita."
-        title="Sair do time"
+        message={t("establishmentHub.leaveMessage")}
+        title={t("establishmentHub.leaveTitle")}
         visible={showLeaveAlert}
         onRequestClose={() => {
           if (!leavePending) {
@@ -182,7 +186,7 @@ export function EstablishmentHubScreen(
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               variant: "primary",
               onPress: () => setLeaveError(null),
             },
@@ -209,9 +213,9 @@ export function EstablishmentHubScreen(
                   disabled={menuDisabled}
                   hub={hub}
                   icon="document-text-outline"
-                  subtitle="Endereço, horário e categoria"
+                  subtitle={t("establishmentHub.cardDataSubtitle")}
                   theme={theme}
-                  title="Dados do cadastro"
+                  title={t("establishmentHub.cardDataTitle")}
                   onPress={() =>
                     navigation.navigate(ProfileStack.EstablishmentEdit, {
                       establishmentId: est.id,
@@ -227,9 +231,9 @@ export function EstablishmentHubScreen(
                       disabled={menuDisabled}
                       hub={hub}
                       icon="people-outline"
-                      subtitle="Equipe, papéis e convites"
+                      subtitle={t("establishmentHub.cardCollaboratorsSubtitle")}
                       theme={theme}
-                      title="Colaboradores"
+                      title={t("establishmentHub.cardCollaboratorsTitle")}
                       onPress={() =>
                         navigation.navigate(
                           ProfileStack.EstablishmentCollaborators,
@@ -245,9 +249,9 @@ export function EstablishmentHubScreen(
                       disabled={menuDisabled}
                       hub={hub}
                       icon={SERVICE_IONICON}
-                      subtitle="Preço, duração e quem atende"
+                      subtitle={t("establishmentHub.cardServicesSubtitle")}
                       theme={theme}
-                      title="Serviços"
+                      title={t("establishmentHub.cardServicesTitle")}
                       onPress={() =>
                         navigation.navigate(
                           ProfileStack.EstablishmentServices,
@@ -266,10 +270,7 @@ export function EstablishmentHubScreen(
 
           {isStaffMember ? (
             <View style={hub.staffSection}>
-              <Text variant="hint">
-                Você faz parte desta equipe como colaborador. Para sair do time,
-                use o botão abaixo.
-              </Text>
+              <Text variant="hint">{t("establishmentHub.staffHint")}</Text>
               <Pressable
                 accessibilityRole="button"
                 disabled={leavePending}
@@ -281,15 +282,14 @@ export function EstablishmentHubScreen(
                 onPress={() => setShowLeaveAlert(true)}
               >
                 <Text style={hub.leaveButtonLabel} variant="bodyTight">
-                  Sair do time
+                  {t("establishmentHub.leaveButton")}
                 </Text>
               </Pressable>
             </View>
           ) : !canManage ? (
             <View style={hub.readOnlyHint}>
               <Text variant="hint">
-                Só o dono ou o gestor pode gerir colaboradores e serviços. Use
-                Dados do cadastro para ver endereço, horário e categoria.
+                {t("establishmentHub.readOnlyHint")}
               </Text>
             </View>
           ) : null}
@@ -297,7 +297,7 @@ export function EstablishmentHubScreen(
           {isEstablishmentInactive && canManage && !canToggleActive ? (
             <View style={hub.inactiveManagerHint}>
               <Text variant="hint">
-                Só o dono pode reativar este local na busca pública.
+                {t("establishmentHub.inactiveManagerHint")}
               </Text>
             </View>
           ) : null}
@@ -315,7 +315,7 @@ export function EstablishmentHubScreen(
               variant="primary"
               onPress={onReactivate}
             >
-              Desbloquear local
+              {t("establishmentHub.unlockButton")}
             </Button>
           </View>
         ) : null}
@@ -323,7 +323,7 @@ export function EstablishmentHubScreen(
         {unlockBusy ? (
           <View accessibilityViewIsModal style={hub.unlockLoadingOverlay}>
             <ActivityIndicator
-              accessibilityLabel="A reativar"
+              accessibilityLabel={t("establishmentHub.reactivatingAccessibility")}
               color={theme.accent}
               size="large"
             />

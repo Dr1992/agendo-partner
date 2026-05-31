@@ -1,5 +1,6 @@
 import type { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useCallback, useLayoutEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import { navigateFromServiceSelectToSchedule } from "../../../navigation/staffBookingNavigate";
 import type { ServiceSelectScreenProps } from "../types";
@@ -8,6 +9,7 @@ export function useServiceSelectRules(
   navigation: ServiceSelectScreenProps["navigation"],
   routeParams: ServiceSelectScreenProps["route"]["params"],
 ) {
+  const { t } = useTranslation("booking");
   const {
     bookingFlowOrigin,
     defaultPerformerUserId,
@@ -16,11 +18,10 @@ export function useServiceSelectRules(
   } = routeParams;
 
   useLayoutEffect(() => {
-    navigation.setOptions({ title: "Agendar para cliente" });
-  }, [navigation]);
+    navigation.setOptions({ title: t("serviceSelect.navTitle") });
+  }, [navigation, t]);
 
-  const headerHint =
-    "Escolha o serviço para este atendimento. Na confirmação, indique o e-mail da conta do cliente na app.";
+  const headerHint = t("serviceSelect.headerHint");
 
   const onServicePress = useCallback(
     (serviceId: string) => {

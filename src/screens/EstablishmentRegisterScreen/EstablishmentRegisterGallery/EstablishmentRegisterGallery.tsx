@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Image, Pressable, ScrollView, View } from "react-native";
 
 import { Text } from "../../../components/Text";
@@ -23,6 +24,7 @@ export function EstablishmentRegisterGallery({
   photos,
   readOnly,
 }: EstablishmentRegisterGalleryProps) {
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const galleryStyles = useMemo(
     () => getEstablishmentRegisterGalleryStyles(theme),
@@ -37,11 +39,11 @@ export function EstablishmentRegisterGallery({
 
   return (
     <>
-      <Text variant="fieldLabel">Fotos do local</Text>
+      <Text variant="fieldLabel">{t("placeForm.galleryTitle")}</Text>
       <Text style={galleryStyles.hint} variant="hint">
         {readOnly
-          ? "Imagens que aparecem na ficha do estabelecimento."
-          : "Adicione entre 1 e 5 fotos do espaço (ambiente, equipamento ou trabalhos)."}
+          ? t("placeForm.galleryHintReadOnly")
+          : t("placeForm.galleryHintEditable")}
       </Text>
       <ScrollView
         horizontal
@@ -60,7 +62,7 @@ export function EstablishmentRegisterGallery({
             </View>
             {!readOnly ? (
               <Pressable
-                accessibilityLabel="Remover foto"
+                accessibilityLabel={t("placeForm.removePhotoAccessibility")}
                 accessibilityRole="button"
                 hitSlop={6}
                 style={({ pressed }) => [
@@ -80,7 +82,7 @@ export function EstablishmentRegisterGallery({
         ))}
         {canAddMore ? (
           <Pressable
-            accessibilityLabel="Adicionar foto"
+            accessibilityLabel={t("placeForm.addPhotoAccessibility")}
             accessibilityRole="button"
             disabled={busy}
             style={({ pressed }) => [

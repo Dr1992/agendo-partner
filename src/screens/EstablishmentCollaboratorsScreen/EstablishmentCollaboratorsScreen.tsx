@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { FlatList, useWindowDimensions, View } from "react-native";
 import {
   SafeAreaView,
@@ -32,6 +33,7 @@ export function EstablishmentCollaboratorsScreen({
 }: ProfileScreenProps<"EstablishmentCollaborators">) {
   const { establishmentId } = route.params;
   const { theme } = useAppTheme();
+  const { t } = useTranslation("team");
   const { height: windowHeight } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const styles = getScreenFormStyles(theme);
@@ -82,6 +84,7 @@ export function EstablishmentCollaboratorsScreen({
     profileCpf: profile?.cpf ?? "",
     refetch,
     sessionUserId: session?.userId,
+    t,
   });
 
   const renderStaffRow = useCallback(
@@ -132,13 +135,8 @@ export function EstablishmentCollaboratorsScreen({
     if (!canManage || !est || est.professionals.length > 0) {
       return null;
     }
-    return (
-      <Text variant="hint">
-        Ainda não há gestores ou colaboradores ativos. Use “Adicionar
-        colaborador” para quem atende no local.
-      </Text>
-    );
-  }, [canManage, est]);
+    return <Text variant="hint">{t("collaborators.emptyList")}</Text>;
+  }, [canManage, est, t]);
 
   const flatData = useMemo(
     () => (canManage && est ? est.professionals : []),
@@ -204,7 +202,7 @@ export function EstablishmentCollaboratorsScreen({
       <AppSheetModal
         contentPaddingH={20}
         maxHeightPx={pendingSheetMaxHeight}
-        title="Convites pendentes"
+        title={t("collaborators.pendingSheetTitle")}
         visible={Boolean(est && pendingModalOpen)}
         onRequestClose={() => {
           setRevokeInviteId(null);

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Animated,
   type LayoutChangeEvent,
@@ -23,6 +24,7 @@ type AgendaModeToggleProps = {
 
 export function AgendaModeToggle({ mode, onChange }: AgendaModeToggleProps) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const styles = useMemo(() => getAgendaModeToggleStyles(theme), [theme]);
   const [trackWidth, setTrackWidth] = useState(0);
   const progress = useRef(
@@ -102,7 +104,7 @@ export function AgendaModeToggle({ mode, onChange }: AgendaModeToggleProps) {
               }
               variant="bodyTight"
             >
-              Cliente
+              {t("agendaModeToggle.client")}
             </Text>
           </Pressable>
           <Pressable
@@ -118,7 +120,7 @@ export function AgendaModeToggle({ mode, onChange }: AgendaModeToggleProps) {
               style={mode === "staff" ? styles.textActive : styles.textInactive}
               variant="bodyTight"
             >
-              Colaborador
+              {t("agendaModeToggle.staff")}
             </Text>
           </Pressable>
         </View>

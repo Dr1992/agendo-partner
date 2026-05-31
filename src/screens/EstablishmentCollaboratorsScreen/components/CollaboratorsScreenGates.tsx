@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Button } from "../../../components/Button";
@@ -34,16 +35,17 @@ export function CollaboratorsErrorGate({
   onRetry,
   styles,
 }: CollaboratorsErrorGateProps) {
+  const { t } = useTranslation("team");
   return (
     <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
       <Text variant="body">
         {error instanceof Error
           ? error.message
-          : "Local não encontrado ou sem permissão."}
+          : t("collaborators.errorFallback")}
       </Text>
       {isError ? (
         <Button style={styles.ctaRetryFullWidth} onPress={() => void onRetry()}>
-          Tentar novamente
+          {t("common.retry")}
         </Button>
       ) : null}
     </SafeAreaView>
@@ -57,10 +59,11 @@ type CollaboratorsNoAccessGateProps = {
 export function CollaboratorsNoAccessGate({
   styles,
 }: CollaboratorsNoAccessGateProps) {
+  const { t } = useTranslation("team");
   return (
     <SafeAreaView edges={[]} style={styles.container}>
       <Text style={styles.body} variant="body">
-        Só o dono ou o gestor pode gerir colaboradores neste local.
+        {t("collaborators.noAccess")}
       </Text>
     </SafeAreaView>
   );

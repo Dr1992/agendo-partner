@@ -1,4 +1,5 @@
 /** Consulta CEP via ViaCEP (serviço público, sem chave). Alternativa: BrasilAPI (`/api/cep/v1/{cep}`). */
+import i18n from "../i18n";
 
 export function normalizeCepDigits(input: string): string {
   return input.replace(/\D/g, "").slice(0, 8);
@@ -48,7 +49,7 @@ export async function fetchViaCep(
 ): Promise<{ data: ViaCepAddress; ok: true } | { message: string; ok: false }> {
   const cep = normalizeCepDigits(cepDigits);
   if (cep.length !== 8) {
-    return { ok: false, message: "CEP deve ter 8 dígitos." };
+    return { ok: false, message: i18n.t("partner:cep.invalidLength") };
   }
 
   try {
@@ -59,14 +60,14 @@ export async function fetchViaCep(
       return { ok: false, message: "" };
     }
     if (!res.ok) {
-      return { ok: false, message: "Não foi possível consultar o CEP." };
+      return { ok: false, message: i18n.t("partner:cep.lookupFailed") };
     }
     const viaCepJson = (await res.json()) as ViaCepJson;
     if (opts?.signal?.aborted) {
       return { ok: false, message: "" };
     }
     if (viaCepJson.erro === true || !viaCepJson.uf || !viaCepJson.localidade) {
-      return { ok: false, message: "CEP não encontrado." };
+      return { ok: false, message: i18n.t("partner:cep.notFound") };
     }
     return {
       ok: true,
@@ -83,7 +84,7 @@ export async function fetchViaCep(
     }
     return {
       ok: false,
-      message: "Falha na rede ao buscar o CEP. Tente de novo.",
+      message: i18n.t("partner:cep.networkError"),
     };
   }
 }

@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -16,6 +17,7 @@ export function PendingInviteLinkServicesScreen(
   props: ProfileScreenProps<"PendingInviteLinkServices">,
 ) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("team");
   const formStyles = getScreenFormStyles(theme);
   const local = useMemo(
     () => getPendingInviteLinkServicesScreenStyles(theme),
@@ -44,12 +46,10 @@ export function PendingInviteLinkServicesScreen(
         style={formStyles.scroll}
       >
         <Text style={local.hint} variant="hint">
-          Toque para marcar ou desmarcar. Só serviços com lista explícita de
-          prestadores passam a incluir esta pessoa automaticamente; em serviços
-          em que “todos” atendem, não é necessário vincular.
+          {t("linkServices.hint")}
         </Text>
         {services.length === 0 ? (
-          <Text variant="body">Não há serviços activos neste local.</Text>
+          <Text variant="body">{t("linkServices.emptyServices")}</Text>
         ) : (
           services.map((s) => {
             const on = selected.has(s.id);
@@ -72,7 +72,11 @@ export function PendingInviteLinkServicesScreen(
                 <View style={local.rowText}>
                   <Text variant="bodyTight">{s.name}</Text>
                   {s.durationMinutes ? (
-                    <Text variant="hint">{s.durationMinutes} min</Text>
+                    <Text variant="hint">
+                      {t("linkServices.durationMinutes", {
+                        minutes: s.durationMinutes,
+                      })}
+                    </Text>
                   ) : null}
                 </View>
               </Pressable>
@@ -87,7 +91,7 @@ export function PendingInviteLinkServicesScreen(
               disabled={services.length === 0}
               onPress={() => void onSave()}
             >
-              Confirmar
+              {t("linkServices.confirmButton")}
             </Button>
           )}
         </View>

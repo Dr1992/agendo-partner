@@ -1,0 +1,87 @@
+{
+  "agendaList": {
+    "gateText": "Log in to view your agenda as a staff member.",
+    "login": "Login",
+    "loginErrorDefault": "Could not complete login.",
+    "loginErrorTitle": "Login",
+    "ok": "OK"
+  },
+  "calendar": {
+    "cancelBack": "Back",
+    "cancelBooking": "Cancel appointment",
+    "cancelConfirmMessage": "The client will no longer see this time slot in the app. Confirm the cancellation?",
+    "cancelConfirmTitle": "Cancel appointment",
+    "cancelErrorDefault": "Could not cancel.",
+    "cancelErrorTitle": "Cancellation",
+    "cancelInProgress": "Cancelling…",
+    "cancelSubmit": "Cancel",
+    "clientLabel": "Client",
+    "dayDetailTitle": "Day details",
+    "emptyDay": "No client appointments on this day.",
+    "intro": "Days highlighted on the calendar have at least one client appointment scheduled.",
+    "legendLabel": "Day with a booked client",
+    "loadingHint": "Loading month…",
+    "newBooking": "New booking",
+    "newBookingLabel": "New",
+    "ok": "OK",
+    "selectDayHint": "Tap a day on the calendar to list the client time slots.",
+    "serviceLabel": "Service",
+    "slotsForDate": "Time slots — {{date}}",
+    "statusLabel": "Status",
+    "timeLabel": "Time",
+    "status": {
+      "cancelled": "Cancelled",
+      "completed": "Completed",
+      "confirmed": "Confirmed",
+      "pending": "Pending"
+    }
+  },
+  "detail": {
+    "gateText": "Sign in to manage your agenda.",
+    "intro": "Set the days and times when you accept client appointments at this establishment.",
+    "loadError": "Could not load availability.",
+    "ok": "OK",
+    "retry": "Try again",
+    "save": "Save",
+    "saveErrorDefault": "Could not save.",
+    "saveErrorTitle": "Error",
+    "savedMessage": "Your availability at this location has been updated.",
+    "savedTitle": "Saved",
+    "scheduleIncompleteMessage": "Select at least one day and set opening and closing times for each active day.",
+    "scheduleIncompleteTitle": "Incomplete schedule",
+    "scheduleRangeTitle": "Hours"
+  },
+  "newBookingType": {
+    "clientDescription": "Choose this option to schedule an appointment slot for a client.",
+    "clientTitle": "Client",
+    "personalDescription": "Choose this option to block a period of your agenda for a personal commitment.",
+    "personalTitle": "Personal Commitment"
+  },
+  "personalCommitment": {
+    "descriptionLabel": "Description (optional)",
+    "descriptionPlaceholder": "E.g.: Meeting with supplier",
+    "endLabel": "End",
+    "endTimeTitle": "End time",
+    "overlapCancel": "Cancel",
+    "overlapConfirm": "Continue anyway",
+    "overlapMessage": "The selected period overlaps with already confirmed bookings. Do you want to block it anyway?",
+    "overlapTitle": "Schedule conflict",
+    "save": "Save",
+    "scheduleLabel": "Time",
+    "startLabel": "Start",
+    "startTimeTitle": "Start time",
+    "timeOrderError": "The end time must be after the start time."
+  },
+  "disponibilidadeList": {
+    "gateText": "Log in to manage your availability.",
+    "login": "Login",
+    "loginErrorDefault": "Could not complete login.",
+    "loginErrorTitle": "Login",
+    "ok": "OK"
+  },
+  "scheduleValidation": {
+    "closedDay": "The establishment is closed on {{weekday}}. Disable this day in your availability or ask the owner or manager to adjust the location's hours.",
+    "invalidTime": "Check the hours on {{weekday}} (use HH:MM format).",
+    "outOfRange": "On {{weekday}}, your availability ({{staffOpen}}–{{staffClose}}) must fit within the establishment's hours ({{estOpen}}–{{estClose}})."
+  }
+}

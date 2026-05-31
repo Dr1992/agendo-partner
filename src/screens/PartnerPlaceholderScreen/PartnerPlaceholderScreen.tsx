@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Pressable, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -10,6 +11,7 @@ export function PartnerPlaceholderScreen({
   route,
 }: ProfileScreenProps<"PartnerPlaceholder">) {
   const { subtitle, title } = route.params;
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = getScreenFormStyles(theme);
 
@@ -24,7 +26,7 @@ export function PartnerPlaceholderScreen({
         style={[styles.cta, { marginTop: 24, minWidth: 200 }]}
         onPress={() => navigation.goBack()}
       >
-        <Text style={styles.ctaText}>Voltar</Text>
+        <Text style={styles.ctaText}>{t("placeholder.backButton")}</Text>
       </Pressable>
     </SafeAreaView>
   );

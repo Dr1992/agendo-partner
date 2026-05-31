@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import {
   SafeAreaView,
@@ -21,6 +22,7 @@ import { establishmentAddressFallback } from "./utils/establishmentAddressFallba
 
 export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
   const { navigation } = props;
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const insets = useSafeAreaInsets();
   const styles = useMemo(() => getScreenFormStyles(theme), [theme]);
@@ -62,7 +64,7 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
         );
       const categoryLabel = detail.categoryLabel?.trim()
         ? detail.categoryLabel.trim()
-        : "Sem categoria";
+        : t("home.noCategory");
 
       return (
         <EstablishmentRowCard
@@ -83,7 +85,7 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
         />
       );
     },
-    [homeStyles.establishmentListCardSpacing, navigation, theme],
+    [homeStyles.establishmentListCardSpacing, navigation, t, theme],
   );
 
   return (
@@ -92,7 +94,7 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: dismissLoginError,
               variant: "primary",
             },
@@ -120,38 +122,38 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
         {!session ? (
           <>
             <Text style={homeStyles.gateText} variant="hint">
-              Entre para gerenciar seus locais.
+              {t("home.gateLoggedOut")}
             </Text>
             <Button
               style={styles.ctaRetryFullWidth}
               onPress={() => void onLogin()}
             >
-              Login
+              {t("home.loginButton")}
             </Button>
           </>
         ) : !profileComplete ? (
           <>
             <Text style={homeStyles.gateText} variant="hint">
-              Complete seu cadastro para liberar o gerenciamento do local.
+              {t("home.gateIncompleteProfile")}
             </Text>
             <Button
               style={styles.ctaRetryFullWidth}
               onPress={() => navigation.navigate(ProfileStack.CompleteProfile)}
             >
-              Completar cadastro
+              {t("home.completeProfileButton")}
             </Button>
           </>
         ) : (
           <>
             {listPending && listRes === undefined ? (
               <>
-                <Text variant="fieldLabel">Meus estabelecimentos</Text>
+                <Text variant="fieldLabel">{t("home.myEstablishments")}</Text>
                 <InlineLoading />
               </>
             ) : isCollaboratorOnly ? (
               <>
                 <Text variant="fieldLabel">
-                  Estabelecimentos que faço parte
+                  {t("home.establishmentsImPartOf")}
                 </Text>
                 {staffRows.map((row) => (
                   <EstablishmentRowCard
@@ -161,7 +163,9 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
                       [row.cityName, row.stateUf].filter(Boolean).join(" — ") ||
                       "—"
                     }
-                    categoryLabel={row.categoryLabel?.trim() || "Sem categoria"}
+                    categoryLabel={
+                      row.categoryLabel?.trim() || t("home.noCategory")
+                    }
                     containerStyle={homeStyles.establishmentListCardSpacing}
                     showEditIcon
                     theme={theme}
@@ -177,14 +181,13 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
               </>
             ) : partnerRows.length === 0 ? (
               <Text style={homeStyles.emptyPartnerMessage} variant="body">
-                Você não tem nenhum estabelecimento no qual você é dono ou
-                gestor.
+                {t("home.noOwnedEstablishments")}
               </Text>
             ) : (
               <>
-                <Text variant="fieldLabel">Meus estabelecimentos</Text>
+                <Text variant="fieldLabel">{t("home.myEstablishments")}</Text>
                 {hasInactive && activeRows.length > 0 ? (
-                  <Text variant="fieldLabel">Ativos</Text>
+                  <Text variant="fieldLabel">{t("home.activeSection")}</Text>
                 ) : null}
                 {activeRows.map(renderEstablishmentCard)}
                 {hasInactive && inactiveRows.length > 0 ? (
@@ -193,7 +196,7 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
                       variant="fieldLabel"
                       style={homeStyles.sectionHeading}
                     >
-                      Desativados
+                      {t("home.inactiveSection")}
                     </Text>
                     {inactiveRows.map(renderEstablishmentCard)}
                   </>
@@ -212,7 +215,7 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
               navigation.navigate(ProfileStack.EstablishmentRegister)
             }
           >
-            Cadastrar estabelecimento
+            {t("home.registerButton")}
           </Button>
         </View>
       ) : null}

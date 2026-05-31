@@ -6,6 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import type { DateData } from "react-native-calendars";
 import type { MarkedDates } from "react-native-calendars/src/types";
 import { Platform, Pressable } from "react-native";
@@ -32,6 +33,7 @@ export function useStaffAgendaCalendarScreen({
   route,
 }: StaffAgendaCalendarScreenProps) {
   const { establishmentId, establishmentName } = route.params;
+  const { t } = useTranslation("staff");
   const { session } = useAuth();
   const queryClient = useQueryClient();
   const { theme } = useAppTheme();
@@ -60,7 +62,7 @@ export function useStaffAgendaCalendarScreen({
   const headerRight = useCallback(() => {
     return (
       <Pressable
-        accessibilityLabel="Novo agendamento"
+        accessibilityLabel={t("calendar.newBooking")}
         accessibilityRole="button"
         hitSlop={8}
         style={({ pressed }) => [
@@ -84,7 +86,7 @@ export function useStaffAgendaCalendarScreen({
       >
         <Ionicons color={theme.accent} name="add" size={22} />
         <Text style={local.headerAddLabel} variant="bodyTight">
-          Novo
+          {t("calendar.newBookingLabel")}
         </Text>
       </Pressable>
     );
@@ -96,6 +98,7 @@ export function useStaffAgendaCalendarScreen({
     local.headerAddLabel,
     navigation,
     session?.userId,
+    t,
     theme.accent,
   ]);
 
@@ -153,8 +156,10 @@ export function useStaffAgendaCalendarScreen({
     onError: (error) => {
       setCancelDialogBookingId(null);
       const msg =
-        error instanceof Error ? error.message : "Não foi possível cancelar.";
-      setCancelError({ title: "Cancelamento", message: msg });
+        error instanceof Error
+          ? error.message
+          : t("calendar.cancelErrorDefault");
+      setCancelError({ title: t("calendar.cancelErrorTitle"), message: msg });
     },
     onSuccess: async () => {
       setCancelDialogBookingId(null);

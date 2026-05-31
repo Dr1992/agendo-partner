@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { Text as AppText } from "../../../components/Text";
@@ -14,6 +15,8 @@ export function BookingScheduleInlineNotices({
   screenStyles,
   staffAssistedBooking,
 }: BookingScheduleInlineNoticesProps) {
+  const { t } = useTranslation("booking");
+
   if (!staffAssistedBooking) {
     return null;
   }
@@ -24,9 +27,7 @@ export function BookingScheduleInlineNotices({
         style={screenStyles.staffOwnAgendaNoticeText}
         variant="bodyTight"
       >
-        Você está agendando na sua agenda como profissional deste local. Os
-        horários seguem a mesma regra de disponibilidade da app e não se
-        sobrepõem a outros atendimentos já reservados.
+        {t("schedule.staffOwnAgendaNotice")}
       </AppText>
     </View>
   );

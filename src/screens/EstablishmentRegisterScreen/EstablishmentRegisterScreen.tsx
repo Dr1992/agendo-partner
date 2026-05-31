@@ -1,5 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { useCallback, useLayoutEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Linking, Pressable, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQueryClient } from "../../hooks/api/reactQuery";
@@ -25,10 +26,6 @@ import { isValidCnpj } from "../../utils/cnpj";
 import { isValidBrazilCellPhoneDigits } from "../../utils/phone";
 
 import { FullScreenBlockingLoader } from "../../components/FullScreenBlockingLoader";
-import {
-  ESTABLISHMENT_PLACE_REVIEW_NAV_TITLE,
-  ESTABLISHMENT_PLACE_STEP0_NAV_TITLE,
-} from "./EstablishmentPlaceReviewStep";
 import { EstablishmentRegisterForm } from "./EstablishmentRegisterForm";
 import { getEstablishmentRegisterScreenStyles } from "./styles";
 import { useEstablishmentPlaceFormState } from "./useEstablishmentPlaceFormState";
@@ -36,10 +33,7 @@ import { BRAZIL_STATES, type BrazilState } from "../../data/brazilRegions";
 
 const SUPPORT_EMAIL = "suporte.agendo@gmail.com";
 
-function openSuggestCategoryMail() {
-  const subject = "Sugestão de nova categoria (cadastro de estabelecimento)";
-  const body =
-    "Não encontrei a categoria do meu negócio no app. Descreva o ramo e o tipo de serviço:\n\n";
+function openSuggestCategoryMail(subject: string, body: string) {
   void Linking.openURL(
     `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
   );
@@ -48,6 +42,7 @@ function openSuggestCategoryMail() {
 export function EstablishmentRegisterScreen({
   navigation,
 }: ProfileScreenProps<"EstablishmentRegister">) {
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = useMemo(
     () => getEstablishmentRegisterScreenStyles(theme),
@@ -64,10 +59,10 @@ export function EstablishmentRegisterScreen({
     navigation.setOptions({
       title:
         form.step === 1
-          ? ESTABLISHMENT_PLACE_REVIEW_NAV_TITLE.create
-          : ESTABLISHMENT_PLACE_STEP0_NAV_TITLE.create,
+          ? t("placeForm.navTitleReviewCreate")
+          : t("placeForm.navTitleStepCreate"),
     });
-  }, [form.step, navigation]);
+  }, [form.step, navigation, t]);
   const [busy, setBusy] = useState(false);
   const [galleryBusy, setGalleryBusy] = useState(false);
   const [galleryPickerLaunching, setGalleryPickerLaunching] = useState(false);
@@ -94,9 +89,8 @@ export function EstablishmentRegisterScreen({
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!perm.granted) {
       setFeedbackDialog({
-        title: "Permissão",
-        message:
-          "Precisamos de acesso às suas fotos para enviar imagens do local.",
+        title: t("register.permissionTitle"),
+        message: t("register.permissionPhotosMessage"),
       });
       return;
     }
@@ -125,9 +119,11 @@ export function EstablishmentRegisterScreen({
         });
       } catch (e) {
         setFeedbackDialog({
-          title: "Envio",
+          title: t("register.uploadTitle"),
           message:
-            e instanceof Error ? e.message : "Não foi possível enviar a foto.",
+            e instanceof Error
+              ? e.message
+              : t("register.uploadErrorFallback"),
         });
       } finally {
         setGalleryBusy(false);
@@ -135,7 +131,7 @@ export function EstablishmentRegisterScreen({
     } finally {
       setGalleryPickerLaunching(false);
     }
-  }, [form]);
+  }, [form, t]);
 
   const onSubmit = useCallback(async () => {
     if (
@@ -145,24 +141,23 @@ export function EstablishmentRegisterScreen({
       !form.category
     ) {
       setFeedbackDialog({
-        title: "Cadastro",
-        message: "É preciso estar logado com perfil completo.",
+        title: t("register.registerTitle"),
+        message: t("register.loginRequiredMessage"),
       });
       return;
     }
     const cnpjOnly = form.cnpj.replace(/\D/g, "");
     if (cnpjOnly.length > 0 && !isValidCnpj(cnpjOnly)) {
       setFeedbackDialog({
-        title: "CNPJ inválido",
-        message: "Confira os dígitos ou deixe o campo em branco.",
+        title: t("register.cnpjInvalidTitle"),
+        message: t("register.cnpjInvalidMessage"),
       });
       return;
     }
     if (!isValidBrazilCellPhoneDigits(form.whatsappDigits)) {
       setFeedbackDialog({
-        title: "Celular",
-        message:
-          "Informe o celular com DDD (11 dígitos, começando com 9 após o DDD).",
+        title: t("register.phoneTitle"),
+        message: t("register.phoneInvalidMessage"),
       });
       return;
     }
@@ -171,9 +166,8 @@ export function EstablishmentRegisterScreen({
       .filter(Boolean);
     if (photoStorageKeys.length < 1 || photoStorageKeys.length > 5) {
       setFeedbackDialog({
-        title: "Fotos",
-        message:
-          "Adicione entre 1 e 5 fotos do estabelecimento antes de confirmar.",
+        title: t("register.photosTitle"),
+        message: t("register.photosRangeMessage"),
       });
       return;
     }
@@ -204,22 +198,20 @@ export function EstablishmentRegisterScreen({
       });
     } catch (e) {
       setFeedbackDialog({
-        title: "Cadastro",
-        message: e instanceof Error ? e.message : "Falha ao salvar.",
+        title: t("register.registerTitle"),
+        message: e instanceof Error ? e.message : t("register.saveErrorFallback"),
       });
     } finally {
       setBusy(false);
     }
-  }, [form, navigation, profile, profileComplete, queryClient, session]);
+  }, [form, navigation, profile, profileComplete, queryClient, session, t]);
 
   if (!session?.accessToken || !profileComplete) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
-        <Text variant="body">
-          Faça login e conclua o cadastro na sequência para registrar um local.
-        </Text>
+        <Text variant="body">{t("register.gateMessage")}</Text>
         <Button onPress={() => navigation.navigate(ProfileStack.PartnerHome)}>
-          Ir à área do parceiro
+          {t("register.gateButton")}
         </Button>
       </SafeAreaView>
     );
@@ -283,13 +275,18 @@ export function EstablishmentRegisterScreen({
             style={styles.suggestCategoryButton}
             onPress={() => {
               setCategoryModalOpen(false);
-              openSuggestCategoryMail();
+              openSuggestCategoryMail(
+                t("register.suggestCategorySubject"),
+                t("register.suggestCategoryBody"),
+              );
             }}
           >
             <Text variant="linkAccent">
-              Não encontrou? Sugerir nova categoria
+              {t("register.suggestCategoryLink")}
             </Text>
-            <Text variant="linkMuted">Abre o e-mail para {SUPPORT_EMAIL}</Text>
+            <Text variant="linkMuted">
+              {t("register.suggestCategoryMailHint", { email: SUPPORT_EMAIL })}
+            </Text>
           </Pressable>
         }
         items={apiCategories}
@@ -298,7 +295,7 @@ export function EstablishmentRegisterScreen({
           subtitle: c.description,
           title: c.label,
         })}
-        title="Escolha a categoria"
+        title={t("register.categoryModalTitle")}
         visible={categoryModalOpen}
         onClose={() => setCategoryModalOpen(false)}
         onSelectItem={(c) => form.setCategoryId(c.id)}
@@ -308,7 +305,7 @@ export function EstablishmentRegisterScreen({
         items={BRAZIL_STATES}
         keyExtractor={(s) => s.uf}
         renderItem={(s) => ({ subtitle: s.uf, title: s.label })}
-        title="Escolha o estado"
+        title={t("register.stateModalTitle")}
         visible={stateModalOpen}
         onClose={() => setStateModalOpen(false)}
         onSelectItem={form.onPickState}
@@ -318,7 +315,9 @@ export function EstablishmentRegisterScreen({
         items={form.citiesForState}
         keyExtractor={(c) => c}
         renderItem={(c) => ({ title: c })}
-        title={`Cidades em ${form.stateLabelRow ?? form.stateUf}`}
+        title={t("register.cityModalTitle", {
+          state: form.stateLabelRow ?? form.stateUf,
+        })}
         visible={cityModalOpen}
         onClose={() => setCityModalOpen(false)}
         onSelectItem={form.setCityName}
@@ -335,7 +334,7 @@ export function EstablishmentRegisterScreen({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: form.dismissPlaceFormAlert,
               variant: "primary",
             },
@@ -350,7 +349,7 @@ export function EstablishmentRegisterScreen({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: () => setFeedbackDialog(null),
               variant: "primary",
             },
