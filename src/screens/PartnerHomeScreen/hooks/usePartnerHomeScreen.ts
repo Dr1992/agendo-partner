@@ -7,12 +7,12 @@ import { usePartnerHomeData } from "../fetch/usePartnerHomeData";
 import { partitionPartnerRows } from "../utils/partitionPartnerRows";
 import { usePartnerHomeRules } from "./usePartnerHomeRules";
 
-export function usePartnerHomeScreen({
-  navigation,
-}: ProfileScreenProps<"PartnerHome">) {
+export function usePartnerHomeScreen(
+  _props: ProfileScreenProps<"PartnerHome">,
+) {
   const listQuery = usePartnerHomeData();
   const staffQuery = useProfileAgendaData();
-  const rules = usePartnerHomeRules(navigation);
+  const rules = usePartnerHomeRules();
 
   const partnerRows = useMemo(
     () => listQuery.data?.data ?? [],
@@ -42,11 +42,8 @@ export function usePartnerHomeScreen({
     listEnabled: listQuery.listEnabled,
     listPending: listQuery.isPending,
     listRes: listQuery.data,
-    loginError: rules.loginError,
-    onLogin: rules.onLogin,
     partnerRows,
     staffRows,
-    dismissLoginError: rules.dismissLoginError,
     showFixedRegisterButton:
       rules.showFixedRegisterButton && !isCollaboratorOnly,
   };

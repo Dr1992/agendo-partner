@@ -35,7 +35,7 @@ export function getPickerModalStyles(theme: AppTheme) {
       opacity: 0.88,
     },
     rowSubtitle: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 13,
       marginTop: 4,
     },

@@ -39,7 +39,7 @@ export function getProfileStyles(theme: AppTheme) {
       gap: 10,
     },
     sectionLabel: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 13,
       fontWeight: "600",
       letterSpacing: 0.6,
@@ -80,7 +80,7 @@ export function getProfileStyles(theme: AppTheme) {
       paddingRight: 12,
     },
     linkSubtitle: {
-      color: theme.textMuted,
+      color: theme.textSecondary,
       fontSize: 13,
       marginTop: 4,
     },
@@ -123,7 +123,7 @@ export function getProfileStyles(theme: AppTheme) {
       flex: 1,
     },
     subtle: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 13,
       lineHeight: 18,
       marginTop: 8,

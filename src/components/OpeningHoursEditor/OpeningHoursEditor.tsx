@@ -52,11 +52,7 @@ export function OpeningHoursEditor({
   );
 
   const hintLine =
-    hint === false
-      ? null
-      : hint === undefined
-        ? t("openingHours.hint")
-        : hint;
+    hint === false ? null : hint === undefined ? t("openingHours.hint") : hint;
 
   const timePickerTitle =
     timePick?.field === "open"
@@ -114,7 +110,7 @@ export function OpeningHoursEditor({
                     <View style={oh.timeFieldRow}>
                       <Text variant="body">{slot.open}</Text>
                       <Ionicons
-                        color={theme.textMuted}
+                        color={theme.textHint}
                         name="chevron-down"
                         size={22}
                       />
@@ -135,7 +131,7 @@ export function OpeningHoursEditor({
                     <View style={oh.timeFieldRow}>
                       <Text variant="body">{slot.close}</Text>
                       <Ionicons
-                        color={theme.textMuted}
+                        color={theme.textHint}
                         name="chevron-down"
                         size={22}
                       />

@@ -30,7 +30,7 @@ export function TextField({
     <View>
       {label ? <Text variant="fieldLabel">{label}</Text> : null}
       <TextInput
-        placeholderTextColor={theme.textMuted}
+        placeholderTextColor={theme.textHint}
         style={[styles.field, style]}
         {...inputProps}
       />

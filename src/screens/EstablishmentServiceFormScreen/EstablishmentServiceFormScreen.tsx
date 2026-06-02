@@ -209,7 +209,7 @@ export function EstablishmentServiceFormScreen({
             <Text variant="bodyTight">
               {formatDurationMinutesLabel(durationMinutesDisplay)}
             </Text>
-            <Ionicons color={theme.textMuted} name="chevron-down" size={22} />
+            <Ionicons color={theme.textHint} name="chevron-down" size={22} />
           </View>
         </Pressable>
 
@@ -287,9 +287,7 @@ export function EstablishmentServiceFormScreen({
         {!allPerformers ? (
           <>
             {bookableProfessionals.length === 0 ? (
-              <Text variant="hint">
-                {t("serviceForm.noProfessionalsHint")}
-              </Text>
+              <Text variant="hint">{t("serviceForm.noProfessionalsHint")}</Text>
             ) : (
               <Pressable
                 accessibilityRole="button"
@@ -313,7 +311,7 @@ export function EstablishmentServiceFormScreen({
                   </Text>
                 </View>
                 <Ionicons
-                  color={theme.textMuted}
+                  color={theme.textHint}
                   name="chevron-forward"
                   size={22}
                 />

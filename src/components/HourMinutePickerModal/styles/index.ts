@@ -22,7 +22,7 @@ export function getHourMinutePickerModalStyles(theme: AppTheme) {
     },
     unitLabel: {
       alignSelf: "center",
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 12,
       fontWeight: "600",
       marginBottom: -4,

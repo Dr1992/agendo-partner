@@ -84,7 +84,7 @@ export function getBookingConfirmStyles(theme: AppTheme) {
       }),
     },
     intro: {
-      color: theme.textMuted,
+      color: theme.textSecondary,
       fontSize: 14,
       lineHeight: 21,
       marginBottom: 22,

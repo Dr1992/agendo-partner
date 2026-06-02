@@ -130,7 +130,7 @@ export function InviteStaffScreen(props: ProfileScreenProps<"InviteStaff">) {
           keyboardType="number-pad"
           maxLength={14}
           placeholder={t("invite.cpfPlaceholder")}
-          placeholderTextColor={theme.textMuted}
+          placeholderTextColor={theme.textHint}
           style={styles.field}
           value={formatCpfDisplay(cpfDigits)}
           onChangeText={(text) =>

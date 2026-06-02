@@ -51,7 +51,14 @@ export async function fetchStaffAgendaEstablishments(): Promise<StaffAgendaEstab
 }
 
 export type StaffEstablishmentBookingRow = {
-  customerDisplayName: string;
+  /** `null` quando o cliente é "ghost" (sem conta vinculada). */
+  customerDisplayName: string | null;
+  customerUserId: string | null;
+  /** Email digitado pelo colaborador quando não houve match com conta. */
+  ghostCustomerEmail: string | null;
+  /** `null` quando o próprio cliente criou (ou registro legado sem criador). */
+  createdByDisplayName: string | null;
+  createdByUserId: string | null;
   endsAt: string;
   id: string;
   serviceName: string;
@@ -95,7 +102,8 @@ export async function cancelPartnerAppointment(
 }
 
 export type CreateStaffAssistedAppointmentBody = {
-  customerEmail: string;
+  /** Opcional: se vazio ou sem match no sistema, o agendamento fica "ghost". */
+  customerEmail?: string;
   professionalUserId: string;
   serviceId: string;
   startsAt: string;

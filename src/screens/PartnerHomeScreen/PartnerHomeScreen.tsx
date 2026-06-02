@@ -6,10 +6,10 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
-import { AlertDialog } from "../../components/AlertDialog/AlertDialog";
 import { Button } from "../../components/Button";
 import { EstablishmentRowCard } from "../../components/EstablishmentRowCard/EstablishmentRowCard";
 import { InlineLoading } from "../../components/InlineLoading";
+import { SignedOutGate } from "../../components/SignedOutGate";
 import { Text } from "../../components/Text";
 import { getScreenFormStyles } from "../../components/ScreenForm";
 import { useAppTheme } from "../../hooks/useAppTheme";
@@ -37,15 +37,12 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
 
   const {
     activeRows,
-    dismissLoginError,
     hasInactive,
     inactiveRows,
     isCollaboratorOnly,
     listEnabled,
     listPending,
     listRes,
-    loginError,
-    onLogin,
     partnerRows,
     staffRows,
     showFixedRegisterButton,
@@ -88,29 +85,23 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
     [homeStyles.establishmentListCardSpacing, navigation, t, theme],
   );
 
+  if (!session) {
+    return (
+      <SignedOutGate
+        buttonText={t("home.gateButton")}
+        subtitle={t("home.gateSubtitle")}
+        title={t("home.gateTitle")}
+      />
+    );
+  }
+
   return (
     <SafeAreaView edges={[]} style={styles.container}>
-      {loginError ? (
-        <AlertDialog
-          buttons={[
-            {
-              label: t("common.ok"),
-              onPress: dismissLoginError,
-              variant: "primary",
-            },
-          ]}
-          message={loginError.message}
-          title={loginError.title}
-          visible
-          onRequestClose={dismissLoginError}
-        />
-      ) : null}
       <ScrollView
         contentContainerStyle={[
           styles.scrollContent,
           showFixedRegisterButton && homeStyles.scrollContentWithFixedFooter,
-          (!session ||
-            !profileComplete ||
+          (!profileComplete ||
             (listEnabled &&
               !listPending &&
               partnerRows.length === 0 &&
@@ -119,19 +110,7 @@ export function PartnerHomeScreen(props: ProfileScreenProps<"PartnerHome">) {
         ]}
         style={styles.scroll}
       >
-        {!session ? (
-          <>
-            <Text style={homeStyles.gateText} variant="hint">
-              {t("home.gateLoggedOut")}
-            </Text>
-            <Button
-              style={styles.ctaRetryFullWidth}
-              onPress={() => void onLogin()}
-            >
-              {t("home.loginButton")}
-            </Button>
-          </>
-        ) : !profileComplete ? (
+        {!profileComplete ? (
           <>
             <Text style={homeStyles.gateText} variant="hint">
               {t("home.gateIncompleteProfile")}

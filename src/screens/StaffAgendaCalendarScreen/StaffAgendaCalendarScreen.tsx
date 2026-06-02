@@ -23,6 +23,7 @@ export function StaffAgendaCalendarScreen(
   const { t } = useTranslation("staff");
   const {
     bookingsForSelected,
+    cancellableBookingIds,
     cancelDialogBookingId,
     cancelError,
     cancelMutation,
@@ -200,10 +201,15 @@ export function StaffAgendaCalendarScreen(
                     </View>
                     <Text
                       numberOfLines={2}
-                      style={summaryStyles.summaryCellValue}
+                      style={[
+                        summaryStyles.summaryCellValue,
+                        booking.customerDisplayName === null &&
+                          local.customerUnknown,
+                      ]}
                       variant="bodyTight"
                     >
-                      {booking.customerDisplayName}
+                      {booking.customerDisplayName ??
+                        t("calendar.customerUnknown")}
                     </Text>
                   </View>
                   <View style={summaryStyles.summaryCell}>
@@ -228,25 +234,55 @@ export function StaffAgendaCalendarScreen(
                     </Text>
                   </View>
                 </View>
-                <View style={local.summaryCancelFooter}>
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityState={{ disabled: cancelMutation.isPending }}
-                    disabled={cancelMutation.isPending}
-                    style={({ pressed }) => [
-                      local.summaryCancelButton,
-                      pressed && local.summaryCancelButtonPressed,
-                    ]}
-                    onPress={() => setCancelDialogBookingId(booking.id)}
-                  >
-                    <Text
-                      style={local.summaryCancelButtonLabel}
-                      variant="bodyTight"
+                {booking.createdByDisplayName !== null ? (
+                  <View style={summaryStyles.summaryGridRow}>
+                    <View style={summaryStyles.summaryCell}>
+                      <View style={summaryStyles.summaryCellHeader}>
+                        <Ionicons
+                          color={theme.accent}
+                          name="person-add-outline"
+                          size={18}
+                        />
+                        <Text
+                          style={summaryStyles.summaryCellLabel}
+                          variant="caption"
+                        >
+                          {t("calendar.bookedByLabel")}
+                        </Text>
+                      </View>
+                      <Text
+                        numberOfLines={2}
+                        style={summaryStyles.summaryCellValue}
+                        variant="bodyTight"
+                      >
+                        {booking.createdByDisplayName}
+                      </Text>
+                    </View>
+                  </View>
+                ) : null}
+                {cancellableBookingIds.has(booking.id) ? (
+                  <View style={local.summaryCancelFooter}>
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityState={{
+                        disabled: cancelMutation.isPending,
+                      }}
+                      disabled={cancelMutation.isPending}
+                      style={({ pressed }) => [
+                        local.summaryCancelButton,
+                        pressed && local.summaryCancelButtonPressed,
+                      ]}
+                      onPress={() => setCancelDialogBookingId(booking.id)}
                     >
-                      {t("calendar.cancelBooking")}
-                    </Text>
-                  </Pressable>
-                </View>
+                      <Text
+                        style={local.summaryCancelButtonLabel}
+                        variant="bodyTight"
+                      >
+                        {t("calendar.cancelBooking")}
+                      </Text>
+                    </Pressable>
+                  </View>
+                ) : null}
               </View>
             ))
           )}

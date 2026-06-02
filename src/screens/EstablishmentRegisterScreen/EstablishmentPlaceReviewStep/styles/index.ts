@@ -50,7 +50,7 @@ export function getEstablishmentPlaceReviewStepStyles(theme: AppTheme) {
       marginBottom: 12,
     },
     photoCardTitle: {
-      color: theme.textMuted,
+      color: theme.textHint,
       flex: 1,
       fontSize: 11,
       fontWeight: "600",
@@ -59,7 +59,7 @@ export function getEstablishmentPlaceReviewStepStyles(theme: AppTheme) {
       textTransform: "uppercase",
     },
     photoEmpty: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 15,
     },
     photoRow: {

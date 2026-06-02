@@ -55,7 +55,7 @@ export function getServiceCardStyles(theme: AppTheme) {
       gap: 5,
     },
     durationText: {
-      color: theme.textMuted,
+      color: theme.textSecondary,
       fontSize: 13,
     },
     price: {

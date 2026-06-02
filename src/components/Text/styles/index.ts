@@ -17,7 +17,7 @@ export function getTextStyles(theme: AppTheme): Record<string, TextStyle> {
       lineHeight: 22,
     },
     caption: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 13,
       marginTop: 4,
       textAlign: "center",
@@ -70,7 +70,7 @@ export function getTextStyles(theme: AppTheme): Record<string, TextStyle> {
       textAlign: "center",
     },
     listSubtitle: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 13,
       marginTop: 4,
     },

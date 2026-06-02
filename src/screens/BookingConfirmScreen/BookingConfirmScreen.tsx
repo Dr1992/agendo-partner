@@ -87,7 +87,7 @@ export function BookingConfirmScreen(props: BookingConfirmScreenProps) {
             autoCorrect={false}
             keyboardType="email-address"
             placeholder={t("confirm.customerEmailPlaceholder")}
-            placeholderTextColor={theme.textMuted}
+            placeholderTextColor={theme.textHint}
             style={styles.customerEmailInput}
             value={customerEmail}
             onChangeText={setCustomerEmail}

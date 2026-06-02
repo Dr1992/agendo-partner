@@ -65,7 +65,7 @@ export function PendingInviteLinkServicesScreen(
                 onPress={() => toggle(s.id)}
               >
                 <Ionicons
-                  color={on ? theme.accent : theme.textMuted}
+                  color={on ? theme.accent : theme.textHint}
                   name={on ? "checkbox" : "square-outline"}
                   size={22}
                 />

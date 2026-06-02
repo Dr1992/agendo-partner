@@ -98,7 +98,7 @@ export function StaffPersonalCommitmentScreen({
                 {startHHMM ?? "00:00"}
               </Text>
               <Ionicons
-                color={theme.textMuted}
+                color={theme.textHint}
                 name="chevron-forward"
                 size={18}
               />
@@ -124,7 +124,7 @@ export function StaffPersonalCommitmentScreen({
                 {endHHMM ?? "00:00"}
               </Text>
               <Ionicons
-                color={theme.textMuted}
+                color={theme.textHint}
                 name="chevron-forward"
                 size={18}
               />
@@ -146,7 +146,7 @@ export function StaffPersonalCommitmentScreen({
             multiline
             numberOfLines={3}
             placeholder={t("personalCommitment.descriptionPlaceholder")}
-            placeholderTextColor={theme.textMuted}
+            placeholderTextColor={theme.textHint}
             style={styles.descriptionInput}
             value={description}
             onChangeText={setDescription}

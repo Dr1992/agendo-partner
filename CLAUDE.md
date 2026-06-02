@@ -204,7 +204,7 @@ View
 
 - A pasta **`app/src/api/public/`** é a camada HTTP pura: funções simples com URL/método (`apiAuthGet`, `apiAuthPost`, etc.), sem `@tanstack/react-query`.
 - O pacote **`@tanstack/react-query`** deve ser importado **somente** em ficheiros de **`app/src/hooks/api/`**.
-- Ficheiros de feature em **`screens/**/fetch/`** devem consumir hooks da camada `hooks/api` (ex.: `useFetchPartnerEstablishment`) em vez de chamar `useQuery`/`useMutation` diretamente.
+- Ficheiros de feature em **`screens/**/fetch/`** devem consumir hooks da camada `hooks/api`(ex.:`useFetchPartnerEstablishment`) em vez de chamar `useQuery`/`useMutation` diretamente.
 - Em **componentes reutilizáveis** (não-screen), é aceitável consumir `useFetch*` de `hooks/api` diretamente quando for apenas 1 query simples; criar `fetch/` local é opcional.
 - Transformação de shape/retorno específico do ecrã continua na própria feature (`screens/**/fetch/` e `screens/**/hooks/`), mantendo `api/public` simples.
 
@@ -236,3 +236,11 @@ Não é obrigatório mover ficheiros legados de uma vez. Ao tocar num ecrã com 
 ### Pós-alterações de código
 
 - Sempre rodar TypeScript (`npx tsc --noEmit`) e Prettier (`npx prettier --check .`) após qualquer alteração no código para garantir que não há erros de tipo e que o código está formatado corretamente.
+
+---
+
+## Criação de tickets Jira
+
+- **Sempre** perguntar a categoria antes de criar um ticket, sem exceção.
+- Categorias disponíveis: **MVP** e **Pos-MVP** (ao menos uma obrigatória).
+- Aplicar a categoria como label na issue (`labels: ["MVP"]` ou `labels: ["Pos-MVP"]`).

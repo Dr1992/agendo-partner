@@ -54,7 +54,7 @@ export function getDetailFactsCardStyles(theme: AppTheme) {
       width: ICON_BOX,
     },
     detailLabel: {
-      color: theme.textMuted,
+      color: theme.textHint,
       fontSize: 11,
       fontWeight: "600",
       letterSpacing: 0.35,

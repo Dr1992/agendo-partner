@@ -77,7 +77,7 @@ export function CollaboratorsPendingInvitesSheetContent({
                   <View style={screenStyles.pendingModalMetaRow}>
                     <View style={screenStyles.pendingModalMetaIconMuted}>
                       <Ionicons
-                        color={theme.textMuted}
+                        color={theme.textHint}
                         name={
                           inv.intendedRole === "MANAGER"
                             ? "shield-checkmark-outline"
@@ -98,7 +98,7 @@ export function CollaboratorsPendingInvitesSheetContent({
                   <View style={screenStyles.pendingModalMetaRow}>
                     <View style={screenStyles.pendingModalMetaIconMuted}>
                       <Ionicons
-                        color={theme.textMuted}
+                        color={theme.textHint}
                         name="calendar-outline"
                         size={19}
                       />
@@ -114,7 +114,7 @@ export function CollaboratorsPendingInvitesSheetContent({
                     <View style={screenStyles.pendingModalMetaRow}>
                       <View style={screenStyles.pendingModalMetaIconMuted}>
                         <Ionicons
-                          color={theme.textMuted}
+                          color={theme.textHint}
                           name="layers-outline"
                           size={19}
                         />
@@ -132,7 +132,7 @@ export function CollaboratorsPendingInvitesSheetContent({
                     <View style={screenStyles.pendingModalMetaRow}>
                       <View style={screenStyles.pendingModalMetaIconMuted}>
                         <Ionicons
-                          color={theme.textMuted}
+                          color={theme.textHint}
                           name="link-outline"
                           size={19}
                         />

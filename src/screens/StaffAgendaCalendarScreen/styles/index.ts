@@ -31,6 +31,10 @@ export function getStaffAgendaCalendarScreenStyles(theme: AppTheme) {
     staffSummaryCard: {
       marginHorizontal: 0,
     },
+    customerUnknown: {
+      color: theme.textHint,
+      fontStyle: "italic",
+    },
     staffSummaryCardSpacing: {
       marginTop: 12,
     },

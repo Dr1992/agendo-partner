@@ -119,7 +119,9 @@ export function HourMinutePickerModal(props: HourMinutePickerModalProps) {
     <AppSheetModal
       contentPaddingH={0}
       footer={
-        <Button onPress={onConfirmPress}>{t("hourMinutePicker.confirm")}</Button>
+        <Button onPress={onConfirmPress}>
+          {t("hourMinutePicker.confirm")}
+        </Button>
       }
       size="medium"
       title={title}

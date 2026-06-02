@@ -178,10 +178,9 @@
   },
   "home": {
     "noCategory": "No category",
-    "loginErrorTitle": "Login",
-    "loginErrorFallback": "Couldn't complete login.",
-    "gateLoggedOut": "Sign in to manage your places.",
-    "loginButton": "Login",
+    "gateTitle": "Manage your places",
+    "gateSubtitle": "Sign in to manage your places from here.",
+    "gateButton": "Log in",
     "gateIncompleteProfile": "Complete your profile to unlock place management.",
     "completeProfileButton": "Complete profile",
     "myEstablishments": "My establishments",

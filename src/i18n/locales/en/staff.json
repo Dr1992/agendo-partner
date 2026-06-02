@@ -1,10 +1,8 @@
 {
   "agendaList": {
-    "gateText": "Log in to view your agenda as a staff member.",
-    "login": "Login",
-    "loginErrorDefault": "Could not complete login.",
-    "loginErrorTitle": "Login",
-    "ok": "OK"
+    "gateTitle": "Your agenda as staff",
+    "gateSubtitle": "Log in to see your agenda as staff.",
+    "gateLogin": "Log in"
   },
   "calendar": {
     "cancelBack": "Back",
@@ -16,6 +14,8 @@
     "cancelInProgress": "Cancelling…",
     "cancelSubmit": "Cancel",
     "clientLabel": "Client",
+    "customerUnknown": "Unknown customer",
+    "bookedByLabel": "Booked by",
     "dayDetailTitle": "Day details",
     "emptyDay": "No client appointments on this day.",
     "intro": "Days highlighted on the calendar have at least one client appointment scheduled.",
@@ -73,11 +73,9 @@
     "timeOrderError": "The end time must be after the start time."
   },
   "disponibilidadeList": {
-    "gateText": "Log in to manage your availability.",
-    "login": "Login",
-    "loginErrorDefault": "Could not complete login.",
-    "loginErrorTitle": "Login",
-    "ok": "OK"
+    "gateTitle": "Your availability",
+    "gateSubtitle": "Log in to manage your availability.",
+    "gateLogin": "Log in"
   },
   "scheduleValidation": {
     "closedDay": "The establishment is closed on {{weekday}}. Disable this day in your availability or ask the owner or manager to adjust the location's hours.",

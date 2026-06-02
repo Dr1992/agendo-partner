@@ -1,10 +1,8 @@
 {
   "agendaList": {
-    "gateText": "Faça login para ver sua agenda como colaborador.",
-    "login": "Login",
-    "loginErrorDefault": "Não foi possível concluir o login.",
-    "loginErrorTitle": "Login",
-    "ok": "OK"
+    "gateTitle": "Sua agenda como colaborador",
+    "gateSubtitle": "Faça login para ver sua agenda como colaborador.",
+    "gateLogin": "Fazer login"
   },
   "calendar": {
     "cancelBack": "Voltar",
@@ -16,6 +14,8 @@
     "cancelInProgress": "A cancelar…",
     "cancelSubmit": "Cancelar",
     "clientLabel": "Cliente",
+    "customerUnknown": "Não identificado",
+    "bookedByLabel": "Agendado por",
     "dayDetailTitle": "Detalhe do dia",
     "emptyDay": "Nenhum atendimento com cliente neste dia.",
     "intro": "Os dias destacados no calendário têm pelo menos um atendimento com cliente agendado.",
@@ -73,11 +73,9 @@
     "timeOrderError": "O horário de fim deve ser depois do início."
   },
   "disponibilidadeList": {
-    "gateText": "Faça login para gerir a sua disponibilidade.",
-    "login": "Login",
-    "loginErrorDefault": "Não foi possível concluir o login.",
-    "loginErrorTitle": "Login",
-    "ok": "OK"
+    "gateTitle": "Sua disponibilidade",
+    "gateSubtitle": "Faça login para gerir a sua disponibilidade.",
+    "gateLogin": "Fazer login"
   },
   "scheduleValidation": {
     "closedDay": "O estabelecimento não funciona em {{weekday}}. Desmarque este dia na sua disponibilidade ou peça ao dono ou ao gestor para ajustar o horário do local.",
