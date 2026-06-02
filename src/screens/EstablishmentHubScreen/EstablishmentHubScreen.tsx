@@ -288,9 +288,7 @@ export function EstablishmentHubScreen(
             </View>
           ) : !canManage ? (
             <View style={hub.readOnlyHint}>
-              <Text variant="hint">
-                {t("establishmentHub.readOnlyHint")}
-              </Text>
+              <Text variant="hint">{t("establishmentHub.readOnlyHint")}</Text>
             </View>
           ) : null}
 
@@ -323,7 +321,9 @@ export function EstablishmentHubScreen(
         {unlockBusy ? (
           <View accessibilityViewIsModal style={hub.unlockLoadingOverlay}>
             <ActivityIndicator
-              accessibilityLabel={t("establishmentHub.reactivatingAccessibility")}
+              accessibilityLabel={t(
+                "establishmentHub.reactivatingAccessibility",
+              )}
               color={theme.accent}
               size="large"
             />

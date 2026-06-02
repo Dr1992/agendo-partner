@@ -188,6 +188,15 @@ export function useStaffAgendaCalendarScreen({
     );
   }, [visibleBookings, selectedKey]);
 
+  const cancellableBookingIds = useMemo(() => {
+    const now = Date.now();
+    return new Set(
+      bookingsForSelected
+        .filter((booking) => new Date(booking.startsAt).getTime() > now)
+        .map((booking) => booking.id),
+    );
+  }, [bookingsForSelected]);
+
   const staffMarkedDates = useMemo((): MarkedDates => {
     if (!selectedKey) {
       return {};
@@ -218,6 +227,7 @@ export function useStaffAgendaCalendarScreen({
 
   return {
     bookingsForSelected,
+    cancellableBookingIds,
     cancelDialogBookingId,
     cancelError,
     cancelMutation,

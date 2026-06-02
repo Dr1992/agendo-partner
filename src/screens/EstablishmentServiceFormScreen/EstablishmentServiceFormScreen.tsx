@@ -287,9 +287,7 @@ export function EstablishmentServiceFormScreen({
         {!allPerformers ? (
           <>
             {bookableProfessionals.length === 0 ? (
-              <Text variant="hint">
-                {t("serviceForm.noProfessionalsHint")}
-              </Text>
+              <Text variant="hint">{t("serviceForm.noProfessionalsHint")}</Text>
             ) : (
               <Pressable
                 accessibilityRole="button"

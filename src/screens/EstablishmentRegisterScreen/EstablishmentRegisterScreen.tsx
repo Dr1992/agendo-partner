@@ -121,9 +121,7 @@ export function EstablishmentRegisterScreen({
         setFeedbackDialog({
           title: t("register.uploadTitle"),
           message:
-            e instanceof Error
-              ? e.message
-              : t("register.uploadErrorFallback"),
+            e instanceof Error ? e.message : t("register.uploadErrorFallback"),
         });
       } finally {
         setGalleryBusy(false);
@@ -199,7 +197,8 @@ export function EstablishmentRegisterScreen({
     } catch (e) {
       setFeedbackDialog({
         title: t("register.registerTitle"),
-        message: e instanceof Error ? e.message : t("register.saveErrorFallback"),
+        message:
+          e instanceof Error ? e.message : t("register.saveErrorFallback"),
       });
     } finally {
       setBusy(false);

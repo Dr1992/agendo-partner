@@ -97,7 +97,9 @@ export function CompleteProfileScreen({
       setSaveError({
         title: t("completeProfile.saveErrorTitle"),
         message:
-          e instanceof Error ? e.message : t("completeProfile.saveErrorFallback"),
+          e instanceof Error
+            ? e.message
+            : t("completeProfile.saveErrorFallback"),
       });
     } finally {
       setBusy(false);
@@ -200,7 +202,9 @@ export function CompleteProfileScreen({
           {busy ? (
             <ActivityIndicator color={palette.onAccent} />
           ) : (
-            <Text style={styles.ctaText}>{t("completeProfile.saveButton")}</Text>
+            <Text style={styles.ctaText}>
+              {t("completeProfile.saveButton")}
+            </Text>
           )}
         </Pressable>
       </ScrollView>

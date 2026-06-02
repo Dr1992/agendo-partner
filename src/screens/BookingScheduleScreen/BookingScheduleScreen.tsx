@@ -382,7 +382,9 @@ export function BookingScheduleScreen({
             ]}
             onPress={onReserve}
           >
-            <Text style={styles.footerCtaText}>{t("schedule.continueCta")}</Text>
+            <Text style={styles.footerCtaText}>
+              {t("schedule.continueCta")}
+            </Text>
           </Pressable>
         </View>
       </View>

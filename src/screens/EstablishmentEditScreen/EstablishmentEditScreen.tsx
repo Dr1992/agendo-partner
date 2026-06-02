@@ -32,9 +32,10 @@ import { isValidBrazilCellPhoneDigits } from "../../utils/phone";
 
 import { FullScreenBlockingLoader } from "../../components/FullScreenBlockingLoader";
 import { LoadingCentered } from "../../components/LoadingCentered";
-import { EstablishmentRegisterForm } from "../EstablishmentRegisterScreen/EstablishmentRegisterForm";
-import { getEstablishmentRegisterScreenStyles } from "../EstablishmentRegisterScreen/styles";
+import { EstablishmentPlaceReviewStep } from "../EstablishmentRegisterScreen/EstablishmentPlaceReviewStep";
 import { useEstablishmentPlaceFormState } from "../EstablishmentRegisterScreen/useEstablishmentPlaceFormState";
+import { EstablishmentEditForm } from "./components/EstablishmentEditForm";
+import { getEstablishmentEditScreenStyles } from "./styles";
 import { BRAZIL_STATES, type BrazilState } from "../../data/brazilRegions";
 import {
   useEstablishmentEditCategoriesData,
@@ -58,7 +59,7 @@ export function EstablishmentEditScreen({
   const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = useMemo(
-    () => getEstablishmentRegisterScreenStyles(theme),
+    () => getEstablishmentEditScreenStyles(theme),
     [theme],
   );
   const queryClient = useQueryClient();
@@ -183,9 +184,7 @@ export function EstablishmentEditScreen({
         setFeedbackDialog({
           title: t("register.uploadTitle"),
           message:
-            e instanceof Error
-              ? e.message
-              : t("register.uploadErrorFallback"),
+            e instanceof Error ? e.message : t("register.uploadErrorFallback"),
         });
       } finally {
         setGalleryBusy(false);
@@ -333,48 +332,62 @@ export function EstablishmentEditScreen({
           </Text>
         ) : null}
 
-        <EstablishmentRegisterForm
-          addressLine={form.addressLine}
-          addressNumber={form.addressNumber}
-          addrLocks={form.addrLocks}
-          busy={busy}
-          canStep0={form.canStep0}
-          categoryLabel={form.category?.label ?? null}
-          cepDigits={form.cepDigits}
-          cepLookupBusy={form.cepLookupBusy}
-          cityName={form.cityName}
-          cnpj={form.cnpj}
-          description={form.description}
-          galleryPhotos={form.galleryPhotos}
-          galleryReadOnly={false}
-          galleryUploadBusy={galleryBusy}
-          mode="edit"
-          name={form.name}
-          neighborhood={form.neighborhood}
-          openingHoursSummary={form.openingHoursSummary}
-          stateLabelRow={form.stateLabelRow ?? null}
-          stateUf={form.stateUf}
-          step={form.step}
-          street={form.street}
-          whatsappDigits={form.whatsappDigits}
-          onAddressNumberChange={form.setAddressNumber}
-          onBack={() => form.setStep(0)}
-          onCepDigitsChange={form.setCepDigits}
-          onCnpjChange={form.setCnpj}
-          onDescriptionChange={form.setDescription}
-          onGalleryAddPress={onGalleryAddPress}
-          onGalleryRemove={form.removeGalleryPhoto}
-          onNameChange={form.setName}
-          onNeighborhoodChange={form.setNeighborhood}
-          onNext={onNext}
-          onOpenCategoryModal={() => setCategoryModalOpen(true)}
-          onOpenCityModal={() => setCityModalOpen(true)}
-          onOpenHoursModal={() => setOpeningHoursModalOpen(true)}
-          onOpenStateModal={() => setStateModalOpen(true)}
-          onStreetChange={form.setStreet}
-          onSubmit={onSubmit}
-          onWhatsappChange={form.setWhatsappDigits}
-        />
+        {form.step === 1 ? (
+          <EstablishmentPlaceReviewStep
+            addressLine={form.addressLine}
+            busy={busy}
+            categoryLabel={form.category?.label ?? null}
+            cepDigits={form.cepDigits}
+            cityName={form.cityName}
+            cnpj={form.cnpj}
+            description={form.description}
+            galleryPhotos={form.galleryPhotos}
+            mode="edit"
+            name={form.name}
+            openingHoursSummary={form.openingHoursSummary}
+            stateLabelRow={form.stateLabelRow ?? null}
+            stateUf={form.stateUf}
+            whatsappDigits={form.whatsappDigits}
+            onBack={() => form.setStep(0)}
+            onSubmit={onSubmit}
+          />
+        ) : (
+          <EstablishmentEditForm
+            addrLocks={form.addrLocks}
+            addressNumber={form.addressNumber}
+            canStep0={form.canStep0}
+            categoryLabel={form.category?.label ?? null}
+            cepDigits={form.cepDigits}
+            cepLookupBusy={form.cepLookupBusy}
+            cityName={form.cityName}
+            cnpj={form.cnpj}
+            description={form.description}
+            galleryPhotos={form.galleryPhotos}
+            galleryUploadBusy={galleryBusy}
+            name={form.name}
+            neighborhood={form.neighborhood}
+            openingHoursSummary={form.openingHoursSummary}
+            stateLabelRow={form.stateLabelRow ?? null}
+            stateUf={form.stateUf}
+            street={form.street}
+            whatsappDigits={form.whatsappDigits}
+            onAddressNumberChange={form.setAddressNumber}
+            onCepDigitsChange={form.setCepDigits}
+            onCnpjChange={form.setCnpj}
+            onDescriptionChange={form.setDescription}
+            onGalleryAddPress={onGalleryAddPress}
+            onGalleryRemove={form.removeGalleryPhoto}
+            onNameChange={form.setName}
+            onNeighborhoodChange={form.setNeighborhood}
+            onNext={onNext}
+            onOpenCategoryModal={() => setCategoryModalOpen(true)}
+            onOpenCityModal={() => setCityModalOpen(true)}
+            onOpenHoursModal={() => setOpeningHoursModalOpen(true)}
+            onOpenStateModal={() => setStateModalOpen(true)}
+            onStreetChange={form.setStreet}
+            onWhatsappChange={form.setWhatsappDigits}
+          />
+        )}
 
         {form.step === 0 && canToggleActive ? (
           <Button

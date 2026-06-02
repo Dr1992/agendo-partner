@@ -178,10 +178,9 @@
   },
   "home": {
     "noCategory": "Sem categoria",
-    "loginErrorTitle": "Login",
-    "loginErrorFallback": "Nao foi possivel concluir o login.",
-    "gateLoggedOut": "Entre para gerenciar seus locais.",
-    "loginButton": "Login",
+    "gateTitle": "Gerencie seus estabelecimentos",
+    "gateSubtitle": "Faça login para gerenciar seus locais por aqui.",
+    "gateButton": "Fazer login",
     "gateIncompleteProfile": "Complete seu cadastro para liberar o gerenciamento do local.",
     "completeProfileButton": "Completar cadastro",
     "myEstablishments": "Meus estabelecimentos",

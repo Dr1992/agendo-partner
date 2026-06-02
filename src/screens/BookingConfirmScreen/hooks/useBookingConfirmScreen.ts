@@ -16,7 +16,7 @@ import { formatDurationMinutesLabel } from "../../../utils/formatDurationLabel";
 import { formatSlotDateTimePt } from "../../../utils/formatSlotDateTimePt";
 import { useBookingConfirmData } from "../fetch/useBookingConfirmData";
 import type { BookingConfirmScreenProps, BookingDialogState } from "../types";
-import { isValidCustomerEmail } from "../utils/bookingConfirmHelpers";
+import { isAcceptableCustomerEmail } from "../utils/bookingConfirmHelpers";
 
 export function useBookingConfirmScreen({
   navigation,
@@ -138,7 +138,7 @@ export function useBookingConfirmScreen({
       return;
     }
     const trimmed = customerEmail.trim();
-    if (!isValidCustomerEmail(trimmed)) {
+    if (!isAcceptableCustomerEmail(trimmed)) {
       setDialog({
         kind: "booking_error",
         message: t("confirm.errorInvalidEmail"),
@@ -148,7 +148,7 @@ export function useBookingConfirmScreen({
     setBookingBusy(true);
     try {
       await createStaffAssistedAppointment(est.id, {
-        customerEmail: trimmed,
+        customerEmail: trimmed.length > 0 ? trimmed : undefined,
         professionalUserId: professional.id,
         serviceId: service.id,
         startsAt: slotIso,
@@ -190,10 +190,10 @@ export function useBookingConfirmScreen({
     if (!est || !service || !professional) {
       return;
     }
-    if (!isValidCustomerEmail(customerEmail)) {
+    if (!isAcceptableCustomerEmail(customerEmail)) {
       setDialog({
         kind: "booking_error",
-        message: t("confirm.errorMissingEmail"),
+        message: t("confirm.errorInvalidEmail"),
       });
       return;
     }

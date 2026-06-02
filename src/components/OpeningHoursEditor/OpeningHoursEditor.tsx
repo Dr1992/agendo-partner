@@ -52,11 +52,7 @@ export function OpeningHoursEditor({
   );
 
   const hintLine =
-    hint === false
-      ? null
-      : hint === undefined
-        ? t("openingHours.hint")
-        : hint;
+    hint === false ? null : hint === undefined ? t("openingHours.hint") : hint;
 
   const timePickerTitle =
     timePick?.field === "open"
