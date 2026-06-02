@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
 import {
   SafeAreaView,
@@ -17,18 +18,21 @@ import { formatCentsAsBrazilReais } from "../../utils/brazilMoney";
 import { useEstablishmentServicesScreen } from "./hooks/useEstablishmentServicesScreen";
 import { getEstablishmentServicesScreenStyles } from "./styles";
 
-function priceLabel(priceCents: number | null): string {
-  return priceCents != null
-    ? `R$ ${formatCentsAsBrazilReais(priceCents)}`
-    : "Preço não informado";
-}
-
 export function EstablishmentServicesScreen(
   props: ProfileScreenProps<"EstablishmentServices">,
 ) {
   const { route } = props;
   const { establishmentName } = route.params;
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
+
+  const priceLabel = useCallback(
+    (priceCents: number | null): string =>
+      priceCents != null
+        ? `R$ ${formatCentsAsBrazilReais(priceCents)}`
+        : t("services.priceUnset"),
+    [t],
+  );
   const insets = useSafeAreaInsets();
   const styles = getScreenFormStyles(theme);
   const svcStyles = useMemo(
@@ -69,7 +73,7 @@ export function EstablishmentServicesScreen(
         onPress={() => onEdit(item)}
       />
     ),
-    [onEdit],
+    [onEdit, priceLabel],
   );
 
   const listEmpty = useMemo(() => {
@@ -78,10 +82,10 @@ export function EstablishmentServicesScreen(
     }
     return (
       <Text style={svcStyles.hintTop} variant="hint">
-        Nenhum serviço cadastrado. Toque em "Novo serviço" para criar.
+        {t("services.emptyList")}
       </Text>
     );
-  }, [rows.length, svcStyles.hintTop]);
+  }, [rows.length, svcStyles.hintTop, t]);
 
   const footerPaddingBottom = insets.bottom + 16;
 
@@ -99,14 +103,14 @@ export function EstablishmentServicesScreen(
         <Text variant="body">
           {estError instanceof Error
             ? estError.message
-            : "Local não encontrado ou sem permissão."}
+            : t("services.notFound")}
         </Text>
         {isEstError ? (
           <Button
             style={styles.ctaRetryFullWidth}
             onPress={() => void refetchEst()}
           >
-            Tentar novamente
+            {t("common.retry")}
           </Button>
         ) : null}
       </SafeAreaView>
@@ -117,7 +121,7 @@ export function EstablishmentServicesScreen(
     return (
       <SafeAreaView edges={[]} style={styles.container}>
         <Text style={styles.body} variant="body">
-          Só o dono ou o gestor pode gerir serviços em {establishmentName}.
+          {t("services.permissionDenied", { name: establishmentName })}
         </Text>
       </SafeAreaView>
     );
@@ -135,12 +139,10 @@ export function EstablishmentServicesScreen(
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
         <Text variant="body">
-          {error instanceof Error
-            ? error.message
-            : "Não foi possível carregar os serviços."}
+          {error instanceof Error ? error.message : t("services.loadError")}
         </Text>
         <Button style={styles.ctaRetryFullWidth} onPress={() => void refetch()}>
-          Tentar novamente
+          {t("common.retry")}
         </Button>
       </SafeAreaView>
     );
@@ -153,8 +155,7 @@ export function EstablishmentServicesScreen(
           ListEmptyComponent={listEmpty}
           ListHeaderComponent={
             <Text style={svcStyles.hintTop} variant="hint">
-              Serviços oferecidos neste local. Edite preço, duração e quem pode
-              atender cada um.
+              {t("services.listHint")}
             </Text>
           }
           contentContainerStyle={styles.scrollContent}
@@ -168,7 +169,7 @@ export function EstablishmentServicesScreen(
           style={[svcStyles.footer, { paddingBottom: footerPaddingBottom }]}
         >
           <Button style={svcStyles.footerButton} onPress={onNewService}>
-            Novo serviço
+            {t("services.newServiceButton")}
           </Button>
         </View>
       </View>

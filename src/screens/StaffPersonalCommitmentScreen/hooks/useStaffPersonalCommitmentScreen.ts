@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { DateData } from "react-native-calendars";
 import type { MarkedDates } from "react-native-calendars/src/types";
 
@@ -33,6 +34,7 @@ function hasTimeOverlap(
 }
 
 export function useStaffPersonalCommitmentScreen(establishmentId: string) {
+  const { t } = useTranslation("staff");
   const now = useMemo(() => new Date(), []);
   const todayStart = useMemo(() => startOfLocalDay(now), [now]);
 
@@ -122,10 +124,10 @@ export function useStaffPersonalCommitmentScreen(establishmentId: string) {
       return null;
     }
     if ((timeToMinutes(endHHMM) ?? 0) <= (timeToMinutes(startHHMM) ?? 0)) {
-      return "O horário de fim deve ser depois do início.";
+      return t("personalCommitment.timeOrderError");
     }
     return null;
-  }, [startHHMM, endHHMM]);
+  }, [startHHMM, endHHMM, t]);
 
   const canSave = Boolean(startHHMM && endHHMM && !timeError);
 

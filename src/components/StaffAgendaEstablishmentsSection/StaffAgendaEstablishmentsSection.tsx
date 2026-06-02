@@ -1,5 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 
 import type { StaffAgendaEstablishmentRow } from "../../api/public/partner";
@@ -55,6 +56,7 @@ export function StaffAgendaEstablishmentsSection({
   showDistanceKm = true,
 }: StaffAgendaEstablishmentsSectionProps) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const styles = useMemo(() => getScreenFormStyles(theme), [theme]);
   const cardStyles = useMemo(
     () => getStaffAgendaEstablishmentsSectionStyles(theme),
@@ -98,11 +100,11 @@ export function StaffAgendaEstablishmentsSection({
     >
       {!session?.accessToken ? (
         <Text style={cardStyles.centeredMessage} variant="body">
-          Faça login para ver sua agenda como colaborador.
+          {t("staffAgendaEstablishments.loginToView")}
         </Text>
       ) : !profileComplete ? (
         <Text style={cardStyles.centeredMessage} variant="body">
-          Complete seu cadastro no perfil para ver seus estabelecimentos.
+          {t("staffAgendaEstablishments.completeProfile")}
         </Text>
       ) : canLoadStaffAgenda && isPending ? (
         <InlineLoading />
@@ -112,7 +114,7 @@ export function StaffAgendaEstablishmentsSection({
           const showDistance = showDistanceKm && km != null && km > 0;
           const categoryLabel = r.categoryLabel?.trim()
             ? r.categoryLabel.trim()
-            : "Sem categoria";
+            : t("staffAgendaEstablishments.noCategory");
           const addressLine =
             r.addressShort?.trim() ||
             [r.cityName, r.stateUf].filter(Boolean).join(" — ") ||
@@ -129,7 +131,7 @@ export function StaffAgendaEstablishmentsSection({
               hint={
                 r.isActive === false ? (
                   <Text style={cardStyles.inactiveHint} variant="hint">
-                    Local desativado — só gestão/dono pode reativar.
+                    {t("staffAgendaEstablishments.inactiveHint")}
                   </Text>
                 ) : undefined
               }

@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 import { AlertDialog } from "../../components/AlertDialog/AlertDialog";
 import { Text } from "../../components/Text";
@@ -26,6 +27,7 @@ import { EDIT_PROFILE_ICON_SIZE, getEditProfileStyles } from "./styles";
 export function EditProfileScreen({
   navigation,
 }: ProfileScreenProps<"EditProfile">) {
+  const { t } = useTranslation("onboarding");
   const { theme } = useAppTheme();
   const styles = useMemo(() => getEditProfileStyles(theme), [theme]);
   const iconSize = EDIT_PROFILE_ICON_SIZE;
@@ -80,13 +82,14 @@ export function EditProfileScreen({
       navigation.goBack();
     } catch (e) {
       setSaveError({
-        title: "Não foi possível salvar",
-        message: e instanceof Error ? e.message : "Tente novamente.",
+        title: t("editProfile.saveErrorTitle"),
+        message:
+          e instanceof Error ? e.message : t("editProfile.saveErrorFallback"),
       });
     } finally {
       setBusy(false);
     }
-  }, [completeRegistration, draft, navigation, profile]);
+  }, [completeRegistration, draft, navigation, profile, t]);
 
   if (!session?.accessToken || !profile) {
     return null;
@@ -98,7 +101,7 @@ export function EditProfileScreen({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("editProfile.okButton"),
               onPress: () => setSaveError(null),
               variant: "primary",
             },
@@ -125,13 +128,13 @@ export function EditProfileScreen({
             </View>
             <View style={styles.fieldCol}>
               <Text style={styles.rowLabel} variant="caption">
-                Nome completo
+                {t("editProfile.fullNameLabel")}
               </Text>
               <View style={[styles.inputShell, styles.inputShellEditable]}>
                 <TextInput
                   autoCapitalize="words"
                   autoCorrect={false}
-                  placeholder="Seu nome"
+                  placeholder={t("editProfile.fullNamePlaceholder")}
                   placeholderTextColor={theme.textMuted}
                   style={styles.inputInner}
                   value={fullName}
@@ -151,7 +154,7 @@ export function EditProfileScreen({
             </View>
             <View style={styles.fieldCol}>
               <Text style={styles.rowLabel} variant="caption">
-                E-mail
+                {t("editProfile.emailLabel")}
               </Text>
               <View style={[styles.inputShell, styles.inputShellLocked]}>
                 <TextInput
@@ -174,18 +177,18 @@ export function EditProfileScreen({
             </View>
             <View style={styles.fieldCol}>
               <Text style={styles.rowLabel} variant="caption">
-                Telefone
+                {t("editProfile.phoneLabel")}
               </Text>
               <View style={[styles.inputShell, styles.inputShellEditable]}>
                 <TextInput
                   keyboardType="phone-pad"
                   maxLength={15}
-                  placeholder="(11) 98765-4321"
+                  placeholder={t("editProfile.phonePlaceholder")}
                   placeholderTextColor={theme.textMuted}
                   style={styles.inputInner}
                   value={formatBrazilPhoneDisplay(phoneDigits)}
-                  onChangeText={(t) =>
-                    setPhoneDigits(normalizePhoneDigits(t, 11))
+                  onChangeText={(input) =>
+                    setPhoneDigits(normalizePhoneDigits(input, 11))
                   }
                 />
               </View>
@@ -202,7 +205,7 @@ export function EditProfileScreen({
             </View>
             <View style={styles.fieldCol}>
               <Text style={styles.rowLabel} variant="caption">
-                CPF
+                {t("editProfile.cpfLabel")}
               </Text>
               <View style={[styles.inputShell, styles.inputShellLocked]}>
                 <TextInput
@@ -229,7 +232,7 @@ export function EditProfileScreen({
           {busy ? (
             <ActivityIndicator color={palette.onAccent} />
           ) : (
-            <Text variant="ctaPrimary">Salvar alterações</Text>
+            <Text variant="ctaPrimary">{t("editProfile.saveButton")}</Text>
           )}
         </Pressable>
       </ScrollView>

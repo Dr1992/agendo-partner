@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import type { NavigationProp, ParamListBase } from "@react-navigation/native";
 
@@ -23,6 +24,7 @@ export function CollaboratorsListFooter({
   navigation,
   screenStyles,
 }: CollaboratorsListFooterProps) {
+  const { t } = useTranslation("team");
   return (
     <View
       style={[
@@ -39,7 +41,7 @@ export function CollaboratorsListFooter({
           })
         }
       >
-        Adicionar colaborador
+        {t("collaborators.addCollaborator")}
       </Button>
     </View>
   );

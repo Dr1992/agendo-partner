@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { ProfileScreenProps } from "../../../navigation/profileNavigation.types";
 import { ProfileStack } from "../../../navigation/routeIds";
@@ -8,6 +9,7 @@ export function usePartnerHomeRules(
   navigation: ProfileScreenProps<"PartnerHome">["navigation"],
 ) {
   const { profileComplete, session, signIn } = useAuth();
+  const { t } = useTranslation("partner");
   const [loginError, setLoginError] = useState<{
     message: string;
     title: string;
@@ -25,12 +27,12 @@ export function usePartnerHomeRules(
       }
     } catch (e) {
       setLoginError({
-        title: "Login",
+        title: t("home.loginErrorTitle"),
         message:
-          e instanceof Error ? e.message : "Nao foi possivel concluir o login.",
+          e instanceof Error ? e.message : t("home.loginErrorFallback"),
       });
     }
-  }, [navigation, signIn]);
+  }, [navigation, signIn, t]);
 
   const showFixedRegisterButton = Boolean(session && profileComplete);
 

@@ -1,0 +1,51 @@
+{
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "ok": "OK"
+  },
+  "language": {
+    "section": "Idioma",
+    "system": "Sistema",
+    "pt": "Português",
+    "en": "Inglês"
+  },
+  "tabs": {
+    "agenda": "Agenda",
+    "availability": "Disponibilidade",
+    "establishments": "Estabelecimentos",
+    "profile": "Perfil"
+  },
+  "profile": {
+    "title": "Perfil",
+    "accountSection": "Conta",
+    "login": "LOGIN",
+    "welcome": "Bem-vindo, {{name}}",
+    "guest": "Visitante",
+    "editProfile": "Editar perfil",
+    "completeRegistration": "Completar cadastro",
+    "supportSection": "Suporte",
+    "supportContact": "Falar com suporte",
+    "suggestCategory": "Sugerir categoria",
+    "suggestCategoryDescription": "Envie uma sugestao para avaliarmos novas categorias.",
+    "legalSection": "Legal",
+    "termsOfUse": "Termos de uso",
+    "privacyPolicy": "Política de privacidade",
+    "legalNotice": "Este conteudo legal esta em preparacao e sera atualizado antes do lancamento.",
+    "appearanceSection": "Aparência",
+    "themeSystem": "Sistema",
+    "themeLight": "Claro",
+    "themeDark": "Escuro",
+    "signOut": "Sair",
+    "signOutConfirmMessage": "Tem certeza que deseja sair da sua conta?",
+    "loginDialogTitle": "Login",
+    "loginErrorDefault": "Não foi possível concluir o login.",
+    "termsDialogTitle": "Termos de uso",
+    "termsDialogMessage": "Os termos completos serao publicados antes do lancamento.",
+    "privacyDialogTitle": "Privacidade",
+    "privacyDialogMessage": "A politica de privacidade completa sera publicada antes do lancamento.",
+    "supportEmailSubject": "Suporte Agendô",
+    "suggestionEmailSubject": "Sugestão de nova categoria / serviço",
+    "suggestionEmailBody": "Descreva o serviço que não encontrou na lista da plataforma:\n\n"
+  }
+}

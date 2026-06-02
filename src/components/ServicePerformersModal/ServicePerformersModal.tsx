@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FlatList, Platform, Switch, TextInput, View } from "react-native";
 
 import { AppSheetModal } from "../AppSheetModal/AppSheetModal";
@@ -9,11 +10,13 @@ import type { Professional } from "../../types/professional";
 
 import { getServicePerformersModalStyles } from "./styles";
 
-function staffRoleLower(role: string | undefined): string {
+function staffRoleKey(
+  role: string | undefined,
+): "roleCollaborator" | "roleManager" {
   if (role === "MANAGER") {
-    return "gestor";
+    return "roleManager";
   }
-  return "colaborador";
+  return "roleCollaborator";
 }
 
 export type ServicePerformersModalProps = {
@@ -32,6 +35,7 @@ export function ServicePerformersModal({
   visible,
 }: ServicePerformersModalProps) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const styles = useMemo(() => getServicePerformersModalStyles(theme), [theme]);
 
   const [query, setQuery] = useState("");
@@ -73,9 +77,11 @@ export function ServicePerformersModal({
 
   return (
     <AppSheetModal
-      footer={<Button onPress={onConfirm}>Concluir</Button>}
+      footer={
+        <Button onPress={onConfirm}>{t("servicePerformers.done")}</Button>
+      }
       size="large"
-      title="Colaboradores"
+      title={t("servicePerformers.title")}
       visible={visible}
       onRequestClose={onClose}
     >
@@ -86,7 +92,7 @@ export function ServicePerformersModal({
           {...(Platform.OS === "ios"
             ? { clearButtonMode: "while-editing" as const }
             : {})}
-          placeholder="Buscar por nome…"
+          placeholder={t("servicePerformers.searchPlaceholder")}
           placeholderTextColor={theme.textHint}
           style={styles.searchField}
           value={query}
@@ -102,7 +108,7 @@ export function ServicePerformersModal({
           style={styles.listFlex}
           ListEmptyComponent={
             <Text style={styles.subHint} variant="hint">
-              Nenhum resultado para esta busca.
+              {t("servicePerformers.empty")}
             </Text>
           }
           renderItem={({ item }) => (
@@ -110,7 +116,7 @@ export function ServicePerformersModal({
               <View style={styles.rowLabel}>
                 <Text variant="bodyTight">{item.name}</Text>
                 <Text style={styles.subHint} variant="hint">
-                  {staffRoleLower(item.staffRole)}
+                  {t(`servicePerformers.${staffRoleKey(item.staffRole)}`)}
                 </Text>
               </View>
               <View style={styles.switchWrap}>

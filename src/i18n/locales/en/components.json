@@ -1,0 +1,78 @@
+{
+  "appSheetModal": {
+    "close": "Close"
+  },
+  "durationPicker": {
+    "title": "Duration"
+  },
+  "hourMinutePicker": {
+    "confirm": "Confirm",
+    "hours": "Hours",
+    "minutes": "Min"
+  },
+  "openingHours": {
+    "hint": "Enable the days the place is open and set opening and closing times. Each day can have different hours.",
+    "weekday": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "dayOpensSwitch": "{{day}}: open on this day",
+    "openTimeTitle": "Opening time",
+    "closeTimeTitle": "Closing time",
+    "start": "Opens",
+    "end": "Closes",
+    "modalTitle": "Opening hours",
+    "done": "Done"
+  },
+  "servicePerformers": {
+    "title": "Collaborators",
+    "searchPlaceholder": "Search by name…",
+    "empty": "No results for this search.",
+    "done": "Done",
+    "roleManager": "manager",
+    "roleCollaborator": "collaborator"
+  },
+  "serviceCard": {
+    "inactive": "Disabled"
+  },
+  "establishmentRowCard": {
+    "editAction": "Edit establishment"
+  },
+  "agendaModeToggle": {
+    "client": "Client",
+    "staff": "Collaborator"
+  },
+  "inlineLoading": {
+    "loading": "Loading"
+  },
+  "monthCalendar": {
+    "loading": "Loading…"
+  },
+  "agendoCalendarDay": {
+    "dayLabel": "Day {{day}}",
+    "dayWithBookingsLabel": "Day {{day}}, with appointments"
+  },
+  "staffAgendaEstablishments": {
+    "loginToView": "Sign in to view your agenda as a collaborator.",
+    "completeProfile": "Complete your profile to view your establishments.",
+    "noCategory": "No category",
+    "inactiveHint": "Place disabled — only management/owner can reactivate."
+  },
+  "weekdaysShort": {
+    "monday": "Mon",
+    "tuesday": "Tue",
+    "wednesday": "Wed",
+    "thursday": "Thu",
+    "friday": "Fri",
+    "saturday": "Sat",
+    "sunday": "Sun"
+  },
+  "detailFactsCard": {
+    "routeHint": "Opens route options"
+  }
+}

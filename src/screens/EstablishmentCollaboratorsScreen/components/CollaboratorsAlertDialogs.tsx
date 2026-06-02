@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { AlertDialog } from "../../../components/AlertDialog/AlertDialog";
 
 type RemoveTarget = { id: string; name: string } | null;
@@ -29,12 +31,13 @@ export function CollaboratorsAlertDialogs({
   setTeamFeedback,
   teamFeedback,
 }: CollaboratorsAlertDialogsProps) {
+  const { t } = useTranslation("team");
   return (
     <>
       <AlertDialog
         buttons={[
           {
-            label: "Voltar",
+            label: t("common.back"),
             onPress: () => {
               if (!includeStaffBusy) {
                 setIncludeSelfDialogOpen(false);
@@ -43,13 +46,15 @@ export function CollaboratorsAlertDialogs({
             variant: "secondary",
           },
           {
-            label: includeStaffBusy ? "A incluir…" : "Incluir",
+            label: includeStaffBusy
+              ? t("collaborators.includeSelfDialog.includingButton")
+              : t("collaborators.includeSelfDialog.includeButton"),
             onPress: () => void executeIncludeOwnerAsStaff(),
             variant: "primary",
           },
         ]}
-        message="Você passará a aparecer como prestador neste local e poderá ser escolhido nos agendamentos e nos serviços."
-        title="Incluir você na equipe?"
+        message={t("collaborators.includeSelfDialog.message")}
+        title={t("collaborators.includeSelfDialog.title")}
         visible={includeSelfDialogOpen}
         onRequestClose={() => {
           if (!includeStaffBusy) {
@@ -61,7 +66,7 @@ export function CollaboratorsAlertDialogs({
         <AlertDialog
           buttons={[
             {
-              label: "Cancelar",
+              label: t("common.cancel"),
               onPress: () => {
                 if (!removeStaffPending) {
                   setRemoveTarget(null);
@@ -70,13 +75,17 @@ export function CollaboratorsAlertDialogs({
               variant: "secondary",
             },
             {
-              label: removeStaffPending ? "A remover…" : "Remover",
+              label: removeStaffPending
+                ? t("collaborators.removeDialog.removingButton")
+                : t("collaborators.removeDialog.removeButton"),
               onPress: confirmRemoveMember,
               variant: "destructive",
             },
           ]}
-          message={`Remover ${removeTarget.name} deste estabelecimento? A pessoa deixa de aparecer na equipe.`}
-          title="Remover da equipe"
+          message={t("collaborators.removeDialog.message", {
+            name: removeTarget.name,
+          })}
+          title={t("collaborators.removeDialog.title")}
           visible
           onRequestClose={() => {
             if (!removeStaffPending) {
@@ -89,7 +98,7 @@ export function CollaboratorsAlertDialogs({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: () => setTeamFeedback(null),
               variant: "primary",
             },

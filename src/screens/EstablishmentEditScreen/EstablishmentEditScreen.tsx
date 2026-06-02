@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Linking, Pressable, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -31,10 +32,6 @@ import { isValidBrazilCellPhoneDigits } from "../../utils/phone";
 
 import { FullScreenBlockingLoader } from "../../components/FullScreenBlockingLoader";
 import { LoadingCentered } from "../../components/LoadingCentered";
-import {
-  ESTABLISHMENT_PLACE_REVIEW_NAV_TITLE,
-  ESTABLISHMENT_PLACE_STEP0_NAV_TITLE,
-} from "../EstablishmentRegisterScreen/EstablishmentPlaceReviewStep";
 import { EstablishmentRegisterForm } from "../EstablishmentRegisterScreen/EstablishmentRegisterForm";
 import { getEstablishmentRegisterScreenStyles } from "../EstablishmentRegisterScreen/styles";
 import { useEstablishmentPlaceFormState } from "../EstablishmentRegisterScreen/useEstablishmentPlaceFormState";
@@ -47,10 +44,7 @@ import { useEstablishmentEditToggleActive } from "./hooks/useEstablishmentEditTo
 
 const SUPPORT_EMAIL = "suporte.agendo@gmail.com";
 
-function openSuggestCategoryMail() {
-  const subject = "Sugestão de nova categoria (edição de estabelecimento)";
-  const body =
-    "Não encontrei a categoria do meu negócio no app. Descreva o ramo e o tipo de serviço:\n\n";
+function openSuggestCategoryMail(subject: string, body: string) {
   void Linking.openURL(
     `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
   );
@@ -61,6 +55,7 @@ export function EstablishmentEditScreen({
   route,
 }: ProfileScreenProps<"EstablishmentEdit">) {
   const { establishmentId } = route.params;
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = useMemo(
     () => getEstablishmentRegisterScreenStyles(theme),
@@ -98,10 +93,10 @@ export function EstablishmentEditScreen({
     navigation.setOptions({
       title:
         form.step === 1
-          ? ESTABLISHMENT_PLACE_REVIEW_NAV_TITLE.edit
-          : ESTABLISHMENT_PLACE_STEP0_NAV_TITLE.edit,
+          ? t("placeForm.navTitleReviewEdit")
+          : t("placeForm.navTitleStepEdit"),
     });
-  }, [form.step, navigation]);
+  }, [form.step, navigation, t]);
 
   const { data: est, isPending } =
     useEstablishmentEditEstablishmentData(establishmentId);
@@ -156,9 +151,8 @@ export function EstablishmentEditScreen({
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!perm.granted) {
       setFeedbackDialog({
-        title: "Permissão",
-        message:
-          "Precisamos de acesso às suas fotos para enviar imagens do local.",
+        title: t("register.permissionTitle"),
+        message: t("register.permissionPhotosMessage"),
       });
       return;
     }
@@ -187,9 +181,11 @@ export function EstablishmentEditScreen({
         });
       } catch (e) {
         setFeedbackDialog({
-          title: "Envio",
+          title: t("register.uploadTitle"),
           message:
-            e instanceof Error ? e.message : "Não foi possível enviar a foto.",
+            e instanceof Error
+              ? e.message
+              : t("register.uploadErrorFallback"),
         });
       } finally {
         setGalleryBusy(false);
@@ -197,7 +193,7 @@ export function EstablishmentEditScreen({
     } finally {
       setGalleryPickerLaunching(false);
     }
-  }, [addGalleryPhoto, canManage, galleryPhotos]);
+  }, [addGalleryPhoto, canManage, galleryPhotos, t]);
 
   const onSubmit = useCallback(async () => {
     if (!session || !canManage || !est) {
@@ -206,23 +202,22 @@ export function EstablishmentEditScreen({
     const cnpjOnly = form.cnpj.replace(/\D/g, "");
     if (cnpjOnly.length > 0 && !isValidCnpj(cnpjOnly)) {
       setFeedbackDialog({
-        title: "CNPJ inválido",
-        message: "Confira os dígitos ou deixe o campo em branco.",
+        title: t("register.cnpjInvalidTitle"),
+        message: t("register.cnpjInvalidMessage"),
       });
       return;
     }
     if (!form.category) {
       setFeedbackDialog({
-        title: "Categoria",
-        message: "Escolha uma categoria.",
+        title: t("edit.categoryTitle"),
+        message: t("edit.categoryRequiredMessage"),
       });
       return;
     }
     if (!isValidBrazilCellPhoneDigits(form.whatsappDigits)) {
       setFeedbackDialog({
-        title: "Celular",
-        message:
-          "Informe o celular com DDD (11 dígitos, começando com 9 após o DDD).",
+        title: t("register.phoneTitle"),
+        message: t("register.phoneInvalidMessage"),
       });
       return;
     }
@@ -231,17 +226,15 @@ export function EstablishmentEditScreen({
       .filter(Boolean);
     if (photoStorageKeys.length < 1 || photoStorageKeys.length > 5) {
       setFeedbackDialog({
-        title: "Fotos",
-        message:
-          "Mantenha entre 1 e 5 fotos do estabelecimento. Envie novamente as que faltarem.",
+        title: t("register.photosTitle"),
+        message: t("edit.photosKeepRangeMessage"),
       });
       return;
     }
     if (photoStorageKeys.length !== form.galleryPhotos.length) {
       setFeedbackDialog({
-        title: "Fotos",
-        message:
-          "Alguma imagem ainda não está associada ao servidor. Remova-a e adicione outra vez.",
+        title: t("register.photosTitle"),
+        message: t("edit.photosUnlinkedMessage"),
       });
       return;
     }
@@ -268,14 +261,14 @@ export function EstablishmentEditScreen({
         queryKey: establishmentDetailQueryKey(establishmentId),
       });
       setFeedbackDialog({
-        title: "Salvo",
-        message: "Os dados do estabelecimento foram atualizados.",
+        title: t("edit.savedTitle"),
+        message: t("edit.savedMessage"),
         onDismiss: () => navigation.goBack(),
       });
     } catch (e) {
       setFeedbackDialog({
-        title: "Erro",
-        message: e instanceof Error ? e.message : "Não foi possível salvar.",
+        title: t("common.errorTitle"),
+        message: e instanceof Error ? e.message : t("edit.saveErrorFallback"),
       });
     } finally {
       setBusy(false);
@@ -299,6 +292,7 @@ export function EstablishmentEditScreen({
     navigation,
     queryClient,
     session,
+    t,
   ]);
 
   if (isPending || !est) {
@@ -312,9 +306,7 @@ export function EstablishmentEditScreen({
   if (!canManage) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
-        <Text variant="body">
-          Apenas dono ou gestor pode editar os dados deste local.
-        </Text>
+        <Text variant="body">{t("edit.permissionDeniedMessage")}</Text>
       </SafeAreaView>
     );
   }
@@ -328,8 +320,7 @@ export function EstablishmentEditScreen({
       >
         {!isEstablishmentActive ? (
           <Text style={[styles.body, styles.inactiveBanner]} variant="body">
-            Este local está desativado: não aparece na busca pública. Reative
-            abaixo para voltar a exibir.
+            {t("edit.inactiveBanner")}
           </Text>
         ) : null}
 
@@ -338,8 +329,7 @@ export function EstablishmentEditScreen({
             style={[styles.body, styles.legacyGalleryBanner]}
             variant="body"
           >
-            Estas fotos vêm de uma versão antiga: remova-as com × e envie de
-            novo (1 a 5) para poder guardar.
+            {t("edit.legacyGalleryBanner")}
           </Text>
         ) : null}
 
@@ -394,8 +384,8 @@ export function EstablishmentEditScreen({
             onPress={() => onToggleActive(!isEstablishmentActive)}
           >
             {isEstablishmentActive
-              ? "Desativar local (arquivar)"
-              : "Reativar local"}
+              ? t("edit.deactivateButton")
+              : t("edit.reactivateButton")}
           </Button>
         ) : null}
       </ScrollView>
@@ -407,13 +397,18 @@ export function EstablishmentEditScreen({
             style={styles.suggestCategoryButton}
             onPress={() => {
               setCategoryModalOpen(false);
-              openSuggestCategoryMail();
+              openSuggestCategoryMail(
+                t("edit.suggestCategorySubject"),
+                t("register.suggestCategoryBody"),
+              );
             }}
           >
             <Text variant="linkAccent">
-              Não encontrou? Sugerir nova categoria
+              {t("register.suggestCategoryLink")}
             </Text>
-            <Text variant="linkMuted">Abre o e-mail para {SUPPORT_EMAIL}</Text>
+            <Text variant="linkMuted">
+              {t("register.suggestCategoryMailHint", { email: SUPPORT_EMAIL })}
+            </Text>
           </Pressable>
         }
         items={apiCategories}
@@ -422,7 +417,7 @@ export function EstablishmentEditScreen({
           subtitle: c.description,
           title: c.label,
         })}
-        title="Escolha a categoria"
+        title={t("register.categoryModalTitle")}
         visible={categoryModalOpen}
         onClose={() => setCategoryModalOpen(false)}
         onSelectItem={(c) => form.setCategoryId(c.id)}
@@ -432,7 +427,7 @@ export function EstablishmentEditScreen({
         items={BRAZIL_STATES}
         keyExtractor={(s) => s.uf}
         renderItem={(s) => ({ subtitle: s.uf, title: s.label })}
-        title="Escolha o estado"
+        title={t("register.stateModalTitle")}
         visible={stateModalOpen}
         onClose={() => setStateModalOpen(false)}
         onSelectItem={form.onPickState}
@@ -442,7 +437,9 @@ export function EstablishmentEditScreen({
         items={form.citiesForState}
         keyExtractor={(c) => c}
         renderItem={(c) => ({ title: c })}
-        title={`Cidades em ${form.stateLabelRow ?? form.stateUf}`}
+        title={t("register.cityModalTitle", {
+          state: form.stateLabelRow ?? form.stateUf,
+        })}
         visible={cityModalOpen}
         onClose={() => setCityModalOpen(false)}
         onSelectItem={form.setCityName}
@@ -460,7 +457,7 @@ export function EstablishmentEditScreen({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: form.dismissPlaceFormAlert,
               variant: "primary",
             },
@@ -475,7 +472,7 @@ export function EstablishmentEditScreen({
         <AlertDialog
           buttons={[
             {
-              label: "Cancelar",
+              label: t("common.cancel"),
               onPress: () => {
                 if (!toggleActiveMutation.isPending) {
                   setToggleConfirm(null);
@@ -485,21 +482,23 @@ export function EstablishmentEditScreen({
             },
             {
               label: toggleActiveMutation.isPending
-                ? "A atualizar…"
+                ? t("edit.toggleUpdatingButton")
                 : toggleConfirm.nextActive
-                  ? "Reativar"
-                  : "Desativar",
+                  ? t("edit.toggleReactivateButton")
+                  : t("edit.toggleDeactivateButton"),
               onPress: confirmToggleActive,
               variant: toggleConfirm.nextActive ? "primary" : "destructive",
             },
           ]}
           message={
             toggleConfirm.nextActive
-              ? "O local volta a aparecer na busca pública para novos clientes."
-              : "O local deixa de aparecer na busca pública. Agendamentos já existentes não são apagados; pode reativar quando quiser."
+              ? t("edit.reactivateConfirmMessage")
+              : t("edit.deactivateConfirmMessage")
           }
           title={
-            toggleConfirm.nextActive ? "Reativar local?" : "Desativar local?"
+            toggleConfirm.nextActive
+              ? t("edit.reactivateConfirmTitle")
+              : t("edit.deactivateConfirmTitle")
           }
           visible
           onRequestClose={() => {
@@ -513,7 +512,7 @@ export function EstablishmentEditScreen({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: () => {
                 const fn = feedbackDialog.onDismiss;
                 setFeedbackDialog(null);

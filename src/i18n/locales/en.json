@@ -1,0 +1,51 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
+  "language": {
+    "section": "Language",
+    "system": "System",
+    "pt": "Portuguese",
+    "en": "English"
+  },
+  "tabs": {
+    "agenda": "Schedule",
+    "availability": "Availability",
+    "establishments": "Establishments",
+    "profile": "Profile"
+  },
+  "profile": {
+    "title": "Profile",
+    "accountSection": "Account",
+    "login": "LOG IN",
+    "welcome": "Welcome, {{name}}",
+    "guest": "Guest",
+    "editProfile": "Edit profile",
+    "completeRegistration": "Complete registration",
+    "supportSection": "Support",
+    "supportContact": "Contact support",
+    "suggestCategory": "Suggest a category",
+    "suggestCategoryDescription": "Send a suggestion so we can evaluate new categories.",
+    "legalSection": "Legal",
+    "termsOfUse": "Terms of use",
+    "privacyPolicy": "Privacy policy",
+    "legalNotice": "This legal content is being prepared and will be updated before launch.",
+    "appearanceSection": "Appearance",
+    "themeSystem": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "signOut": "Sign out",
+    "signOutConfirmMessage": "Are you sure you want to sign out of your account?",
+    "loginDialogTitle": "Log in",
+    "loginErrorDefault": "Could not complete the login.",
+    "termsDialogTitle": "Terms of use",
+    "termsDialogMessage": "The full terms will be published before launch.",
+    "privacyDialogTitle": "Privacy",
+    "privacyDialogMessage": "The full privacy policy will be published before launch.",
+    "supportEmailSubject": "Agendô Support",
+    "suggestionEmailSubject": "Suggestion for a new category / service",
+    "suggestionEmailBody": "Describe the service you did not find in the platform list:\n\n"
+  }
+}

@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, View } from "react-native";
 
 import { Text } from "../Text";
@@ -30,6 +31,7 @@ type Props = {
 
 export function DetailFactsCard({ compactTop, rows }: Props) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const styles = useMemo(() => getDetailFactsCardStyles(theme), [theme]);
   const iconSize = DETAIL_FACT_ICON_SIZE;
 
@@ -42,7 +44,7 @@ export function DetailFactsCard({ compactTop, rows }: Props) {
           return (
             <Pressable
               key={rowKey}
-              accessibilityHint="Abre opções de rota"
+              accessibilityHint={t("detailFactsCard.routeHint")}
               accessibilityRole="button"
               style={[
                 styles.detailRowPressable,

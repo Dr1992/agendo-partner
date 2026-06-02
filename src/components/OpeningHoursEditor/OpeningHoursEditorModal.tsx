@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -22,7 +23,7 @@ type OpeningHoursEditorModalProps = {
 };
 
 export function OpeningHoursEditorModal({
-  modalTitle = "Horário de funcionamento",
+  modalTitle,
   onChange,
   onConfirm,
   onClose,
@@ -30,6 +31,8 @@ export function OpeningHoursEditorModal({
   visible,
 }: OpeningHoursEditorModalProps) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
+  const resolvedTitle = modalTitle ?? t("openingHours.modalTitle");
   const insets = useSafeAreaInsets();
   const formStyles = useMemo(() => getScreenFormStyles(theme), [theme]);
   const layout = useMemo(
@@ -61,10 +64,10 @@ export function OpeningHoursEditorModal({
   const footer = useMemo(
     () => (
       <Button style={formStyles.ctaModalFooter} onPress={handleConfirm}>
-        Concluir
+        {t("openingHours.done")}
       </Button>
     ),
-    [formStyles.ctaModalFooter, handleConfirm],
+    [formStyles.ctaModalFooter, handleConfirm, t],
   );
 
   return (
@@ -72,7 +75,7 @@ export function OpeningHoursEditorModal({
       contentPaddingH={20}
       footer={footer}
       size="large"
-      title={modalTitle}
+      title={resolvedTitle}
       visible={visible}
       onRequestClose={onClose}
     >

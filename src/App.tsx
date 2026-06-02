@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+import "./i18n";
+import { useLocale } from "./i18n/useLocale";
 import { PartnerMainTabNavigator } from "./navigators/PartnerMainTabNavigator";
 import {
   AppProviders,
@@ -21,11 +23,19 @@ export default function App() {
 
   return (
     <AppProviders>
-      <ThemedNavigationContainer>
-        <AuthProvider>
-          <PartnerMainTabNavigator />
-        </AuthProvider>
-      </ThemedNavigationContainer>
+      <AppGate />
     </AppProviders>
+  );
+}
+
+function AppGate() {
+  useLocale();
+
+  return (
+    <ThemedNavigationContainer>
+      <AuthProvider>
+        <PartnerMainTabNavigator />
+      </AuthProvider>
+    </ThemedNavigationContainer>
   );
 }

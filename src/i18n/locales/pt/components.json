@@ -1,0 +1,78 @@
+{
+  "appSheetModal": {
+    "close": "Fechar"
+  },
+  "durationPicker": {
+    "title": "Duração"
+  },
+  "hourMinutePicker": {
+    "confirm": "Confirmar",
+    "hours": "Horas",
+    "minutes": "Min"
+  },
+  "openingHours": {
+    "hint": "Ative os dias em que o local abre e informe abertura e fechamento. Cada dia pode ter horários diferentes.",
+    "weekday": {
+      "monday": "Segunda",
+      "tuesday": "Terça",
+      "wednesday": "Quarta",
+      "thursday": "Quinta",
+      "friday": "Sexta",
+      "saturday": "Sábado",
+      "sunday": "Domingo"
+    },
+    "dayOpensSwitch": "{{day}}: abre neste dia",
+    "openTimeTitle": "Início do horário",
+    "closeTimeTitle": "Fim do horário",
+    "start": "Início",
+    "end": "Fim",
+    "modalTitle": "Horário de funcionamento",
+    "done": "Concluir"
+  },
+  "servicePerformers": {
+    "title": "Colaboradores",
+    "searchPlaceholder": "Buscar por nome…",
+    "empty": "Nenhum resultado para esta busca.",
+    "done": "Concluir",
+    "roleManager": "gestor",
+    "roleCollaborator": "colaborador"
+  },
+  "serviceCard": {
+    "inactive": "Desativado"
+  },
+  "establishmentRowCard": {
+    "editAction": "Editar estabelecimento"
+  },
+  "agendaModeToggle": {
+    "client": "Cliente",
+    "staff": "Colaborador"
+  },
+  "inlineLoading": {
+    "loading": "Carregando"
+  },
+  "monthCalendar": {
+    "loading": "Carregando…"
+  },
+  "agendoCalendarDay": {
+    "dayLabel": "Dia {{day}}",
+    "dayWithBookingsLabel": "Dia {{day}}, com atendimentos"
+  },
+  "staffAgendaEstablishments": {
+    "loginToView": "Faça login para ver sua agenda como colaborador.",
+    "completeProfile": "Complete seu cadastro no perfil para ver seus estabelecimentos.",
+    "noCategory": "Sem categoria",
+    "inactiveHint": "Local desativado — só gestão/dono pode reativar."
+  },
+  "weekdaysShort": {
+    "monday": "Seg",
+    "tuesday": "Ter",
+    "wednesday": "Qua",
+    "thursday": "Qui",
+    "friday": "Sex",
+    "saturday": "Sáb",
+    "sunday": "Dom"
+  },
+  "detailFactsCard": {
+    "routeHint": "Abre opções de rota"
+  }
+}

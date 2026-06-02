@@ -2,6 +2,7 @@ import type { NavigationProp } from "@react-navigation/native";
 import { useMutation, useQueryClient } from "../../../hooks/api/reactQuery";
 import type { Dispatch, SetStateAction } from "react";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   createPartnerService,
@@ -44,6 +45,7 @@ export function useEstablishmentServiceFormMutations({
   setFormErrorDialog: Dispatch<SetStateAction<FormErrorState>>;
 }) {
   const queryClient = useQueryClient();
+  const { t } = useTranslation("partner");
 
   const invalidatePartner = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: ["partner"] });
@@ -57,17 +59,15 @@ export function useEstablishmentServiceFormMutations({
         durationMinutes < 1 ||
         durationMinutes > 24 * 60
       ) {
-        throw new Error("Informe a duração só em minutos (entre 1 e 1440).");
+        throw new Error(t("serviceForm.durationInvalid"));
       }
       const trimmedName = vars.name.trim();
       if (!trimmedName) {
-        throw new Error("Informe o nome do serviço.");
+        throw new Error(t("serviceForm.nameRequired"));
       }
       const cents = parseBrazilMoneyInputToCents(vars.priceText);
       if (bookableProfessionals.length === 0) {
-        throw new Error(
-          "Cadastre pelo menos um colaborador no local antes de guardar o serviço.",
-        );
+        throw new Error(t("serviceForm.noProfessionalsError"));
       }
       let performerUserIds: string[] | undefined;
       if (vars.allPerformers) {
@@ -75,9 +75,7 @@ export function useEstablishmentServiceFormMutations({
       } else {
         const ids = [...vars.selectedPerformerIds];
         if (ids.length === 0) {
-          throw new Error(
-            "Selecione ao menos um colaborador ou marque “Todos realizam”.",
-          );
+          throw new Error(t("serviceForm.selectPerformerError"));
         }
         performerUserIds = ids;
       }
@@ -121,16 +119,18 @@ export function useEstablishmentServiceFormMutations({
           await saveMutation.mutateAsync(vars);
         } catch (e) {
           setFormErrorDialog({
-            title: "Erro",
+            title: t("common.errorTitle"),
             message:
-              e instanceof Error ? e.message : "Não foi possível salvar.",
+              e instanceof Error
+                ? e.message
+                : t("serviceForm.saveErrorFallback"),
           });
         } finally {
           setBusy(false);
         }
       })();
     },
-    [saveMutation, setBusy, setFormErrorDialog],
+    [saveMutation, setBusy, setFormErrorDialog, t],
   );
 
   const onDelete = useCallback(() => {
@@ -151,9 +151,11 @@ export function useEstablishmentServiceFormMutations({
         await deleteMutation.mutateAsync();
       } catch (e) {
         setFormErrorDialog({
-          title: "Erro",
+          title: t("common.errorTitle"),
           message:
-            e instanceof Error ? e.message : "Não foi possível desativar.",
+            e instanceof Error
+              ? e.message
+              : t("serviceForm.deactivateErrorFallback"),
         });
       } finally {
         setBusy(false);
@@ -165,6 +167,7 @@ export function useEstablishmentServiceFormMutations({
     setBusy,
     setDeleteConfirmOpen,
     setFormErrorDialog,
+    t,
   ]);
 
   return {

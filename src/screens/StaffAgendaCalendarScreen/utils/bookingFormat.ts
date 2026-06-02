@@ -1,17 +1,20 @@
+import type { TFunction } from "i18next";
+
 import type { StaffEstablishmentBookingRow } from "../../../api/public/partner";
 
 export function formatBookingStatusLabel(
   status: StaffEstablishmentBookingRow["status"],
+  t: TFunction<"staff">,
 ): string {
   switch (status) {
     case "CANCELLED":
-      return "Cancelado";
+      return t("calendar.status.cancelled");
     case "COMPLETED":
-      return "Concluído";
+      return t("calendar.status.completed");
     case "CONFIRMED":
-      return "Confirmado";
+      return t("calendar.status.confirmed");
     case "PENDING":
-      return "Pendente";
+      return t("calendar.status.pending");
     default:
       return status;
   }

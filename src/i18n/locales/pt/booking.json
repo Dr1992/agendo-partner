@@ -1,0 +1,57 @@
+{
+  "slotDateTime": {
+    "connector": "às"
+  },
+  "schedule": {
+    "serviceNotFound": "Serviço não encontrado.",
+    "professionalSectionTitle": "Profissional",
+    "establishmentTeam": "Equipe do estabelecimento",
+    "timeSectionTitle": "Horários",
+    "slotsLoadError": "Não foi possível carregar horários.",
+    "closedDayHint": "O estabelecimento não abre neste dia da semana.",
+    "noSlotsHint": "Não há horários disponíveis para esta data.",
+    "staffOwnAgendaNotice": "Você está agendando na sua agenda como profissional deste local. Os horários seguem a mesma regra de disponibilidade da app e não se sobrepõem a outros atendimentos já reservados.",
+    "summaryService": "Serviço",
+    "summaryPrice": "Preço",
+    "summaryTime": "Horário",
+    "summaryCollaborator": "Colaborador",
+    "continueCta": "Continuar"
+  },
+  "confirm": {
+    "incompleteData": "Dados incompletos para reservar.",
+    "title": "Resumo do atendimento",
+    "intro": "Regista o atendimento na agenda do local. O cliente precisa de conta na app com o e-mail abaixo.",
+    "customerEmailLabel": "E-mail do cliente (conta na app)",
+    "customerEmailPlaceholder": "nome@exemplo.com",
+    "registerCta": "Registar atendimento",
+    "navTitle": "Registar atendimento",
+    "anyProfessional": "Qualquer disponível na equipe",
+    "rowEstablishment": "Estabelecimento",
+    "rowService": "Serviço",
+    "rowProfessional": "Profissional",
+    "rowTime": "Horário",
+    "rowDuration": "Duração",
+    "rowServicePrice": "Valor do serviço",
+    "rowAddress": "Endereço",
+    "errorChooseProfessional": "Escolha um profissional específico antes de confirmar.",
+    "errorInvalidEmail": "Indique um e-mail válido — tem de corresponder à conta do cliente na app.",
+    "errorMissingEmail": "Indique o e-mail da conta do cliente na app (o mesmo que usa em Perfil).",
+    "errorBookingFailed": "Não foi possível concluir o registo. Tente de novo.",
+    "dialogErrorTitle": "Atendimento",
+    "dialogOk": "OK",
+    "dialogCancel": "Cancelar",
+    "dialogRegistering": "A registar…",
+    "dialogConfirmRegister": "Sim, registar",
+    "dialogConfirmMessage": "O horário fica confirmado para a conta com o e-mail indicado e aparece na sua agenda como profissional.",
+    "dialogConfirmTitle": "Registar atendimento?",
+    "dialogSuccessViewCalendar": "Ver calendário",
+    "dialogSuccessMessage": "O cliente verá o horário na área Agendamentos. No calendário do local aparece logo o novo atendimento.",
+    "dialogSuccessTitle": "Atendimento registado"
+  },
+  "serviceSelect": {
+    "loadError": "Não foi possível carregar serviços.",
+    "emptyList": "Nenhum serviço ativo listado.",
+    "navTitle": "Agendar para cliente",
+    "headerHint": "Escolha o serviço para este atendimento. Na confirmação, indique o e-mail da conta do cliente na app."
+  }
+}

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 import type { MonthCalendarRenderDayArgs } from "../MonthCalendar/MonthCalendar";
@@ -31,6 +32,7 @@ export type AgendoCalendarDayProps = MonthCalendarRenderDayArgs &
 export function AgendoCalendarDay(props: AgendoCalendarDayProps) {
   const { date, dayKey, onPress, state } = props;
   const { theme } = useAppTheme();
+  const { t } = useTranslation("components");
   const calendarStyles = useMemo(
     () => getAgendoCalendarDayStyles(theme),
     [theme],
@@ -96,7 +98,11 @@ export function AgendoCalendarDay(props: AgendoCalendarDayProps) {
 
   return (
     <Pressable
-      accessibilityLabel={`Dia ${date.getDate()}${has ? ", com atendimentos" : ""}`}
+      accessibilityLabel={
+        has
+          ? t("agendoCalendarDay.dayWithBookingsLabel", { day: date.getDate() })
+          : t("agendoCalendarDay.dayLabel", { day: date.getDate() })
+      }
       accessibilityRole="button"
       accessibilityState={{ selected: sel }}
       style={({ pressed }) => [

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Pressable,
@@ -18,6 +19,7 @@ import type { BookingConfirmScreenProps } from "./types";
 export type { BookingConfirmScreenProps } from "./types";
 
 export function BookingConfirmScreen(props: BookingConfirmScreenProps) {
+  const { t } = useTranslation("booking");
   const { theme } = useAppTheme();
   const styles = getBookingConfirmStyles(theme);
   const {
@@ -49,7 +51,7 @@ export function BookingConfirmScreen(props: BookingConfirmScreenProps) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
         <Text style={styles.errorText} variant="bodyTight">
-          {error?.message ?? "Dados incompletos para reservar."}
+          {error?.message ?? t("confirm.incompleteData")}
         </Text>
       </SafeAreaView>
     );
@@ -71,21 +73,20 @@ export function BookingConfirmScreen(props: BookingConfirmScreenProps) {
         style={styles.scroll}
       >
         <Text style={styles.title} variant="title">
-          Resumo do atendimento
+          {t("confirm.title")}
         </Text>
         <Text style={styles.intro} variant="hint">
-          Regista o atendimento na agenda do local. O cliente precisa de conta
-          na app com o e-mail abaixo.
+          {t("confirm.intro")}
         </Text>
 
         <View style={styles.customerEmailSection}>
-          <Text variant="fieldLabel">E-mail do cliente (conta na app)</Text>
+          <Text variant="fieldLabel">{t("confirm.customerEmailLabel")}</Text>
           <TextInput
             autoCapitalize="none"
             autoComplete="email"
             autoCorrect={false}
             keyboardType="email-address"
-            placeholder="nome@exemplo.com"
+            placeholder={t("confirm.customerEmailPlaceholder")}
             placeholderTextColor={theme.textMuted}
             style={styles.customerEmailInput}
             value={customerEmail}
@@ -108,7 +109,7 @@ export function BookingConfirmScreen(props: BookingConfirmScreenProps) {
           onPress={onConfirm}
         >
           <Text style={styles.ctaText} variant="ctaPrimary">
-            Registar atendimento
+            {t("confirm.registerCta")}
           </Text>
         </Pressable>
       </View>

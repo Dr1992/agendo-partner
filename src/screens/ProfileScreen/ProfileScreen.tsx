@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Linking,
@@ -17,6 +18,8 @@ import type { ColorSchemeOverride } from "../../atoms/colorSchemeOverrideAtom";
 import { AlertDialog } from "../../components/AlertDialog/AlertDialog";
 import { Text as AgendoText } from "../../components/Text";
 import { useAppTheme } from "../../hooks/useAppTheme";
+import type { LocaleOverride } from "../../i18n/localeAtom";
+import { useLocale } from "../../i18n/useLocale";
 import type { ProfileStackParamList } from "../../navigation/profileNavigation.types";
 import { ProfileStack } from "../../navigation/routeIds";
 import { useAuth } from "../../providers/AuthProvider";
@@ -36,7 +39,10 @@ type ProfileDialogState =
 
 export function ProfileScreen() {
   const navigation = useNavigation<ProfileMainNav>();
+  const { t } = useTranslation();
   const { theme, override, setOverride } = useAppTheme();
+  const { override: localeOverride, setOverride: setLocaleOverride } =
+    useLocale();
   const styles = getProfileStyles(theme);
   const { profile, profileComplete, session, signIn, signOut } = useAuth();
   const [dialog, setDialog] = useState<ProfileDialogState>({ kind: "none" });
@@ -66,9 +72,15 @@ export function ProfileScreen() {
   }, [profile?.fullName, session]);
 
   const options: { label: string; value: ColorSchemeOverride }[] = [
-    { label: "Sistema", value: null },
-    { label: "Claro", value: "light" },
-    { label: "Escuro", value: "dark" },
+    { label: t("profile.themeSystem"), value: null },
+    { label: t("profile.themeLight"), value: "light" },
+    { label: t("profile.themeDark"), value: "dark" },
+  ];
+
+  const languageOptions: { label: string; value: LocaleOverride }[] = [
+    { label: t("language.system"), value: null },
+    { label: t("language.pt"), value: "pt" },
+    { label: t("language.en"), value: "en" },
   ];
 
   const openMail = (subject: string, body?: string) => {
@@ -84,12 +96,12 @@ export function ProfileScreen() {
         return {
           buttons: [
             {
-              label: "Cancelar",
+              label: t("common.cancel"),
               onPress: () => setDialog({ kind: "none" }),
               variant: "secondary" as const,
             },
             {
-              label: "Sair",
+              label: t("profile.signOut"),
               onPress: () => {
                 setDialog({ kind: "none" });
                 void signOut();
@@ -97,14 +109,14 @@ export function ProfileScreen() {
               variant: "destructive" as const,
             },
           ],
-          message: "Tem certeza que deseja sair da sua conta?",
-          title: "Sair",
+          message: t("profile.signOutConfirmMessage"),
+          title: t("profile.signOut"),
         };
       case "info":
         return {
           buttons: [
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: () => setDialog({ kind: "none" }),
               variant: "primary" as const,
             },
@@ -113,7 +125,7 @@ export function ProfileScreen() {
           title: dialog.title,
         };
     }
-  }, [dialog, signOut]);
+  }, [dialog, signOut, t]);
 
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
@@ -136,9 +148,9 @@ export function ProfileScreen() {
         showsVerticalScrollIndicator={false}
         style={styles.scrollFlex}
       >
-        <Text style={styles.title}>Perfil</Text>
+        <Text style={styles.title}>{t("profile.title")}</Text>
 
-        <Text style={styles.sectionLabel}>Conta</Text>
+        <Text style={styles.sectionLabel}>{t("profile.accountSection")}</Text>
         {!session ? (
           <Pressable
             accessibilityRole="button"
@@ -161,23 +173,25 @@ export function ProfileScreen() {
               } catch (e) {
                 setDialog({
                   kind: "info",
-                  title: "Login",
+                  title: t("profile.loginDialogTitle"),
                   message:
                     e instanceof Error
                       ? e.message
-                      : "Não foi possível concluir o login.",
+                      : t("profile.loginErrorDefault"),
                 });
               } finally {
                 setLoginBusy(false);
               }
             }}
           >
-            <Text style={styles.loginBtnText}>LOGIN</Text>
+            <Text style={styles.loginBtnText}>{t("profile.login")}</Text>
           </Pressable>
         ) : (
           <>
             <AgendoText style={styles.welcomeLine} variant="bodyTight">
-              {`Bem-vindo, ${welcomeName || "Visitante"}`}
+              {t("profile.welcome", {
+                name: welcomeName || t("profile.guest"),
+              })}
             </AgendoText>
             <Text style={styles.linkSubtitle}>{session.email}</Text>
             {profileComplete ? (
@@ -190,7 +204,9 @@ export function ProfileScreen() {
                 ]}
                 onPress={() => navigation.navigate(ProfileStack.EditProfile)}
               >
-                <Text style={styles.loginBtnText}>Editar perfil</Text>
+                <Text style={styles.loginBtnText}>
+                  {t("profile.editProfile")}
+                </Text>
               </Pressable>
             ) : (
               <Pressable
@@ -204,20 +220,24 @@ export function ProfileScreen() {
                   navigation.navigate(ProfileStack.CompleteProfile)
                 }
               >
-                <Text style={styles.loginBtnText}>Completar cadastro</Text>
+                <Text style={styles.loginBtnText}>
+                  {t("profile.completeRegistration")}
+                </Text>
               </Pressable>
             )}
           </>
         )}
-        <Text style={styles.sectionLabel}>Suporte</Text>
+        <Text style={styles.sectionLabel}>{t("profile.supportSection")}</Text>
         <Pressable
           accessibilityRole="button"
           style={styles.linkCard}
-          onPress={() => openMail("Suporte Agendô")}
+          onPress={() => openMail(t("profile.supportEmailSubject"))}
         >
           <View style={styles.linkRow}>
             <View style={styles.linkTextColumn}>
-              <Text style={styles.linkTitle}>Falar com suporte</Text>
+              <Text style={styles.linkTitle}>
+                {t("profile.supportContact")}
+              </Text>
               <Text style={styles.linkSubtitle}>{SUPPORT_EMAIL}</Text>
             </View>
             <Ionicons color={theme.textMuted} name="mail-outline" size={22} />
@@ -228,16 +248,18 @@ export function ProfileScreen() {
           style={styles.linkCard}
           onPress={() =>
             openMail(
-              "Sugestão de nova categoria / serviço",
-              "Descreva o serviço que não encontrou na lista da plataforma:\n\n",
+              t("profile.suggestionEmailSubject"),
+              t("profile.suggestionEmailBody"),
             )
           }
         >
           <View style={styles.linkRow}>
             <View style={styles.linkTextColumn}>
-              <Text style={styles.linkTitle}>Sugerir categoria</Text>
+              <Text style={styles.linkTitle}>
+                {t("profile.suggestCategory")}
+              </Text>
               <Text style={styles.linkSubtitle}>
-                Envie uma sugestao para avaliarmos novas categorias.
+                {t("profile.suggestCategoryDescription")}
               </Text>
             </View>
             <Ionicons
@@ -248,21 +270,20 @@ export function ProfileScreen() {
           </View>
         </Pressable>
 
-        <Text style={styles.sectionLabel}>Legal</Text>
+        <Text style={styles.sectionLabel}>{t("profile.legalSection")}</Text>
         <Pressable
           accessibilityRole="button"
           style={styles.linkCard}
           onPress={() =>
             setDialog({
               kind: "info",
-              title: "Termos de uso",
-              message:
-                "Os termos completos serao publicados antes do lancamento.",
+              title: t("profile.termsDialogTitle"),
+              message: t("profile.termsDialogMessage"),
             })
           }
         >
           <View style={styles.linkRow}>
-            <Text style={styles.linkTitle}>Termos de uso</Text>
+            <Text style={styles.linkTitle}>{t("profile.termsOfUse")}</Text>
             <Ionicons
               color={theme.textMuted}
               name="chevron-forward"
@@ -276,14 +297,13 @@ export function ProfileScreen() {
           onPress={() =>
             setDialog({
               kind: "info",
-              title: "Privacidade",
-              message:
-                "A politica de privacidade completa sera publicada antes do lancamento.",
+              title: t("profile.privacyDialogTitle"),
+              message: t("profile.privacyDialogMessage"),
             })
           }
         >
           <View style={styles.linkRow}>
-            <Text style={styles.linkTitle}>Política de privacidade</Text>
+            <Text style={styles.linkTitle}>{t("profile.privacyPolicy")}</Text>
             <Ionicons
               color={theme.textMuted}
               name="chevron-forward"
@@ -291,12 +311,11 @@ export function ProfileScreen() {
             />
           </View>
         </Pressable>
-        <Text style={styles.subtle}>
-          Este conteudo legal esta em preparacao e sera atualizado antes do
-          lancamento.
-        </Text>
+        <Text style={styles.subtle}>{t("profile.legalNotice")}</Text>
 
-        <Text style={styles.sectionLabel}>Aparência</Text>
+        <Text style={styles.sectionLabel}>
+          {t("profile.appearanceSection")}
+        </Text>
         <View style={styles.row}>
           {options.map((opt) => {
             const active =
@@ -306,6 +325,29 @@ export function ProfileScreen() {
                 key={opt.label}
                 style={[styles.chip, active && styles.chipActive]}
                 onPress={() => setOverride(opt.value)}
+              >
+                <Text
+                  style={[styles.chipText, active && styles.chipTextActive]}
+                >
+                  {opt.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <Text style={styles.sectionLabel}>{t("language.section")}</Text>
+        <View style={styles.row}>
+          {languageOptions.map((opt) => {
+            const active =
+              opt.value === null
+                ? localeOverride === null
+                : localeOverride === opt.value;
+            return (
+              <Pressable
+                key={opt.label}
+                style={[styles.chip, active && styles.chipActive]}
+                onPress={() => setLocaleOverride(opt.value)}
               >
                 <Text
                   style={[styles.chipText, active && styles.chipTextActive]}
@@ -327,7 +369,7 @@ export function ProfileScreen() {
             ]}
             onPress={onPressSignOut}
           >
-            <Text style={styles.loginBtnText}>Sair</Text>
+            <Text style={styles.loginBtnText}>{t("profile.signOut")}</Text>
           </Pressable>
         ) : null}
       </ScrollView>

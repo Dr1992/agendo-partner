@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Switch, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -30,6 +31,7 @@ export function EstablishmentServiceFormScreen({
   route,
 }: ProfileScreenProps<"EstablishmentServiceForm">) {
   const { establishmentId, establishmentName, serviceId } = route.params;
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = useMemo(() => getScreenFormStyles(theme), [theme]);
   const formStyles = useMemo(
@@ -135,7 +137,7 @@ export function EstablishmentServiceFormScreen({
     return (
       <SafeAreaView edges={[]} style={styles.container}>
         <Text style={styles.body} variant="body">
-          Só o dono ou o gestor pode alterar serviços em {establishmentName}.
+          {t("serviceForm.permissionDenied", { name: establishmentName })}
         </Text>
       </SafeAreaView>
     );
@@ -152,13 +154,13 @@ export function EstablishmentServiceFormScreen({
   if (serviceId && !existing && !servicesPending) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
-        <Text variant="body">Serviço não encontrado.</Text>
+        <Text variant="body">{t("serviceForm.serviceNotFound")}</Text>
         <Button
           style={styles.ctaMarginTopTight}
           variant="outline"
           onPress={() => navigation.goBack()}
         >
-          Voltar
+          {t("serviceForm.backButton")}
         </Button>
       </SafeAreaView>
     );
@@ -174,13 +176,13 @@ export function EstablishmentServiceFormScreen({
         <View style={formStyles.fieldLabelRow}>
           <Ionicons color={theme.accent} name="create-outline" size={15} />
           <Text style={formStyles.fieldLabelText} variant="fieldLabel">
-            Nome do serviço
+            {t("serviceForm.nameLabel")}
           </Text>
         </View>
         <TextInput
           autoCapitalize="sentences"
           editable={!busy}
-          placeholder="Ex.: Corte feminino"
+          placeholder={t("serviceForm.namePlaceholder")}
           placeholderTextColor={theme.textHint}
           style={styles.field}
           value={name}
@@ -190,7 +192,7 @@ export function EstablishmentServiceFormScreen({
         <View style={formStyles.fieldLabelRow}>
           <Ionicons color={theme.accent} name="time-outline" size={15} />
           <Text style={formStyles.fieldLabelText} variant="fieldLabel">
-            Duração
+            {t("serviceForm.durationLabel")}
           </Text>
         </View>
         <Pressable
@@ -214,7 +216,7 @@ export function EstablishmentServiceFormScreen({
         <View style={formStyles.fieldLabelRow}>
           <Ionicons color={theme.accent} name="cash-outline" size={15} />
           <Text style={formStyles.fieldLabelText} variant="fieldLabel">
-            Preço (R$)
+            {t("serviceForm.priceLabel")}
           </Text>
         </View>
         <TextInput
@@ -222,7 +224,7 @@ export function EstablishmentServiceFormScreen({
           autoCorrect={false}
           editable={!busy}
           keyboardType="number-pad"
-          placeholder="0,00"
+          placeholder={t("serviceForm.pricePlaceholder")}
           placeholderTextColor={theme.textHint}
           style={styles.field}
           value={priceText}
@@ -236,13 +238,13 @@ export function EstablishmentServiceFormScreen({
             size={15}
           />
           <Text style={formStyles.fieldLabelText} variant="fieldLabel">
-            Descrição (opcional)
+            {t("serviceForm.descriptionLabel")}
           </Text>
         </View>
         <TextInput
           editable={!busy}
           multiline
-          placeholder="Detalhes para o cliente"
+          placeholder={t("serviceForm.descriptionPlaceholder")}
           placeholderTextColor={theme.textHint}
           style={[styles.field, formStyles.descriptionField]}
           value={description}
@@ -252,17 +254,16 @@ export function EstablishmentServiceFormScreen({
         <View style={formStyles.fieldLabelRow}>
           <Ionicons color={theme.accent} name="people-outline" size={15} />
           <Text style={formStyles.fieldLabelText} variant="fieldLabel">
-            Quem realiza
+            {t("serviceForm.performersLabel")}
           </Text>
         </View>
         <Text style={formStyles.sectionHint} variant="hint">
-          Se ninguém for marcado individualmente, todos os colaboradores do
-          local poderão atender.
+          {t("serviceForm.performersHint")}
         </Text>
 
         <View style={formStyles.switchRow}>
           <Text style={formStyles.switchRowLabel} variant="bodyTight">
-            Todos os colaboradores realizam este serviço
+            {t("serviceForm.allPerformersLabel")}
           </Text>
           <View style={formStyles.switchWrap}>
             <Switch
@@ -287,8 +288,7 @@ export function EstablishmentServiceFormScreen({
           <>
             {bookableProfessionals.length === 0 ? (
               <Text variant="hint">
-                Cadastre colaboradores na gestão para escolher quem realiza este
-                serviço.
+                {t("serviceForm.noProfessionalsHint")}
               </Text>
             ) : (
               <Pressable
@@ -302,10 +302,14 @@ export function EstablishmentServiceFormScreen({
                 onPress={() => setPerformersModalOpen(true)}
               >
                 <View style={formStyles.collaboratorRowLabel}>
-                  <Text variant="bodyTight">Escolher colaboradores</Text>
+                  <Text variant="bodyTight">
+                    {t("serviceForm.choosePerformers")}
+                  </Text>
                   <Text style={formStyles.fieldHintTight} variant="hint">
-                    {selectedPerformerIds.size} de{" "}
-                    {bookableProfessionals.length} selecionado(s)
+                    {t("serviceForm.performersSelectedCount", {
+                      selected: selectedPerformerIds.size,
+                      total: bookableProfessionals.length,
+                    })}
                   </Text>
                 </View>
                 <Ionicons
@@ -332,7 +336,7 @@ export function EstablishmentServiceFormScreen({
             })
           }
         >
-          Salvar
+          {t("serviceForm.saveButton")}
         </Button>
 
         {serviceId ? (
@@ -342,7 +346,7 @@ export function EstablishmentServiceFormScreen({
             variant="outline"
             onPress={onDelete}
           >
-            Desativar serviço
+            {t("serviceForm.deactivateButton")}
           </Button>
         ) : null}
       </ScrollView>
@@ -365,7 +369,7 @@ export function EstablishmentServiceFormScreen({
       <AlertDialog
         buttons={[
           {
-            label: "Cancelar",
+            label: t("common.cancel"),
             onPress: () => {
               if (!deleteMutation.isPending) {
                 setDeleteConfirmOpen(false);
@@ -374,13 +378,15 @@ export function EstablishmentServiceFormScreen({
             variant: "secondary",
           },
           {
-            label: deleteMutation.isPending ? "A desativar…" : "Desativar",
+            label: deleteMutation.isPending
+              ? t("serviceForm.deactivatingButton")
+              : t("serviceForm.toggleDeactivateLabel"),
             onPress: confirmDeactivateService,
             variant: "destructive",
           },
         ]}
-        message="O serviço deixa de aparecer para novos agendamentos. Continuar?"
-        title="Desativar serviço"
+        message={t("serviceForm.deactivateConfirmMessage")}
+        title={t("serviceForm.deactivateConfirmTitle")}
         visible={deleteConfirmOpen}
         onRequestClose={() => {
           if (!deleteMutation.isPending) {
@@ -392,7 +398,7 @@ export function EstablishmentServiceFormScreen({
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: () => setFormErrorDialog(null),
               variant: "primary",
             },

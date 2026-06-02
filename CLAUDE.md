@@ -38,6 +38,39 @@ Tipografia, cores e hierarquia ficam centralizadas no tema e variantes; evita re
 
 ---
 
+## Textos da UI (i18n)
+
+### Regra
+
+- **Nunca** usar strings literais (pt-BR ou en) para textos visíveis na UI em ecrãs, componentes, hooks ou navegadores de `agendo-partner/src/`. Todo texto que aparece para o utilizador deve passar por **`useTranslation`** de **`react-i18next`** com chamada **`t('namespace.key')`** — inclui corpo do JSX, props `title` / `placeholder` / `label` / `message` / `accessibilityHint` (e `accessibilityLabel` quando renderizado a utilizadores), títulos de header (`navigation.setOptions({ title })` e `options.title` nos navegadores), botões de `AlertDialog`, mensagens de erro, estados vazios, etc.
+- Idioma padrão: **pt-BR**. O seletor de idioma vive em `ProfileScreen` (ao lado do seletor de tema) e persiste a escolha em `localeOverrideAtom` (`agendo-partner/src/i18n/localeAtom.ts`); o resolvedor (`agendo-partner/src/i18n/useLocale.ts`) devolve a escolha guardada ou `'pt'` por defeito (sem deteção de locale do dispositivo).
+- **Exceções únicas:**
+  - Constantes não-renderizadas (`accessibilityRole`, chaves de `route.params`, identificadores internos, query keys).
+  - Mensagens só de log/depuração e erros técnicos de baixo nível (`src/auth/*`, `src/api/http.ts`, sessão/rede crus) — não localizados por decisão.
+  - Símbolos universais sem sentido linguístico (`'—'`, `'•'`, `'%'`), e formatação numérica/monetária (BRL) / de duração (`02h45`).
+  - Nomes próprios e dados de servidor (nomes de estabelecimento, cidades/estados de `data/brazilRegions.ts`, nomes de clientes/serviços).
+
+### Onde ficam as chaves
+
+- Recursos em **`agendo-partner/src/i18n/locales/pt/<ns>.json`** e **`en/<ns>.json`** (mais `pt.json` / `en.json` na raiz para o namespace padrão `translation`).
+- O teste em `agendo-partner/src/i18n/__tests__/i18n.test.ts` valida **paridade de chaves entre pt e en** e que **nenhum valor é string vazia** — adicionar/remover chave num idioma sem espelhar no outro **quebra o teste** (`yarn test`).
+- A tipagem em `agendo-partner/src/i18n/i18next.d.ts` torna as chaves **fortemente tipadas**: qualquer `t('chave.inexistente')` **quebra o `tsc`** — é o principal gate de cobertura.
+- **Namespaces** por área do app (escolher pela feature, não pelo ficheiro), **autocontidos** (cada um replica as suas próprias palavras comuns como Salvar/Cancelar/OK — **não** referenciar um `common` de outro namespace): `translation` (global: common/language/tabs/profile), `components`, `onboarding`, `booking`, `partner`, `team`, `staff`, `navigation`.
+
+### Ao editar ou criar código
+
+1. No topo do ficheiro: `import { useTranslation } from "react-i18next";`. No componente/hook: `const { t } = useTranslation("<namespace>");` — passar o namespace da feature.
+2. Substituir literais por `t("chave")`. Para interpolação preferir `t("chave", { var: valor })` em vez de template strings — mantém as chaves auditáveis.
+3. Adicionar a chave nos **dois** JSONs (pt e en); valores nunca vazios.
+4. Em `useEffect` / `useLayoutEffect` / `useMemo` / `useCallback` que usem `t`, incluir **`t`** nas deps.
+5. **Utils partilhados não-React** (`src/utils/*` que emitem texto imperativo, ex.: `openingHours`, `cep`, `validateUserProfile`, `formatSlotDateTimePt`): importar a instância global — `import i18n from "../i18n";` — e usar `i18n.t("ns:chave", { ... })` (são chamados em save/fetch, não em render). Nomes de dias da semana ficam centralizados no namespace `components` (`weekdaysShort.*`, `openingHours.weekday.*`). O calendário (`utils/calendarLocalePt.ts`) regista locais `pt` e `en` e expõe `applyCalendarLocale(locale)`, chamado pelo `useLocale()`.
+
+### Porquê
+
+App é distribuído com suporte oficial a pt-BR e en. Cada literal solto no código gera dívida: tradução fica órfã, a escolha do utilizador no seletor é ignorada e o teste de paridade não a detecta. Centralizar nos JSONs por namespace mantém a UI auditável; o `tsc` (chaves tipadas) e o `yarn test` (paridade) garantem que nenhum idioma fica para trás.
+
+---
+
 ## Alertas e confirmações (`AlertDialog`)
 
 - **Não** usar **`Alert.alert`** de `react-native` na pasta **`app/src/`** (UI da app). O alerta nativo não segue o tema nem o padrão visual do produto.

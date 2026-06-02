@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Pressable,
@@ -18,22 +19,23 @@ import type { ProfileScreenProps } from "../../navigation/profileNavigation.type
 import { formatCpfDisplay, normalizeCpfDigits } from "../../utils/cpf";
 import { useInviteStaffScreen } from "./hooks/useInviteStaffScreen";
 
-const INVITE_ROLE_OPTIONS = [
-  {
-    role: "STAFF" as const,
-    subtitle: "Atende clientes neste estabelecimento.",
-    title: "Colaborador",
-  },
-  {
-    role: "MANAGER" as const,
-    subtitle: "Pode gerir equipe e configurações do local.",
-    title: "Gestor",
-  },
-];
-
 export function InviteStaffScreen(props: ProfileScreenProps<"InviteStaff">) {
   const { theme } = useAppTheme();
+  const { t } = useTranslation("team");
   const styles = getScreenFormStyles(theme);
+
+  const inviteRoleOptions = [
+    {
+      role: "STAFF" as const,
+      subtitle: t("invite.roleOptions.staffSubtitle"),
+      title: t("common.staff"),
+    },
+    {
+      role: "MANAGER" as const,
+      subtitle: t("invite.roleOptions.managerSubtitle"),
+      title: t("common.manager"),
+    },
+  ];
   const {
     busy,
     canManage,
@@ -65,7 +67,7 @@ export function InviteStaffScreen(props: ProfileScreenProps<"InviteStaff">) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
         <Text style={styles.body} variant="body">
-          Apenas dono ou gestor pode adicionar colaboradores neste local.
+          {t("invite.noAccess")}
         </Text>
       </SafeAreaView>
     );
@@ -77,7 +79,7 @@ export function InviteStaffScreen(props: ProfileScreenProps<"InviteStaff">) {
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("common.ok"),
               onPress: closeInviteDialog,
               variant: "primary",
             },
@@ -94,18 +96,19 @@ export function InviteStaffScreen(props: ProfileScreenProps<"InviteStaff">) {
         style={styles.scroll}
       >
         <Text style={styles.body} variant="body">
-          Digite o CPF da pessoa que vai integrar a equipe. Não há passo de
-          “aceitar convite”: quando ela criar conta no app e completar o perfil
-          com o mesmo CPF, o acesso ao local fica ativo e ela passa a aparecer
-          na equipe e na agenda deste estabelecimento.
+          {t("invite.intro")}
         </Text>
         {est.viewerMemberRole === "OWNER" ? (
           <>
             <Text style={styles.fieldLabel} variant="fieldLabel">
-              Função neste local
+              {t("invite.roleLabel")}
             </Text>
             <FormSelectRow
-              displayText={inviteRole === "MANAGER" ? "Gestor" : "Colaborador"}
+              displayText={
+                inviteRole === "MANAGER"
+                  ? t("common.manager")
+                  : t("common.staff")
+              }
               empty={false}
               onPress={() => setRolePickerOpen(true)}
             />
@@ -113,25 +116,26 @@ export function InviteStaffScreen(props: ProfileScreenProps<"InviteStaff">) {
         ) : (
           <>
             <Text style={styles.fieldLabel} variant="fieldLabel">
-              Função neste local
+              {t("invite.roleLabel")}
             </Text>
             <Text style={styles.hint} variant="hint">
-              Gestores só podem adicionar colaboradores com função de
-              colaborador. Só o dono pode atribuir gestor.
+              {t("invite.managerOnlyByOwnerHint")}
             </Text>
           </>
         )}
         <Text style={styles.fieldLabel} variant="fieldLabel">
-          CPF
+          {t("invite.cpfLabel")}
         </Text>
         <TextInput
           keyboardType="number-pad"
           maxLength={14}
-          placeholder="000.000.000-00"
+          placeholder={t("invite.cpfPlaceholder")}
           placeholderTextColor={theme.textMuted}
           style={styles.field}
           value={formatCpfDisplay(cpfDigits)}
-          onChangeText={(t) => setCpfDigits(normalizeCpfDigits(t).slice(0, 11))}
+          onChangeText={(text) =>
+            setCpfDigits(normalizeCpfDigits(text).slice(0, 11))
+          }
         />
         <Pressable
           accessibilityRole="button"
@@ -147,7 +151,7 @@ export function InviteStaffScreen(props: ProfileScreenProps<"InviteStaff">) {
             <ActivityIndicator color={palette.onAccent} />
           ) : (
             <Text style={styles.ctaText} variant="ctaPrimary">
-              Adicionar à equipe
+              {t("invite.submitButton")}
             </Text>
           )}
         </Pressable>
@@ -155,14 +159,14 @@ export function InviteStaffScreen(props: ProfileScreenProps<"InviteStaff">) {
 
       {est.viewerMemberRole === "OWNER" ? (
         <PickerModal
-          items={INVITE_ROLE_OPTIONS}
+          items={inviteRoleOptions}
           keyExtractor={(item) => item.role}
           modalAnimation="slide"
           renderItem={(item) => ({
             subtitle: item.subtitle,
             title: item.title,
           })}
-          title="Função neste local"
+          title={t("invite.roleLabel")}
           visible={rolePickerOpen}
           onClose={() => setRolePickerOpen(false)}
           onSelectItem={(item) => setInviteRole(item.role)}

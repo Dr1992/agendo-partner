@@ -1,0 +1,36 @@
+{
+  "completeProfile": {
+    "title": "Complete seu cadastro",
+    "body": "Falta finalizar seus dados para liberar todos os recursos do app. Preencha os campos abaixo para continuar.",
+    "fullNameLabel": "Nome completo",
+    "fullNamePlaceholder": "Seu nome",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "voce@email.com",
+    "phoneLabel": "Telefone (celular)",
+    "phonePlaceholder": "(11) 98765-4321",
+    "cpfLabel": "CPF (apenas números)",
+    "cpfPlaceholder": "000.000.000-00",
+    "saveButton": "Salvar e continuar",
+    "saveErrorTitle": "Não foi possível salvar",
+    "saveErrorFallback": "Tente novamente.",
+    "okButton": "OK"
+  },
+  "editProfile": {
+    "fullNameLabel": "Nome completo",
+    "fullNamePlaceholder": "Seu nome",
+    "emailLabel": "E-mail",
+    "phoneLabel": "Telefone",
+    "phonePlaceholder": "(11) 98765-4321",
+    "cpfLabel": "CPF",
+    "saveButton": "Salvar alterações",
+    "saveErrorTitle": "Não foi possível salvar",
+    "saveErrorFallback": "Tente novamente.",
+    "okButton": "OK"
+  },
+  "validation": {
+    "cpfInvalid": "CPF inválido.",
+    "phoneInvalid": "Telefone inválido (use DDD + número).",
+    "fullNameRequired": "Informe seu nome completo.",
+    "emailInvalid": "E-mail inválido."
+  }
+}

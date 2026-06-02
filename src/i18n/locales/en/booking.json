@@ -1,0 +1,57 @@
+{
+  "slotDateTime": {
+    "connector": "at"
+  },
+  "schedule": {
+    "serviceNotFound": "Service not found.",
+    "professionalSectionTitle": "Professional",
+    "establishmentTeam": "Establishment team",
+    "timeSectionTitle": "Times",
+    "slotsLoadError": "Could not load times.",
+    "closedDayHint": "The establishment is closed on this day of the week.",
+    "noSlotsHint": "No times available for this date.",
+    "staffOwnAgendaNotice": "You are booking on your own agenda as a professional at this location. Times follow the same availability rules as the app and do not overlap with other already reserved appointments.",
+    "summaryService": "Service",
+    "summaryPrice": "Price",
+    "summaryTime": "Time",
+    "summaryCollaborator": "Collaborator",
+    "continueCta": "Continue"
+  },
+  "confirm": {
+    "incompleteData": "Incomplete data to book.",
+    "title": "Appointment summary",
+    "intro": "Records the appointment on the location's agenda. The customer needs an app account with the e-mail below.",
+    "customerEmailLabel": "Customer e-mail (app account)",
+    "customerEmailPlaceholder": "name@example.com",
+    "registerCta": "Record appointment",
+    "navTitle": "Record appointment",
+    "anyProfessional": "Anyone available on the team",
+    "rowEstablishment": "Establishment",
+    "rowService": "Service",
+    "rowProfessional": "Professional",
+    "rowTime": "Time",
+    "rowDuration": "Duration",
+    "rowServicePrice": "Service price",
+    "rowAddress": "Address",
+    "errorChooseProfessional": "Choose a specific professional before confirming.",
+    "errorInvalidEmail": "Enter a valid e-mail — it must match the customer's app account.",
+    "errorMissingEmail": "Enter the e-mail of the customer's app account (the same one used in Profile).",
+    "errorBookingFailed": "Could not complete the booking. Please try again.",
+    "dialogErrorTitle": "Appointment",
+    "dialogOk": "OK",
+    "dialogCancel": "Cancel",
+    "dialogRegistering": "Recording…",
+    "dialogConfirmRegister": "Yes, record",
+    "dialogConfirmMessage": "The time is confirmed for the account with the e-mail provided and appears on your agenda as a professional.",
+    "dialogConfirmTitle": "Record appointment?",
+    "dialogSuccessViewCalendar": "View calendar",
+    "dialogSuccessMessage": "The customer will see the time in the Appointments area. The new appointment appears right away on the location's calendar.",
+    "dialogSuccessTitle": "Appointment recorded"
+  },
+  "serviceSelect": {
+    "loadError": "Could not load services.",
+    "emptyList": "No active service listed.",
+    "navTitle": "Book for customer",
+    "headerHint": "Choose the service for this appointment. On confirmation, enter the e-mail of the customer's app account."
+  }
+}

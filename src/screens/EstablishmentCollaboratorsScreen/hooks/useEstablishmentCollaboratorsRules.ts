@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "../../../hooks/api/reactQuery";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import type { TFunction } from "i18next";
 
 import {
   createStaffInvite,
@@ -30,6 +31,7 @@ type UseEstablishmentCollaboratorsRulesParams = {
   profileCpf: string;
   refetch: () => Promise<{ data: EstablishmentDetail | undefined }>;
   sessionUserId: string | undefined;
+  t: TFunction<"team">;
 };
 
 export function useEstablishmentCollaboratorsRules({
@@ -38,6 +40,7 @@ export function useEstablishmentCollaboratorsRules({
   profileCpf,
   refetch,
   sessionUserId,
+  t,
 }: UseEstablishmentCollaboratorsRulesParams) {
   const queryClient = useQueryClient();
   const [includeSelfDialogOpen, setIncludeSelfDialogOpen] = useState(false);
@@ -131,12 +134,15 @@ export function useEstablishmentCollaboratorsRules({
       } catch (e) {
         setRevokeInviteId(null);
         setTeamFeedback({
-          title: "Revogar convite",
-          message: e instanceof Error ? e.message : "Não foi possível revogar.",
+          title: t("collaborators.feedback.revokeTitle"),
+          message:
+            e instanceof Error
+              ? e.message
+              : t("collaborators.feedback.revokeFallback"),
         });
       }
     })();
-  }, [deleteInviteMutation, revokeInviteId]);
+  }, [deleteInviteMutation, revokeInviteId, t]);
 
   useEffect(() => {
     const pendingInviteCount = est?.pendingInvites?.length ?? 0;
@@ -161,18 +167,21 @@ export function useEstablishmentCollaboratorsRules({
         await removeStaffMutation.mutateAsync(id);
         setRemoveTarget(null);
         setTeamFeedback({
-          title: "Removido",
-          message: "O colaborador foi retirado da equipe.",
+          title: t("collaborators.feedback.removedTitle"),
+          message: t("collaborators.feedback.removedMessage"),
         });
       } catch (e) {
         setRemoveTarget(null);
         setTeamFeedback({
-          title: "Erro",
-          message: e instanceof Error ? e.message : "Não foi possível remover.",
+          title: t("collaborators.feedback.errorTitle"),
+          message:
+            e instanceof Error
+              ? e.message
+              : t("collaborators.feedback.removeFallback"),
         });
       }
     })();
-  }, [removeStaffMutation, removeTarget]);
+  }, [removeStaffMutation, removeTarget, t]);
 
   const viewerIsListedAsProfessional = useMemo(() => {
     if (!est || !sessionUserId) {
@@ -222,7 +231,10 @@ export function useEstablishmentCollaboratorsRules({
       if ("inviteSkipped" in res && res.inviteSkipped) {
         await writeOwnerTeamPromoDismissed(establishmentId, sessionUserId);
         setOwnerSelfPromoDismissed(true);
-        setTeamFeedback({ title: "Tudo certo", message: res.message });
+        setTeamFeedback({
+          title: t("collaborators.feedback.allSetTitle"),
+          message: res.message,
+        });
       } else {
         const listed =
           freshEst?.professionals.some((p) => p.id === sessionUserId) ?? false;
@@ -231,16 +243,18 @@ export function useEstablishmentCollaboratorsRules({
           setOwnerSelfPromoDismissed(true);
         }
         setTeamFeedback({
-          title: "Você na equipe",
-          message:
-            "Agora você aparece como prestador neste local. Associe-se aos serviços em Serviços, se ainda não estiver.",
+          title: t("collaborators.feedback.joinedTitle"),
+          message: t("collaborators.feedback.joinedMessage"),
         });
       }
     } catch (e) {
       setIncludeSelfDialogOpen(false);
       setTeamFeedback({
-        title: "Incluir como prestador",
-        message: e instanceof Error ? e.message : "Não foi possível concluir.",
+        title: t("collaborators.feedback.includeTitle"),
+        message:
+          e instanceof Error
+            ? e.message
+            : t("collaborators.feedback.includeFallback"),
       });
     }
   }, [
@@ -249,6 +263,7 @@ export function useEstablishmentCollaboratorsRules({
     ownerHasValidCpf,
     refetch,
     sessionUserId,
+    t,
   ]);
 
   const onIncludeOwnerAsStaffPress = useCallback(() => {

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -16,6 +17,7 @@ import type { StaffAgendaDetailScreenProps } from "./types";
 export type { StaffAgendaDetailScreenProps } from "./types";
 
 export function StaffAgendaDetailScreen(props: StaffAgendaDetailScreenProps) {
+  const { t } = useTranslation("staff");
   const { theme } = useAppTheme();
   const styles = useMemo(() => getScreenFormStyles(theme), [theme]);
   const local = useMemo(() => getStaffAgendaDetailScreenStyles(theme), [theme]);
@@ -38,7 +40,7 @@ export function StaffAgendaDetailScreen(props: StaffAgendaDetailScreenProps) {
   if (!session?.accessToken) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
-        <Text variant="body">Entre na conta para gerenciar sua agenda.</Text>
+        <Text variant="body">{t("detail.gateText")}</Text>
       </SafeAreaView>
     );
   }
@@ -55,16 +57,14 @@ export function StaffAgendaDetailScreen(props: StaffAgendaDetailScreenProps) {
     return (
       <SafeAreaView edges={[]} style={[styles.container, styles.center]}>
         <Text variant="body">
-          {error instanceof Error
-            ? error.message
-            : "Não foi possível carregar a disponibilidade."}
+          {error instanceof Error ? error.message : t("detail.loadError")}
         </Text>
         <View style={[local.actions, local.retryBar]}>
           <Button
             style={styles.ctaRetryFullWidth}
             onPress={() => void refetch()}
           >
-            Tentar novamente
+            {t("detail.retry")}
           </Button>
         </View>
       </SafeAreaView>
@@ -77,7 +77,7 @@ export function StaffAgendaDetailScreen(props: StaffAgendaDetailScreenProps) {
         <AlertDialog
           buttons={[
             {
-              label: "OK",
+              label: t("detail.ok"),
               onPress: dismissAgendaDialog,
               variant: "primary",
             },
@@ -94,8 +94,7 @@ export function StaffAgendaDetailScreen(props: StaffAgendaDetailScreenProps) {
       >
         <Text variant="title">{establishmentName}</Text>
         <Text style={local.intro} variant="body">
-          Defina os dias e horários em que você aceita atender clientes neste
-          estabelecimento.
+          {t("detail.intro")}
         </Text>
 
         <View style={local.editor}>
@@ -111,7 +110,7 @@ export function StaffAgendaDetailScreen(props: StaffAgendaDetailScreenProps) {
             loading={saveMutation.isPending}
             onPress={onSave}
           >
-            Salvar
+            {t("detail.save")}
           </Button>
         </View>
       </ScrollView>

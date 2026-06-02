@@ -1,12 +1,17 @@
-/** Rótulo de acessibilidade em pt para o papel na equipe. */
-export function staffRoleLower(role: string | undefined): string {
+/** Chave i18n (namespace `team`) para o papel na equipe, usada no rótulo de acessibilidade. */
+export function staffRoleKey(
+  role: string | undefined,
+):
+  | "collaborators.role.owner"
+  | "collaborators.role.manager"
+  | "collaborators.role.staff" {
   if (role === "OWNER") {
-    return "dono";
+    return "collaborators.role.owner";
   }
   if (role === "MANAGER") {
-    return "gestor";
+    return "collaborators.role.manager";
   }
-  return "colaborador";
+  return "collaborators.role.staff";
 }
 
 /** Glifo Ionicons por papel (ícone na lista; papel em `accessibilityLabel`). */

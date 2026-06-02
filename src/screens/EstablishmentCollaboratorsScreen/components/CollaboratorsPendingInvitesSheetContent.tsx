@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import type { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
 
 import { Button } from "../../../components/Button";
@@ -38,6 +39,7 @@ export function CollaboratorsPendingInvitesSheetContent({
   setRevokeInviteId,
   theme,
 }: CollaboratorsPendingInvitesSheetContentProps) {
+  const { t } = useTranslation("team");
   const invites = establishment.pendingInvites ?? [];
 
   return (
@@ -89,8 +91,8 @@ export function CollaboratorsPendingInvitesSheetContent({
                       variant="hint"
                     >
                       {inv.intendedRole === "MANAGER"
-                        ? "Gestor"
-                        : "Colaborador"}
+                        ? t("common.manager")
+                        : t("common.staff")}
                     </Text>
                   </View>
                   <View style={screenStyles.pendingModalMetaRow}>
@@ -121,8 +123,9 @@ export function CollaboratorsPendingInvitesSheetContent({
                         style={screenStyles.pendingModalMetaText}
                         variant="hint"
                       >
-                        {inv.plannedPerformerServiceIds.length} serviço(s)
-                        planejado(s)
+                        {t("collaborators.pendingSheet.plannedServices", {
+                          count: inv.plannedPerformerServiceIds.length,
+                        })}
                       </Text>
                     </View>
                   ) : (
@@ -138,13 +141,15 @@ export function CollaboratorsPendingInvitesSheetContent({
                         style={screenStyles.pendingModalMetaText}
                         variant="hint"
                       >
-                        Nenhum serviço vinculado ainda
+                        {t("collaborators.pendingSheet.noServicesLinked")}
                       </Text>
                     </View>
                   )}
                 </View>
                 <Pressable
-                  accessibilityLabel="Revogar convite"
+                  accessibilityLabel={t(
+                    "collaborators.pendingSheet.revokeInviteAccessibilityLabel",
+                  )}
                   accessibilityRole="button"
                   hitSlop={12}
                   style={({ pressed }) => [
@@ -174,7 +179,7 @@ export function CollaboratorsPendingInvitesSheetContent({
                   });
                 }}
               >
-                Vincular serviços
+                {t("collaborators.pendingSheet.linkServicesButton")}
               </Button>
             </View>
             {index < arr.length - 1 ? (
@@ -200,11 +205,10 @@ export function CollaboratorsPendingInvitesSheetContent({
           />
           <View accessibilityRole="none" style={screenStyles.pendingRevokeCard}>
             <Text style={screenStyles.pendingRevokeTitle} variant="listTitle">
-              Revogar convite?
+              {t("collaborators.pendingSheet.revokeTitle")}
             </Text>
             <Text style={screenStyles.pendingRevokeMessage} variant="bodyTight">
-              A pessoa deixa de poder ativar este convite ao completar o perfil
-              com o mesmo CPF. Pode convidar de novo depois, se precisar.
+              {t("collaborators.pendingSheet.revokeMessage")}
             </Text>
             <View style={screenStyles.pendingRevokeActions}>
               <Pressable
@@ -216,7 +220,7 @@ export function CollaboratorsPendingInvitesSheetContent({
                 ]}
                 onPress={() => setRevokeInviteId(null)}
               >
-                <Text variant="ctaOutline">Cancelar</Text>
+                <Text variant="ctaOutline">{t("common.cancel")}</Text>
               </Pressable>
               <Pressable
                 accessibilityRole="button"
@@ -234,7 +238,7 @@ export function CollaboratorsPendingInvitesSheetContent({
                     style={screenStyles.pendingRevokeDestructiveLabel}
                     variant="bodyTight"
                   >
-                    Revogar
+                    {t("collaborators.pendingSheet.revokeButton")}
                   </Text>
                 )}
               </Pressable>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ScrollView, Pressable, Text, View } from "react-native";
 
 import type { Professional } from "../../../types/professional";
@@ -20,13 +21,17 @@ export function BookingScheduleProfessionalStrip({
   screenStyles,
   staffList,
 }: BookingScheduleProfessionalStripProps) {
+  const { t } = useTranslation("booking");
+
   if (staffList.length === 0) {
     return null;
   }
 
   return (
     <>
-      <Text style={screenStyles.sectionTitle}>Profissional</Text>
+      <Text style={screenStyles.sectionTitle}>
+        {t("schedule.professionalSectionTitle")}
+      </Text>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

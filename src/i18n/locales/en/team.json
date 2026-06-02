@@ -1,0 +1,113 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "back": "Back",
+    "retry": "Try again",
+    "manager": "Manager",
+    "staff": "Staff member"
+  },
+  "collaborators": {
+    "errorFallback": "Location not found or no permission.",
+    "noAccess": "Only the owner or manager can manage collaborators at this location.",
+    "emptyList": "There are no active managers or collaborators yet. Use “Add collaborator” for whoever works at the location.",
+    "pendingSheetTitle": "Pending invites",
+    "addCollaborator": "Add collaborator",
+    "pendingCard": {
+      "title": "Registration pending",
+      "description": "Invited people who have not yet completed registration in the app.",
+      "summaryOne": "1 invite awaiting registration",
+      "summaryOther": "{{count}} invites awaiting registration",
+      "openButton": "View pending invites"
+    },
+    "ownerCard": {
+      "title": "Do you also work at this location?",
+      "description": "This way you appear on the team, can be chosen for appointments and linked to services.",
+      "cpfHint": "Register a valid CPF in your profile (the same as the account) to be listed as a provider.",
+      "includeButton": "Include me as a provider",
+      "updateProfileButton": "Update profile"
+    },
+    "teamSection": {
+      "accessibilityLabel": "Team, collaborators",
+      "title": "Team",
+      "hint": "Only people who already have an account in the app with the CPF registered at this location appear here. Those who have not yet completed registration do not enter the schedule."
+    },
+    "row": {
+      "accessibilityLabel": "{{name}}, {{role}}",
+      "removeAccessibilityLabel": "Remove {{name}} from the team"
+    },
+    "role": {
+      "owner": "owner",
+      "manager": "manager",
+      "staff": "collaborator"
+    },
+    "includeSelfDialog": {
+      "title": "Include yourself in the team?",
+      "message": "You will start appearing as a provider at this location and can be chosen for appointments and services.",
+      "includingButton": "Including…",
+      "includeButton": "Include"
+    },
+    "removeDialog": {
+      "title": "Remove from team",
+      "message": "Remove {{name}} from this establishment? The person will no longer appear on the team.",
+      "removingButton": "Removing…",
+      "removeButton": "Remove"
+    },
+    "feedback": {
+      "revokeTitle": "Revoke invite",
+      "revokeFallback": "Could not revoke.",
+      "removedTitle": "Removed",
+      "removedMessage": "The collaborator was removed from the team.",
+      "errorTitle": "Error",
+      "removeFallback": "Could not remove.",
+      "allSetTitle": "All set",
+      "joinedTitle": "You are on the team",
+      "joinedMessage": "You now appear as a provider at this location. Link yourself to services in Services, if you are not already.",
+      "includeTitle": "Include as provider",
+      "includeFallback": "Could not complete."
+    },
+    "pendingSheet": {
+      "noEmail": "—",
+      "plannedServices": "{{count}} planned service(s)",
+      "noServicesLinked": "No service linked yet",
+      "revokeInviteAccessibilityLabel": "Revoke invite",
+      "linkServicesButton": "Link services",
+      "revokeTitle": "Revoke invite?",
+      "revokeMessage": "The person will no longer be able to activate this invite when completing the profile with the same CPF. You can invite again later, if needed.",
+      "revokeButton": "Revoke"
+    }
+  },
+  "invite": {
+    "noAccess": "Only the owner or a manager can add collaborators at this location.",
+    "intro": "Enter the CPF of the person who will join the team. There is no “accept invite” step: when they create an account in the app and complete the profile with the same CPF, access to the location becomes active and they start appearing on the team and in the schedule of this establishment.",
+    "roleLabel": "Role at this location",
+    "managerOnlyByOwnerHint": "Managers can only add collaborators with the collaborator role. Only the owner can assign manager.",
+    "cpfLabel": "CPF",
+    "cpfPlaceholder": "000.000.000-00",
+    "submitButton": "Add to team",
+    "roleOptions": {
+      "staffSubtitle": "Serves clients at this establishment.",
+      "managerSubtitle": "Can manage the team and location settings."
+    },
+    "noSession": "No session.",
+    "dialog": {
+      "invalidCpfTitle": "Invalid CPF",
+      "invalidCpfMessage": "Check the numbers. The CPF must be complete and with correct check digits.",
+      "allSetTitle": "All set",
+      "errorTitle": "Add collaborator",
+      "errorFallback": "Could not complete."
+    }
+  },
+  "nextSteps": {
+    "bodyAutoAccepted": "This CPF is already registered in our base, so this member is already part of the team. Link services below so this collaborator can start ",
+    "bodyPending": "We registered this CPF for the team. The person needs to create an account in the app and complete the profile with the same CPF: then access to the location becomes active and they start appearing on the team and in the schedule. You can already link services to the invite; the links take effect when registration is completed.",
+    "linkServicesButton": "Link to services",
+    "laterButton": "Do it later"
+  },
+  "linkServices": {
+    "hint": "Tap to check or uncheck. Only services with an explicit provider list will automatically include this person; for services where “everyone” serves, no linking is needed.",
+    "emptyServices": "There are no active services at this location.",
+    "durationMinutes": "{{minutes}} min",
+    "confirmButton": "Confirm"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "agendaList": {
+    "gateText": "Faça login para ver sua agenda como colaborador.",
+    "login": "Login",
+    "loginErrorDefault": "Não foi possível concluir o login.",
+    "loginErrorTitle": "Login",
+    "ok": "OK"
+  },
+  "calendar": {
+    "cancelBack": "Voltar",
+    "cancelBooking": "Cancelar atendimento",
+    "cancelConfirmMessage": "O cliente deixa de ver este horário na app. Confirma o cancelamento?",
+    "cancelConfirmTitle": "Cancelar atendimento",
+    "cancelErrorDefault": "Não foi possível cancelar.",
+    "cancelErrorTitle": "Cancelamento",
+    "cancelInProgress": "A cancelar…",
+    "cancelSubmit": "Cancelar",
+    "clientLabel": "Cliente",
+    "dayDetailTitle": "Detalhe do dia",
+    "emptyDay": "Nenhum atendimento com cliente neste dia.",
+    "intro": "Os dias destacados no calendário têm pelo menos um atendimento com cliente agendado.",
+    "legendLabel": "Dia com cliente marcado",
+    "loadingHint": "Carregando o mês…",
+    "newBooking": "Novo agendamento",
+    "newBookingLabel": "Novo",
+    "ok": "OK",
+    "selectDayHint": "Toque num dia no calendário para listar os horários com cliente.",
+    "serviceLabel": "Serviço",
+    "slotsForDate": "Horários — {{date}}",
+    "statusLabel": "Estado",
+    "timeLabel": "Horário",
+    "status": {
+      "cancelled": "Cancelado",
+      "completed": "Concluído",
+      "confirmed": "Confirmado",
+      "pending": "Pendente"
+    }
+  },
+  "detail": {
+    "gateText": "Entre na conta para gerenciar sua agenda.",
+    "intro": "Defina os dias e horários em que você aceita atender clientes neste estabelecimento.",
+    "loadError": "Não foi possível carregar a disponibilidade.",
+    "ok": "OK",
+    "retry": "Tentar novamente",
+    "save": "Salvar",
+    "saveErrorDefault": "Não foi possível salvar.",
+    "saveErrorTitle": "Erro",
+    "savedMessage": "Sua disponibilidade neste local foi atualizada.",
+    "savedTitle": "Salvo",
+    "scheduleIncompleteMessage": "Marque pelo menos um dia e defina abertura e fechamento em cada dia ativo.",
+    "scheduleIncompleteTitle": "Horário incompleto",
+    "scheduleRangeTitle": "Horário"
+  },
+  "newBookingType": {
+    "clientDescription": "Escolha essa opção para agendar um horário de atendimento para um cliente.",
+    "clientTitle": "Cliente",
+    "personalDescription": "Escolha essa opção para bloquear um período da sua agenda e cumprir um compromisso particular.",
+    "personalTitle": "Compromisso Pessoal"
+  },
+  "personalCommitment": {
+    "descriptionLabel": "Descrição (opcional)",
+    "descriptionPlaceholder": "Ex.: Reunião com fornecedor",
+    "endLabel": "Fim",
+    "endTimeTitle": "Horário de fim",
+    "overlapCancel": "Cancelar",
+    "overlapConfirm": "Continuar mesmo assim",
+    "overlapMessage": "O período selecionado coincide com agendamentos já confirmados. Deseja bloquear mesmo assim?",
+    "overlapTitle": "Conflito de horário",
+    "save": "Salvar",
+    "scheduleLabel": "Horário",
+    "startLabel": "Início",
+    "startTimeTitle": "Horário de início",
+    "timeOrderError": "O horário de fim deve ser depois do início."
+  },
+  "disponibilidadeList": {
+    "gateText": "Faça login para gerir a sua disponibilidade.",
+    "login": "Login",
+    "loginErrorDefault": "Não foi possível concluir o login.",
+    "loginErrorTitle": "Login",
+    "ok": "OK"
+  },
+  "scheduleValidation": {
+    "closedDay": "O estabelecimento não funciona em {{weekday}}. Desmarque este dia na sua disponibilidade ou peça ao dono ou ao gestor para ajustar o horário do local.",
+    "invalidTime": "Confira os horários em {{weekday}} (use formato HH:MM).",
+    "outOfRange": "Em {{weekday}}, sua disponibilidade ({{staffOpen}}–{{staffClose}}) precisa ficar dentro do horário do estabelecimento ({{estOpen}}–{{estClose}})."
+  }
+}

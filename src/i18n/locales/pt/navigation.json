@@ -1,0 +1,33 @@
+{
+  "agenda": {
+    "listTitle": "Agenda",
+    "calendarTitle": "Agenda",
+    "detailTitle": "Disponibilidade",
+    "newBookingTypeTitle": "Novo",
+    "personalCommitmentTitle": "Compromisso Pessoal",
+    "bookingServiceSelectTitle": "Agendar para cliente",
+    "bookingScheduleTitle": "Data e hora do atendimento",
+    "bookingConfirmTitle": "Registar atendimento"
+  },
+  "availability": {
+    "listTitle": "Disponibilidade",
+    "detailTitle": "Disponibilidade"
+  },
+  "establishments": {
+    "homeTitle": "Estabelecimentos",
+    "registerTitle": "Novo Estabelecimento",
+    "hubTitle": "Gestão",
+    "editTitle": "Editar estabelecimento",
+    "collaboratorsTitle": "Colaboradores",
+    "servicesTitle": "Serviços",
+    "serviceFormEditTitle": "Editar serviço",
+    "serviceFormNewTitle": "Novo serviço",
+    "inviteStaffTitle": "Adicionar colaborador",
+    "inviteStaffNextStepsTitle": "Próximos passos",
+    "pendingInviteLinkServicesTitle": "Serviços do convite"
+  },
+  "profile": {
+    "completeTitle": "Seu cadastro",
+    "editTitle": "Editar perfil"
+  }
+}

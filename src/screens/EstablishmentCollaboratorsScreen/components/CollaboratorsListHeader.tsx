@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import type { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { Button } from "../../../components/Button";
@@ -36,6 +37,7 @@ export function CollaboratorsListHeader({
   showOwnerSelfServeCard,
   theme,
 }: CollaboratorsListHeaderProps) {
+  const { t } = useTranslation("team");
   const pending = establishment.pendingInvites ?? [];
 
   return (
@@ -45,23 +47,25 @@ export function CollaboratorsListHeader({
           <View style={screenStyles.pendingHeaderRow}>
             <Ionicons color={theme.accent} name="hourglass-outline" size={22} />
             <Text style={screenStyles.pendingTitle} variant="listTitle">
-              Cadastro pendente
+              {t("collaborators.pendingCard.title")}
             </Text>
           </View>
           <Text variant="hint">
-            Pessoas convidadas que ainda não completaram o cadastro no app.
+            {t("collaborators.pendingCard.description")}
           </Text>
           <Text style={screenStyles.pendingCardSummary} variant="bodyTight">
             {pending.length === 1
-              ? "1 convite aguardando cadastro"
-              : `${pending.length} convites aguardando cadastro`}
+              ? t("collaborators.pendingCard.summaryOne")
+              : t("collaborators.pendingCard.summaryOther", {
+                  count: pending.length,
+                })}
           </Text>
           <Button
             style={screenStyles.pendingOpenModalBtn}
             variant="outline"
             onPress={openPendingInvitesSheet}
           >
-            Ver convites pendentes
+            {t("collaborators.pendingCard.openButton")}
           </Button>
         </View>
       ) : null}
@@ -74,18 +78,18 @@ export function CollaboratorsListHeader({
               size={22}
             />
             <View style={screenStyles.ownerCardTitleBlock}>
-              <Text variant="listTitle">Você também atende neste local?</Text>
+              <Text variant="listTitle">
+                {t("collaborators.ownerCard.title")}
+              </Text>
             </View>
           </View>
           <View style={screenStyles.ownerCardBody}>
             <Text variant="hint">
-              Assim você aparece na equipe, pode ser escolhido nos agendamentos
-              e associado aos serviços.
+              {t("collaborators.ownerCard.description")}
             </Text>
             {!ownerHasValidCpf ? (
               <Text style={screenStyles.ownerCardCpfHint} variant="hint">
-                Cadastre um CPF válido no perfil (o mesmo da conta) para constar
-                como prestador.
+                {t("collaborators.ownerCard.cpfHint")}
               </Text>
             ) : null}
           </View>
@@ -95,7 +99,7 @@ export function CollaboratorsListHeader({
               style={screenStyles.ownerCardButton}
               onPress={onIncludeOwnerAsStaffPress}
             >
-              Incluir-me como prestador
+              {t("collaborators.ownerCard.includeButton")}
             </Button>
           ) : (
             <Button
@@ -103,19 +107,19 @@ export function CollaboratorsListHeader({
               variant="outline"
               onPress={() => navigation.navigate(ProfileStack.EditProfile)}
             >
-              Atualizar perfil
+              {t("collaborators.ownerCard.updateProfileButton")}
             </Button>
           )}
         </View>
       ) : null}
       <View style={screenStyles.teamBlock}>
         <View
-          accessibilityLabel="Equipe, colaboradores"
+          accessibilityLabel={t("collaborators.teamSection.accessibilityLabel")}
           accessibilityRole="header"
           style={screenStyles.teamSectionHeaderRow}
         >
           <Text style={screenStyles.teamSectionTitle} variant="listTitle">
-            Equipe
+            {t("collaborators.teamSection.title")}
           </Text>
           <Ionicons
             accessibilityElementsHidden
@@ -125,8 +129,7 @@ export function CollaboratorsListHeader({
           />
         </View>
         <Text style={screenStyles.teamSectionHint} variant="hint">
-          Só aparecem aqui quem já tem conta no app com o CPF cadastrado neste
-          local. Quem ainda não completou o cadastro não entra na agenda.
+          {t("collaborators.teamSection.hint")}
         </Text>
       </View>
     </View>

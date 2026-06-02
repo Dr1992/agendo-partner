@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   BRAZIL_CITIES_BY_UF,
@@ -51,6 +52,7 @@ export function useEstablishmentPlaceFormState(
   apiCategories: ServiceCategory[],
   options: EstablishmentPlaceFormOptions = {},
 ) {
+  const { t } = useTranslation("partner");
   const requireEstablishmentPhotos =
     options.requireEstablishmentPhotos === true;
   const minimumGalleryPhotos = options.minimumGalleryPhotos;
@@ -153,7 +155,7 @@ export function useEstablishmentPlaceFormState(
       if (!viaCepResult.ok) {
         if (viaCepResult.message) {
           setPlaceFormAlert({
-            title: "CEP",
+            title: t("placeForm.cepAlertTitle"),
             message: viaCepResult.message,
           });
         }
@@ -181,8 +183,11 @@ export function useEstablishmentPlaceFormState(
       } else {
         setCityName("");
         setPlaceFormAlert({
-          title: "Cidade",
-          message: `O CEP é de ${viaCepResult.data.localidade}/${viaCepResult.data.uf}. Escolha a cidade correspondente na lista.`,
+          title: t("placeForm.cityAlertTitle"),
+          message: t("placeForm.cityAlertMessage", {
+            location: viaCepResult.data.localidade,
+            uf: viaCepResult.data.uf,
+          }),
         });
       }
 
@@ -198,7 +203,7 @@ export function useEstablishmentPlaceFormState(
       abortController.abort();
       setCepLookupBusy(false);
     };
-  }, [cepDigits]);
+  }, [cepDigits, t]);
 
   const cnpjDigitsOnly = useMemo(() => cnpj.replace(/\D/g, ""), [cnpj]);
   const cnpjOk = cnpjDigitsOnly.length === 0 || isValidCnpj(cnpjDigitsOnly);

@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 import { useAppTheme } from "../hooks/useAppTheme";
 import type { DisponibilidadeStackParamList } from "../navigation/disponibilidadeNavigation.types";
@@ -11,6 +12,7 @@ const Stack = createNativeStackNavigator<DisponibilidadeStackParamList>();
 export function DisponibilidadeNavigator() {
   const { theme } = useAppTheme();
   const navTheme = useTheme();
+  const { t } = useTranslation("navigation");
 
   return (
     <Stack.Navigator
@@ -27,12 +29,12 @@ export function DisponibilidadeNavigator() {
       <Stack.Screen
         component={DisponibilidadeListScreen}
         name="DisponibilidadeList"
-        options={{ title: "Disponibilidade" }}
+        options={{ title: t("availability.listTitle") }}
       />
       <Stack.Screen
         component={StaffAgendaDetailScreen}
         name="StaffAgendaDetail"
-        options={{ title: "Disponibilidade" }}
+        options={{ title: t("availability.detailTitle") }}
       />
     </Stack.Navigator>
   );
