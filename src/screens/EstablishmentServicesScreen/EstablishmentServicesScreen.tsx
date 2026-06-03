@@ -152,6 +152,9 @@ export function EstablishmentServicesScreen(
     <SafeAreaView edges={[]} style={styles.container}>
       <View style={svcStyles.screenBody}>
         <FlatList
+          ItemSeparatorComponent={() => (
+            <View style={svcStyles.cardSeparator} />
+          )}
           ListEmptyComponent={listEmpty}
           ListHeaderComponent={
             <Text style={svcStyles.hintTop} variant="hint">
