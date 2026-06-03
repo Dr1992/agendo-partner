@@ -4,6 +4,9 @@ import type { AppTheme } from "../../../theme";
 
 export function getEstablishmentServicesScreenStyles(theme: AppTheme) {
   return StyleSheet.create({
+    cardSeparator: {
+      height: 12,
+    },
     flatList: {
       flex: 1,
     },
