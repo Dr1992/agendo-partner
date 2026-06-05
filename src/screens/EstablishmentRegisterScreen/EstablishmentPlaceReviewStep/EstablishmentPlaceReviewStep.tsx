@@ -26,6 +26,7 @@ export type EstablishmentPlaceReviewStepProps = {
   cnpj: string;
   description: string;
   galleryPhotos: EstablishmentGalleryPhoto[];
+  keywords?: readonly string[];
   mode: "create" | "edit";
   name: string;
   onBack: () => void;
@@ -45,6 +46,7 @@ export function EstablishmentPlaceReviewStep({
   cnpj,
   description,
   galleryPhotos,
+  keywords,
   mode,
   name,
   onBack,
@@ -131,6 +133,14 @@ export function EstablishmentPlaceReviewStep({
             ? description.trim()
             : t("placeForm.rowDescriptionEmpty"),
       },
+      {
+        icon: "pricetags-outline",
+        label: t("placeForm.rowKeywordsLabel"),
+        value:
+          keywords && keywords.length > 0
+            ? keywords.join(", ")
+            : t("placeForm.rowKeywordsEmpty"),
+      },
     ];
   }, [
     addressLine,
@@ -138,6 +148,7 @@ export function EstablishmentPlaceReviewStep({
     cepDigits,
     cnpj,
     description,
+    keywords,
     locationLine,
     name,
     openingHoursSummary,

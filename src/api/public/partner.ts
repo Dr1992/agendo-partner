@@ -185,6 +185,8 @@ export type RegisterPartnerEstablishmentInput = {
   cityName: string;
   cnpj?: string;
   description?: string;
+  /** Palavras-chave opcionais para descoberta na busca (além do nome). */
+  keywords?: string[];
   name: string;
   openingHoursSummary: string;
   /** Grava `{ slots }` no backend — valida disponibilidade do staff em relação ao local. */
@@ -210,6 +212,7 @@ export async function createPartnerEstablishment(
     categoryIds: [input.categoryId],
     photoStorageKeys: input.photoStorageKeys,
     whatsapp: input.whatsapp.replace(/\D/g, ""),
+    ...(input.keywords !== undefined ? { keywords: input.keywords } : {}),
     ...(input.openingSchedule && input.openingSchedule.length === 7
       ? { openingSchedule: { slots: input.openingSchedule } }
       : {}),
@@ -266,6 +269,8 @@ export type UpdatePartnerEstablishmentInput = {
   cityName?: string;
   description?: string;
   isActive?: boolean;
+  /** Substitui as palavras-chave do estabelecimento (descoberta na busca). */
+  keywords?: string[];
   name?: string;
   openingSchedule?: DaySlot[];
   /** Substitui a galeria completa (1–5 chaves de upload). */
@@ -306,6 +311,7 @@ export type PartnerServiceRow = {
   durationMinutes: number;
   id: string;
   isActive: boolean;
+  keywords: string[];
   name: string;
   performerUserIds: string[];
   priceCents: number | null;
@@ -322,6 +328,7 @@ export async function fetchPartnerServices(
 export type CreatePartnerServiceInput = {
   description?: string;
   durationMinutes: number;
+  keywords?: string[];
   name: string;
   performerUserIds?: string[];
   priceCents?: number | null;
@@ -341,6 +348,7 @@ export type UpdatePartnerServiceInput = {
   description?: string | null;
   durationMinutes?: number;
   isActive?: boolean;
+  keywords?: string[];
   name?: string;
   performerUserIds?: string[];
   priceCents?: number | null;

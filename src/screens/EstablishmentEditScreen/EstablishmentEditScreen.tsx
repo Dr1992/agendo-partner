@@ -251,6 +251,7 @@ export function EstablishmentEditScreen({
         postalCode: normalizeCepDigits(form.cepDigits),
         photoStorageKeys,
         whatsapp: form.whatsappDigits.replace(/\D/g, ""),
+        keywords: form.keywords,
         ...(includeOpeningSchedule
           ? { openingSchedule: form.openingSchedule }
           : {}),
@@ -283,6 +284,7 @@ export function EstablishmentEditScreen({
     form.cnpj,
     form.description,
     form.galleryPhotos,
+    form.keywords,
     form.name,
     form.stateUf,
     form.cepDigits,
@@ -342,6 +344,7 @@ export function EstablishmentEditScreen({
             cnpj={form.cnpj}
             description={form.description}
             galleryPhotos={form.galleryPhotos}
+            keywords={form.keywords}
             mode="edit"
             name={form.name}
             openingHoursSummary={form.openingHoursSummary}
@@ -364,6 +367,7 @@ export function EstablishmentEditScreen({
             description={form.description}
             galleryPhotos={form.galleryPhotos}
             galleryUploadBusy={galleryBusy}
+            keywords={form.keywords}
             name={form.name}
             neighborhood={form.neighborhood}
             openingHoursSummary={form.openingHoursSummary}
@@ -377,6 +381,7 @@ export function EstablishmentEditScreen({
             onDescriptionChange={form.setDescription}
             onGalleryAddPress={onGalleryAddPress}
             onGalleryRemove={form.removeGalleryPhoto}
+            onKeywordsChange={form.setKeywords}
             onNameChange={form.setName}
             onNeighborhoodChange={form.setNeighborhood}
             onNext={onNext}

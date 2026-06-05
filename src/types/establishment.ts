@@ -51,6 +51,8 @@ export type EstablishmentDetail = Establishment & {
   latitude: number;
   longitude: number;
   description?: string;
+  /** Palavras-chave opcionais para descoberta na busca (além do nome). */
+  keywords?: readonly string[];
   phone?: string;
   whatsapp?: string;
   addressFull: string;

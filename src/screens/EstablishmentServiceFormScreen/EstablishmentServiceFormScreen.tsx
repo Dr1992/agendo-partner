@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AlertDialog } from "../../components/AlertDialog/AlertDialog";
 import { Button } from "../../components/Button";
 import { DurationPickerModal } from "../../components/DurationPickerModal/DurationPickerModal";
+import { KeywordsInput } from "../../components/KeywordsInput";
 import { LoadingCentered } from "../../components/LoadingCentered";
 import { ServicePerformersModal } from "../../components/ServicePerformersModal/ServicePerformersModal";
 import { Text } from "../../components/Text";
@@ -43,6 +44,7 @@ export function EstablishmentServiceFormScreen({
   const [durationText, setDurationText] = useState("60");
   const [priceText, setPriceText] = useState("");
   const [description, setDescription] = useState("");
+  const [keywords, setKeywords] = useState<string[]>([]);
   const [allPerformers, setAllPerformers] = useState(true);
   const [selectedPerformerIds, setSelectedPerformerIds] = useState<Set<string>>(
     () => new Set(),
@@ -80,6 +82,7 @@ export function EstablishmentServiceFormScreen({
     setDurationText(String(existing.durationMinutes));
     setPriceText(formatCentsAsBrazilReais(existing.priceCents));
     setDescription(existing.description ?? "");
+    setKeywords([...existing.keywords]);
     const ids = existing.performerUserIds;
     if (ids.length === 0) {
       setAllPerformers(true);
@@ -114,7 +117,7 @@ export function EstablishmentServiceFormScreen({
     return Math.min(parsedMinutes, 24 * 60);
   }, [durationText]);
 
-  const { confirmDeactivateService, deleteMutation, onDelete, onSave } =
+  const { confirmDeleteService, deleteMutation, onDelete, onSave } =
     useEstablishmentServiceFormMutations({
       bookableProfessionals,
       establishmentId,
@@ -252,6 +255,23 @@ export function EstablishmentServiceFormScreen({
         />
 
         <View style={formStyles.fieldLabelRow}>
+          <Ionicons color={theme.accent} name="pricetags-outline" size={15} />
+          <Text style={formStyles.fieldLabelText} variant="fieldLabel">
+            {t("serviceForm.keywordsLabel")}
+          </Text>
+        </View>
+        <Text style={formStyles.sectionHint} variant="hint">
+          {t("serviceForm.keywordsHint")}
+        </Text>
+        <KeywordsInput
+          disabled={busy}
+          placeholder={t("serviceForm.keywordsPlaceholder")}
+          removeAccessibilityLabel={t("serviceForm.keywordRemove")}
+          value={keywords}
+          onChange={setKeywords}
+        />
+
+        <View style={formStyles.fieldLabelRow}>
           <Ionicons color={theme.accent} name="people-outline" size={15} />
           <Text style={formStyles.fieldLabelText} variant="fieldLabel">
             {t("serviceForm.performersLabel")}
@@ -328,6 +348,7 @@ export function EstablishmentServiceFormScreen({
               allPerformers,
               description,
               durationText,
+              keywords,
               name,
               priceText,
               selectedPerformerIds,
@@ -344,7 +365,7 @@ export function EstablishmentServiceFormScreen({
             variant="outline"
             onPress={onDelete}
           >
-            {t("serviceForm.deactivateButton")}
+            {t("serviceForm.deleteButton")}
           </Button>
         ) : null}
       </ScrollView>
@@ -377,14 +398,14 @@ export function EstablishmentServiceFormScreen({
           },
           {
             label: deleteMutation.isPending
-              ? t("serviceForm.deactivatingButton")
-              : t("serviceForm.toggleDeactivateLabel"),
-            onPress: confirmDeactivateService,
+              ? t("serviceForm.deletingButton")
+              : t("serviceForm.deleteConfirmLabel"),
+            onPress: confirmDeleteService,
             variant: "destructive",
           },
         ]}
-        message={t("serviceForm.deactivateConfirmMessage")}
-        title={t("serviceForm.deactivateConfirmTitle")}
+        message={t("serviceForm.deleteConfirmMessage")}
+        title={t("serviceForm.deleteConfirmTitle")}
         visible={deleteConfirmOpen}
         onRequestClose={() => {
           if (!deleteMutation.isPending) {

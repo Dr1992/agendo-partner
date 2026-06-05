@@ -78,6 +78,7 @@ export function useEstablishmentPlaceFormState(
   const [cnpj, setCnpj] = useState("");
   const [whatsappDigits, setWhatsappDigits] = useState("");
   const [description, setDescription] = useState("");
+  const [keywords, setKeywords] = useState<string[]>([]);
   const [galleryPhotos, setGalleryPhotos] = useState<
     EstablishmentGalleryPhoto[]
   >([]);
@@ -246,6 +247,7 @@ export function useEstablishmentPlaceFormState(
     setStep(0);
     setName(est.name);
     setDescription(est.description ?? "");
+    setKeywords([...(est.keywords ?? [])]);
     setCategoryId(est.categoryIds[0] ?? null);
     setCityName(est.cityName);
     setStateUf(est.stateUf);
@@ -325,6 +327,7 @@ export function useEstablishmentPlaceFormState(
     dismissPlaceFormAlert,
     galleryPhotos,
     hydrateFromEstablishment,
+    keywords,
     name,
     neighborhood,
     onPickState,
@@ -337,6 +340,7 @@ export function useEstablishmentPlaceFormState(
     setCepDigits,
     setCnpj,
     setDescription,
+    setKeywords,
     setName,
     setCityName,
     setNeighborhood,
