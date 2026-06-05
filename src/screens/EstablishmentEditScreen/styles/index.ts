@@ -124,6 +124,9 @@ export function getEstablishmentEditScreenStyles(theme: AppTheme) {
       paddingHorizontal: 12,
       paddingTop: 4,
     },
+    keywordsHint: {
+      marginBottom: 10,
+    },
   });
   return Object.assign({}, base, local) as typeof base & typeof local;
 }

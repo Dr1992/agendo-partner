@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, TextInput, View } from "react-native";
 
 import { Button } from "../../../components/Button";
+import { KeywordsInput } from "../../../components/KeywordsInput";
 import { Text } from "../../../components/Text";
 import { useAppTheme } from "../../../hooks/useAppTheme";
 import { formatCepDisplay, normalizeCepDigits } from "../../../utils/cep";
@@ -29,6 +31,7 @@ export type EstablishmentEditFormProps = {
   description: string;
   galleryPhotos: EstablishmentGalleryPhoto[];
   galleryUploadBusy: boolean;
+  keywords: readonly string[];
   name: string;
   neighborhood: string;
   openingHoursSummary: string;
@@ -42,6 +45,7 @@ export type EstablishmentEditFormProps = {
   onDescriptionChange: (v: string) => void;
   onGalleryAddPress: () => void;
   onGalleryRemove: (id: string) => void;
+  onKeywordsChange: (keywords: string[]) => void;
   onNameChange: (v: string) => void;
   onNeighborhoodChange: (v: string) => void;
   onNext: () => void;
@@ -65,6 +69,7 @@ export function EstablishmentEditForm({
   description,
   galleryPhotos,
   galleryUploadBusy,
+  keywords,
   name,
   neighborhood,
   openingHoursSummary,
@@ -78,6 +83,7 @@ export function EstablishmentEditForm({
   onDescriptionChange,
   onGalleryAddPress,
   onGalleryRemove,
+  onKeywordsChange,
   onNameChange,
   onNeighborhoodChange,
   onNext,
@@ -88,6 +94,7 @@ export function EstablishmentEditForm({
   onStreetChange,
   onWhatsappChange,
 }: EstablishmentEditFormProps) {
+  const { t } = useTranslation("partner");
   const { theme } = useAppTheme();
   const styles = getEstablishmentEditScreenStyles(theme);
 
@@ -166,6 +173,25 @@ export function EstablishmentEditForm({
           </Text>
         </View>
       </View>
+
+      {/* Descoberta na busca */}
+      <View style={styles.sectionHeader}>
+        <View style={styles.sectionIconWrap}>
+          <Ionicons color={theme.accent} name="pricetags-outline" size={18} />
+        </View>
+        <Text style={styles.sectionHeaderLabel} variant="bodyTight">
+          {t("edit.keywordsSectionTitle")}
+        </Text>
+      </View>
+      <Text style={styles.keywordsHint} variant="hint">
+        {t("edit.keywordsHint")}
+      </Text>
+      <KeywordsInput
+        placeholder={t("edit.keywordsPlaceholder")}
+        removeAccessibilityLabel={t("edit.keywordRemove")}
+        value={keywords}
+        onChange={onKeywordsChange}
+      />
 
       {/* Localização */}
       <View style={styles.sectionHeader}>

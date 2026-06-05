@@ -17,6 +17,7 @@ type SaveServiceVars = {
   allPerformers: boolean;
   description: string;
   durationText: string;
+  keywords: string[];
   name: string;
   priceText: string;
   selectedPerformerIds: Set<string>;
@@ -87,6 +88,7 @@ export function useEstablishmentServiceFormMutations({
           durationMinutes,
           priceCents: cents,
           performerUserIds,
+          keywords: vars.keywords,
         });
       }
       return createPartnerService(establishmentId, {
@@ -95,6 +97,7 @@ export function useEstablishmentServiceFormMutations({
         durationMinutes,
         priceCents: cents ?? undefined,
         performerUserIds,
+        keywords: vars.keywords,
       });
     },
     onSuccess: async () => {
@@ -140,7 +143,7 @@ export function useEstablishmentServiceFormMutations({
     setDeleteConfirmOpen(true);
   }, [serviceId, setDeleteConfirmOpen]);
 
-  const confirmDeactivateService = useCallback(() => {
+  const confirmDeleteService = useCallback(() => {
     if (!serviceId || deleteMutation.isPending) {
       return;
     }
@@ -155,7 +158,7 @@ export function useEstablishmentServiceFormMutations({
           message:
             e instanceof Error
               ? e.message
-              : t("serviceForm.deactivateErrorFallback"),
+              : t("serviceForm.deleteErrorFallback"),
         });
       } finally {
         setBusy(false);
@@ -171,7 +174,7 @@ export function useEstablishmentServiceFormMutations({
   ]);
 
   return {
-    confirmDeactivateService,
+    confirmDeleteService,
     deleteMutation,
     onDelete,
     onSave,
