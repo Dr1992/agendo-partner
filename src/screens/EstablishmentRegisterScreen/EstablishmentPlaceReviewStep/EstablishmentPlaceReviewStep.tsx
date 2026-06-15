@@ -25,6 +25,7 @@ export type EstablishmentPlaceReviewStepProps = {
   cityName: string;
   cnpj: string;
   description: string;
+  instagramHandle: string;
   galleryPhotos: EstablishmentGalleryPhoto[];
   keywords?: readonly string[];
   mode: "create" | "edit";
@@ -46,6 +47,7 @@ export function EstablishmentPlaceReviewStep({
   cnpj,
   description,
   galleryPhotos,
+  instagramHandle,
   keywords,
   mode,
   name,
@@ -124,6 +126,11 @@ export function EstablishmentPlaceReviewStep({
           phoneDigits.length > 0
             ? formatBrazilPhoneDisplay(whatsappDigits)
             : "—",
+      },
+      {
+        icon: "logo-instagram",
+        label: "Instagram",
+        value: instagramHandle.trim() || "—",
       },
       {
         icon: "reader-outline",

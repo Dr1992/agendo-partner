@@ -184,6 +184,7 @@ export function EstablishmentRegisterScreen({
         ownerUserId: session.userId,
         photoStorageKeys,
         postalCode: normalizeCepDigits(form.cepDigits),
+        socialLinks: { instagram: form.instagramHandle.trim() || undefined },
         stateUf: form.stateUf.toUpperCase(),
         whatsapp: form.whatsappDigits.replace(/\D/g, ""),
       });
@@ -238,6 +239,7 @@ export function EstablishmentRegisterScreen({
           galleryPhotos={form.galleryPhotos}
           galleryReadOnly={false}
           galleryUploadBusy={galleryBusy}
+          instagramHandle={form.instagramHandle}
           mode="create"
           name={form.name}
           neighborhood={form.neighborhood}
@@ -254,6 +256,7 @@ export function EstablishmentRegisterScreen({
           onDescriptionChange={form.setDescription}
           onGalleryAddPress={onGalleryAddPress}
           onGalleryRemove={form.removeGalleryPhoto}
+          onInstagramChange={form.setInstagramHandle}
           onNameChange={form.setName}
           onNeighborhoodChange={form.setNeighborhood}
           onNext={onNext}

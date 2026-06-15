@@ -251,6 +251,7 @@ export function EstablishmentEditScreen({
         postalCode: normalizeCepDigits(form.cepDigits),
         photoStorageKeys,
         whatsapp: form.whatsappDigits.replace(/\D/g, ""),
+        socialLinks: { instagram: form.instagramHandle.trim() || undefined },
         keywords: form.keywords,
         ...(includeOpeningSchedule
           ? { openingSchedule: form.openingSchedule }
@@ -284,6 +285,7 @@ export function EstablishmentEditScreen({
     form.cnpj,
     form.description,
     form.galleryPhotos,
+    form.instagramHandle,
     form.keywords,
     form.name,
     form.stateUf,
@@ -344,6 +346,7 @@ export function EstablishmentEditScreen({
             cnpj={form.cnpj}
             description={form.description}
             galleryPhotos={form.galleryPhotos}
+            instagramHandle={form.instagramHandle}
             keywords={form.keywords}
             mode="edit"
             name={form.name}
@@ -367,6 +370,7 @@ export function EstablishmentEditScreen({
             description={form.description}
             galleryPhotos={form.galleryPhotos}
             galleryUploadBusy={galleryBusy}
+            instagramHandle={form.instagramHandle}
             keywords={form.keywords}
             name={form.name}
             neighborhood={form.neighborhood}
@@ -381,6 +385,7 @@ export function EstablishmentEditScreen({
             onDescriptionChange={form.setDescription}
             onGalleryAddPress={onGalleryAddPress}
             onGalleryRemove={form.removeGalleryPhoto}
+            onInstagramChange={form.setInstagramHandle}
             onKeywordsChange={form.setKeywords}
             onNameChange={form.setName}
             onNeighborhoodChange={form.setNeighborhood}

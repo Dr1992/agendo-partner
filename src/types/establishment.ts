@@ -55,6 +55,7 @@ export type EstablishmentDetail = Establishment & {
   keywords?: readonly string[];
   phone?: string;
   whatsapp?: string;
+  socialLinks?: { instagram?: string };
   addressFull: string;
   /** Endereço (rua/número) — API parceiro */
   partnerStreetLine?: string;
