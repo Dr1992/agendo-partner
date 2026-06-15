@@ -124,6 +124,7 @@
     "keywordRemove": "Remover palavra-chave",
     "photosKeepRangeMessage": "Mantenha entre 1 e 5 fotos do estabelecimento. Envie novamente as que faltarem.",
     "photosUnlinkedMessage": "Alguma imagem ainda não está associada ao servidor. Remova-a e adicione outra vez.",
+    "instagramLabel": "Instagram (opcional)",
     "savedTitle": "Salvo",
     "savedMessage": "Os dados do estabelecimento foram atualizados.",
     "saveErrorFallback": "Não foi possível salvar.",

@@ -54,6 +54,8 @@ export type EstablishmentEditFormProps = {
   onOpenHoursModal: () => void;
   onOpenStateModal: () => void;
   onStreetChange: (v: string) => void;
+  instagramHandle: string;
+  onInstagramChange: (v: string) => void;
   onWhatsappChange: (v: string) => void;
 };
 
@@ -91,6 +93,8 @@ export function EstablishmentEditForm({
   onOpenCityModal,
   onOpenHoursModal,
   onOpenStateModal,
+  instagramHandle,
+  onInstagramChange,
   onStreetChange,
   onWhatsappChange,
 }: EstablishmentEditFormProps) {
@@ -400,7 +404,7 @@ export function EstablishmentEditForm({
             <Ionicons color={theme.textHint} name="chevron-forward" size={18} />
           </View>
         </Pressable>
-        <View style={[styles.fieldRow, styles.fieldRowLast]}>
+        <View style={styles.fieldRow}>
           <Text style={styles.fieldRowLabel} variant="caption">
             CNPJ (opcional)
           </Text>
@@ -412,6 +416,22 @@ export function EstablishmentEditForm({
             style={styles.fieldRowInput}
             value={formatCnpjDisplay(cnpj)}
             onChangeText={(v) => onCnpjChange(normalizeCnpjDigits(v))}
+          />
+        </View>
+        <View style={[styles.fieldRow, styles.fieldRowLast]}>
+          <Text style={styles.fieldRowLabel} variant="caption">
+            {t("edit.instagramLabel")}
+          </Text>
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="url"
+            maxLength={100}
+            placeholder="@seuperfil"
+            placeholderTextColor={theme.textHint}
+            style={styles.fieldRowInput}
+            value={instagramHandle}
+            onChangeText={onInstagramChange}
           />
         </View>
       </View>

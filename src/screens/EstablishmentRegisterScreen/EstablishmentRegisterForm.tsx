@@ -39,6 +39,8 @@ export type EstablishmentRegisterFormProps = {
   galleryPhotos: EstablishmentGalleryPhoto[];
   galleryReadOnly: boolean;
   galleryUploadBusy: boolean;
+  instagramHandle: string;
+  onInstagramChange: (v: string) => void;
   name: string;
   neighborhood: string;
   onAddressNumberChange: (t: string) => void;
@@ -83,6 +85,8 @@ export function EstablishmentRegisterForm({
   galleryPhotos,
   galleryReadOnly,
   galleryUploadBusy,
+  instagramHandle,
+  onInstagramChange,
   name,
   neighborhood,
   onAddressNumberChange,
@@ -128,6 +132,7 @@ export function EstablishmentRegisterForm({
         cnpj={cnpj}
         description={description}
         galleryPhotos={galleryPhotos}
+        instagramHandle={instagramHandle}
         mode={mode}
         name={name}
         openingHoursSummary={openingHoursSummary}
@@ -259,6 +264,16 @@ export function EstablishmentRegisterForm({
         placeholder={t("placeForm.phonePlaceholder")}
         value={formatBrazilPhoneDisplay(whatsappDigits)}
         onChangeText={(t) => onWhatsappChange(normalizePhoneDigits(t, 11))}
+      />
+      <TextField
+        autoCapitalize="none"
+        autoCorrect={false}
+        keyboardType="url"
+        label={t("edit.instagramLabel")}
+        maxLength={100}
+        placeholder="@seuperfil"
+        value={instagramHandle}
+        onChangeText={onInstagramChange}
       />
       <TextField
         multiline

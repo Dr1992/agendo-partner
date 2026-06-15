@@ -41,6 +41,12 @@ export type EstablishmentGalleryPhoto = {
   storageKey: string;
 };
 
+function extractInstagramHandle(url?: string): string {
+  if (!url) return "";
+  const match = url.match(/instagram\.com\/([^/?#]+)/i);
+  return match ? `@${match[1]}` : url;
+}
+
 export type EstablishmentPlaceFormOptions = {
   /** Cadastro novo: obriga 1–5 fotos enviadas antes de continuar. */
   requireEstablishmentPhotos?: boolean;
@@ -77,6 +83,7 @@ export function useEstablishmentPlaceFormState(
   );
   const [cnpj, setCnpj] = useState("");
   const [whatsappDigits, setWhatsappDigits] = useState("");
+  const [instagramHandle, setInstagramHandle] = useState("");
   const [description, setDescription] = useState("");
   const [keywords, setKeywords] = useState<string[]>([]);
   const [galleryPhotos, setGalleryPhotos] = useState<
@@ -275,6 +282,7 @@ export function useEstablishmentPlaceFormState(
     }
     setCnpj("");
     setWhatsappDigits(normalizePhoneDigits(est.whatsapp ?? "", 11));
+    setInstagramHandle(extractInstagramHandle(est.socialLinks?.instagram));
     if (est.galleryPhotoItems && est.galleryPhotoItems.length > 0) {
       setGalleryPhotos(
         est.galleryPhotoItems.map((item) => ({
@@ -327,6 +335,7 @@ export function useEstablishmentPlaceFormState(
     dismissPlaceFormAlert,
     galleryPhotos,
     hydrateFromEstablishment,
+    instagramHandle,
     keywords,
     name,
     neighborhood,
@@ -340,6 +349,7 @@ export function useEstablishmentPlaceFormState(
     setCepDigits,
     setCnpj,
     setDescription,
+    setInstagramHandle,
     setKeywords,
     setName,
     setCityName,

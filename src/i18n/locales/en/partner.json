@@ -124,6 +124,7 @@
     "keywordRemove": "Remove keyword",
     "photosKeepRangeMessage": "Keep between 1 and 5 photos of the establishment. Upload the missing ones again.",
     "photosUnlinkedMessage": "Some image isn't associated with the server yet. Remove it and add it again.",
+    "instagramLabel": "Instagram (optional)",
     "savedTitle": "Saved",
     "savedMessage": "The establishment details have been updated.",
     "saveErrorFallback": "Couldn't save.",

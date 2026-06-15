@@ -196,6 +196,7 @@ export type RegisterPartnerEstablishmentInput = {
   photoStorageKeys: string[];
   phone?: string;
   postalCode?: string;
+  socialLinks?: { instagram?: string };
   stateUf: string;
   whatsapp: string;
 };
@@ -212,6 +213,7 @@ export async function createPartnerEstablishment(
     categoryIds: [input.categoryId],
     photoStorageKeys: input.photoStorageKeys,
     whatsapp: input.whatsapp.replace(/\D/g, ""),
+    ...(input.socialLinks ? { socialLinks: input.socialLinks } : {}),
     ...(input.keywords !== undefined ? { keywords: input.keywords } : {}),
     ...(input.openingSchedule && input.openingSchedule.length === 7
       ? { openingSchedule: { slots: input.openingSchedule } }
@@ -276,6 +278,7 @@ export type UpdatePartnerEstablishmentInput = {
   /** Substitui a galeria completa (1–5 chaves de upload). */
   photoStorageKeys?: string[];
   postalCode?: string;
+  socialLinks?: { instagram?: string };
   stateUf?: string;
   whatsapp?: string;
 };
